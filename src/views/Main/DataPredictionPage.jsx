@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class DataPredictionPage extends Component {
   state = {};
   render() {
-    return <></>;
+    return <h1>Data prediction</h1>;
   }
 }
 

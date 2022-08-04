@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class DataDescriptionPage extends Component {
   state = {};
   render() {
-    return <></>;
+    return <h1>Data description</h1>;
   }
 }
 

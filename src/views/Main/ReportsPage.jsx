@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class ReportsPage extends Component {
   state = {};
   render() {
-    return <></>;
+    return <h1>reports</h1>;
   }
 }
 

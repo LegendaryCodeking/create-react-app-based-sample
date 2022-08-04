@@ -11,17 +11,14 @@ import MainLayout from './layouts/MainLayout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route path='/' exact component={IndexPage} />
-        <Route path='/dashboard' component={MainLayout} />
-        <Route path='/auth' component={AuthLayout} />
-        <Redirect from='*' to="/" />
-      </Switch>
-    </BrowserRouter>
-    {/* <App /> */}
-  </React.StrictMode>
+  <BrowserRouter>
+    <Switch>
+      <Route path='/' exact component={IndexPage} />
+      <Route path='/cst' component={MainLayout} />
+      <Route path='/auth' component={AuthLayout} />
+      <Redirect from='*' to="/" />
+    </Switch>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
