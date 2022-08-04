@@ -16,3 +16,28 @@ code {
     monospace;
 }
  */
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 400;
+  src: url("./assets/fonts/Montserrat/static/Montserrat-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 700;
+  src: url("./assets/fonts/Montserrat/static/Montserrat-Bold.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 900;
+  src: url("./assets/fonts/Montserrat/static/Montserrat-Black.ttf")
+    format("truetype");
+}
+
+body {
+  font-family: "Montserrat";
+}

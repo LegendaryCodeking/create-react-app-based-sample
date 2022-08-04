@@ -1,0 +1,13 @@
+.loginLogo {
+  height: 15rem;
+}
+
+.loginBackground {
+  background-image: url("../images/authbgblur.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form-container {
+  width: 20rem;
+}
