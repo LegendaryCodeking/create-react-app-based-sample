@@ -1,0 +1,4 @@
+.stats-title {
+    @apply uppercase font-bold;
+    font-size: 12px;
+}

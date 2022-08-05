@@ -29,9 +29,9 @@ const DescriptionSummaryTable = () => {
       });
   }, []);
 
-  setTimeout(() => {
+  /* setTimeout(() => {
     gridRef.api.sizeColumnsToFit();
-  }, 2000);
+  }, 2000); */
 
   const gridReady = (params) => {
     let gridApi = params.api;
@@ -45,16 +45,16 @@ const DescriptionSummaryTable = () => {
     gridRef.current.api.deselectAll();
   }, []); */
   return (
-    <div className="w-full text-white flex p-4 mt-4 mb-4">
+    <div className="w-full text-white flex p-4 mt-4 mb-8 h-full">
       <div
-        className="ag-theme-alpine w-full bg-darkblue h-full"
-        style={{ height: 500 }}
+        className="ag-theme-alpine w-full bg-darkblue h-full mb-4"
+        style={{ height: "400px" }}
       >
         <AgGridReact
           ref={gridRef} // Ref for accessing Grid's API
           rowData={rowData} // Row Data for Rows
           pagination={true}
-          paginationPageSize={10}
+          paginationPageSize={6}
           onGridReady={gridReady}
           columnDefs={columnDefs}
           animateRows={true} // Optional - set to 'true' to have rows animate when sorted

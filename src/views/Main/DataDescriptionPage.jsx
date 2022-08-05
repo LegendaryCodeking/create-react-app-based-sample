@@ -3,7 +3,9 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import DescriptionStatsCards from "../../components/Stats/DescriptionStatsCards";
-import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
+//import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
+import DataDescriptionSearchInput from "../../components/Forms/FormComponents/DataDescriptionSearchInput";
+//import DataSummaryChartsSection from "../../components/DataSummaryChartsContainer";
 
 class DataDescriptionPage extends Component {
   state = {};
@@ -50,7 +52,13 @@ class DataDescriptionPage extends Component {
             </ul>
           </div>
           <DescriptionStatsCards />
-          <DescriptionSummaryTable />
+          {/* <DescriptionSummaryTable /> */}
+          <div className="container p-4">
+            <DataDescriptionSearchInput show />
+          </div>
+          {/* <div className="container">
+            <DataSummaryChartsSection />
+          </div> */}
         </div>
       </div>
     );
