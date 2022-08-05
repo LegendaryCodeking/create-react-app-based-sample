@@ -24,7 +24,7 @@ class TabNav extends Component {
           </li>
           <li className="w-full">
             <Link
-              to="/cst/description"
+              to="/cst/data-description"
               className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 focus:outline-none"
             >
               Data description

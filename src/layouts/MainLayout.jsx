@@ -31,7 +31,7 @@ class MainLayout extends Component {
               />
               <Route
                 exact
-                path="/cst/description"
+                path="/cst/data-description"
                 component={DataDescriptionPage}
               />
               <Route

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import DescriptionStatsCards from "../../components/Stats/DescriptionStatsCards";
 
 class DataDescriptionPage extends Component {
   state = {};
@@ -44,6 +45,7 @@ class DataDescriptionPage extends Component {
               </li>
             </ul>
           </div>
+          <DescriptionStatsCards />
         </div>
       </div>
     );
