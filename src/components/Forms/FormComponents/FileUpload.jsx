@@ -14,7 +14,7 @@ class FileUploadInput extends Component {
             <span className="py-4 text-sm text-white">Upload files</span>
           </div>
         </div>
-        <div className="w-6/12">
+        <div className="w-6/12" style={{ paddingBottom: ".5rem" }}>
           <input
             className="form-control block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
             aria-describedby="user_avatar_help"
@@ -22,7 +22,7 @@ class FileUploadInput extends Component {
             placeholder="Allowed file formats are Csv and xlsx"
           ></input>
         </div>
-        <div className="w-2/12">
+        <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
           <div className="flex h-full justify-end">
             <button className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full">
               <FontAwesomeIcon icon={faFileUpload}></FontAwesomeIcon>
@@ -30,7 +30,7 @@ class FileUploadInput extends Component {
             </button>
           </div>
         </div>
-        <div className="w-2/12">
+        <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
           <div className="flex h-full justify-end">
             <button className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full">
               <FontAwesomeIcon icon={faCancel}></FontAwesomeIcon>
