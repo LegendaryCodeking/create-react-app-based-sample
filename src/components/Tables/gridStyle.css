@@ -1,0 +1,11 @@
+.ag-theme-alpine {
+    --ag-foreground-color: #fff;
+    --ag-background-color: #000b18;
+    --ag-header-foreground-color: rgb(204, 245, 172);
+    --ag-header-background-color: rgb(21, 27, 41);
+    --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+    --ag-header-column-resize-handle-color: rgb(126, 46, 132);
+
+    --ag-font-size: 12px;
+    --ag-font-family: Montserrat;
+}

@@ -11,7 +11,10 @@ class TargetVariableSettingPage extends Component {
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100vh " }}>
         <div className="mx-auto container">
-          <div class="p-4 mb-6 text-sm text-darkblue bg-lightblue" role="alert">
+          <div
+            className="p-4 mb-6 text-sm text-darkblue bg-lightblue"
+            role="alert"
+          >
             <div className="p-1">
               <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
               <span className="ml-1 font-bold">Info</span>
