@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import ReactTooltip from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +14,12 @@ class BinaryRejectedInput extends Component {
           <div className="h-full flex justify-start">
             <span className="py-4 text-sm text-white">
               <span className="mr-1">Set binary for rejected</span>
-              <FontAwesomeIcon className="text-blue-200" icon={faCircleInfo} />
+              <FontAwesomeIcon
+                data-tip="The represantation of rejected/negative unit"
+                className="text-blue-200"
+                icon={faCircleInfo}
+              />
+              <ReactTooltip />
             </span>
           </div>
         </div>

@@ -16,9 +16,10 @@ class FileUploadInput extends Component {
         </div>
         <div className="w-6/12">
           <input
-            className="form-control block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none p-2.5 file:bg-eggyellow file:border-0 file:h-full"
+            className="form-control block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
             aria-describedby="user_avatar_help"
             type="file"
+            placeholder="Allowed file formats are Csv and xlsx"
           ></input>
         </div>
         <div className="w-2/12">
