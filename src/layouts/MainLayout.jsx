@@ -17,8 +17,10 @@ class MainLayout extends Component {
       <>
         <div className="relative">
           <NavBar />
-          <div className=" mx-auto p-2 bg-darkblue">
-            <span className="text-eggyellow mt-2">Credit scoring tool</span>
+          <div className="mx-auto p-2 bg-darkblue">
+            <span className="text-white mt-2 ml-2 font-bold">
+              AICE Credit scoring tool
+            </span>
           </div>
           <TabNav />
 

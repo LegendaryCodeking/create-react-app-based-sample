@@ -26,7 +26,7 @@ class MainNavBar extends Component {
             <div className="flex md:order-2">
               <button
                 type="button"
-                className="text-darkblue bg-eggyellow hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+                className="text-darkblue bg-gradient-to-r from-gradient-start to-gradient-end hover:bg-gradient-to-l hover:bg-from-gradient-start hover:bg-gradient-end focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
               >
                 <FontAwesomeIcon icon={faUserPlus} />
                 <span className="ml-2">Sign Up</span>
@@ -34,7 +34,7 @@ class MainNavBar extends Component {
 
               <button
                 type="button"
-                className="text-darkblue ml-2 bg-eggyellow hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+                className="text-white border border-eggyellow hover:bg-eggyellow hover:text-darkblue ml-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
               >
                 <FontAwesomeIcon icon={faArrowRightToBracket} />
                 <span className="ml-2">Log In</span>
@@ -48,7 +48,7 @@ class MainNavBar extends Component {
                 <li>
                   <Link
                     to="/"
-                    className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+                    className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
                     aria-current="page"
                   >
                     Home
@@ -57,7 +57,7 @@ class MainNavBar extends Component {
                 <li>
                   <Link
                     to="/"
-                    className="block py-2 pr-4 pl-3 text-white text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                    className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
                     About
                   </Link>
@@ -65,15 +65,15 @@ class MainNavBar extends Component {
                 <li>
                   <Link
                     to="/"
-                    className="block py-2 pr-4 pl-3 text-white text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                    className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
-                    Services
+                    How it works
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/"
-                    className="block py-2 pr-4 pl-3 text-white text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                    className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
                     Contact
                   </Link>

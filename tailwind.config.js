@@ -10,6 +10,10 @@ module.exports = {
       eggyellow: '#f0da14',
       eggyellow2: '#dcc814',
       transparent: 'transparent',
+      gradient: {
+        start: '#dcdc1f',
+        end: '#22fafa'
+      },
       black: '#000',
       white: '#fff',
       red: 'red',

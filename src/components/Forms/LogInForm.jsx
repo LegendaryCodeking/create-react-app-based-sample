@@ -24,10 +24,7 @@ class LogInForm extends Component {
             </div>
           </div>
           <div className="mb-4">
-            <label
-              for="website-admin"
-              className="block mb-2 text-sm font-Montserrat font-regular text-yellow dark:text-gray-300"
-            >
+            <label className="block mb-2 text-sm font-Montserrat font-regular text-yellow dark:text-gray-300">
               Username
             </label>
             <div className="flex">
@@ -43,10 +40,7 @@ class LogInForm extends Component {
             </div>
           </div>
           <div className="mb-4">
-            <label
-              for="website-admin"
-              className="block mb-2 text-sm font-medium text-yellow dark:text-gray-300"
-            >
+            <label className="block mb-2 text-sm font-medium text-yellow dark:text-gray-300">
               Password
             </label>
             <div className="flex">
@@ -65,8 +59,11 @@ class LogInForm extends Component {
               className="bg-white hover:bg-eggyellow2 text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline w-full"
               type="button"
             >
-              <FontAwesomeIcon className="" icon={faArrowRightToBracket} />
-              <span className="ml-1">Log In</span>
+              <FontAwesomeIcon
+                className="text-xs font-bold"
+                icon={faArrowRightToBracket}
+              />
+              <span className="ml-2 font-bold text-sm">Log In</span>
             </button>
           </div>
         </form>
