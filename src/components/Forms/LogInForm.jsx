@@ -29,6 +29,7 @@ class LogInForm extends Component {
             </label>
             <div className="flex">
               <input
+                autoFocus
                 type="text"
                 id="website-admin"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "

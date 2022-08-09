@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserPlus,
-  faArrowRightToBracket,
-} from "@fortawesome/free-solid-svg-icons";
-
 import AICELogo from "../../assets/images/aicelogo1.png";
 import "../../assets/stylesheets/main-nav.css";
+import NavNoUser from "./NavUserSection/NavNoUser";
+import NavUser from "./NavUserSection/NavUser";
 class MainNavBar extends Component {
-  state = {};
+  state = {
+    user: {
+      name: "collins",
+      email: "collins@aiceafrica.com",
+      loggedIn: true,
+    },
+  };
   render() {
+    let { user } = this.state;
     return (
       <>
         <nav className="bg-darkblue px-2 sm:px-4 py-2.5 sticky w-full z-20 top-0 left-0 border-b border-gray-200">
@@ -23,23 +26,11 @@ class MainNavBar extends Component {
                 alt="Flowbite Logo"
               ></img>
             </Link>
-            <div className="flex md:order-2">
-              <button
-                type="button"
-                className="text-darkblue bg-gradient-to-r from-gradient-start to-gradient-end hover:bg-gradient-to-l hover:bg-from-gradient-start hover:bg-gradient-end focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
-              >
-                <FontAwesomeIcon icon={faUserPlus} />
-                <span className="ml-2">Sign Up</span>
-              </button>
-
-              <button
-                type="button"
-                className="text-white border border-eggyellow hover:bg-eggyellow hover:text-darkblue ml-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
-              >
-                <FontAwesomeIcon icon={faArrowRightToBracket} />
-                <span className="ml-2">Log In</span>
-              </button>
-            </div>
+            {user.loggedIn ? (
+              <NavUser user={user} />
+            ) : (
+              <NavNoUser user={user} />
+            )}
             <div
               className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
               id="navbar-sticky"

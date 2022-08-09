@@ -3,21 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 //import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import IndexPage from './views/index';
-import AuthLayout from './layouts/AuthLayout'
-import MainLayout from './layouts/MainLayout';
+import App from './App';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <BrowserRouter>
-    <Switch>
-      <Route path='/' exact component={IndexPage} />
-      <Route path='/cst' component={MainLayout} />
-      <Route path='/auth' component={AuthLayout} />
-      <Redirect from='*' to="/" />
-    </Switch>
+    <App />
   </BrowserRouter>
 );
 

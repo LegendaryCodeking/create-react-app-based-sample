@@ -12,9 +12,9 @@ class SignUpPage extends Component {
   };
 
   async componentDidMount() {
-    let promise = axios.get("http://localhost:3000/");
-    const response = await promise;
-    console.log("response: ", response);
+    let { data } = await axios.get("http://localhost:8888/users");
+    this.setState({ users: data });
+    console.log("response: ", data);
   }
   render() {
     return (
