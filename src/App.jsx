@@ -7,14 +7,21 @@ import MainLayout from "./layouts/MainLayout";
 
 class App extends Component {
   state = {
-    user: {},
+    user: {
+      name: "Jane Doe",
+      email: "jane@aiceafrica.com",
+      loggedIn: true,
+    },
   };
   render() {
     let { user } = this.state;
     return (
       <Switch>
         <Route user={user} path="/" exact component={IndexPage} />
-        <Route user={user} path="/cst" component={MainLayout} />
+        <Route
+          path="/cst"
+          render={(props) => <MainLayout user={user} {...props} />}
+        ></Route>
         <Route user={user} path="/auth" component={AuthLayout} />
         <Redirect from="*" to="/" />
       </Switch>

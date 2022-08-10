@@ -8,13 +8,18 @@ import NavUser from "./NavUserSection/NavUser";
 class MainNavBar extends Component {
   state = {
     user: {
-      name: "collins",
-      email: "collins@aiceafrica.com",
+      name: "Jane Doe",
+      email: "jane@aiceafrica.com",
       loggedIn: true,
     },
   };
+
+  constructor(props) {
+    super();
+  }
   render() {
-    let { user } = this.state;
+    //console.log("route props", this.props);
+    let { user } = this.props;
     return (
       <>
         <nav className="bg-darkblue px-2 sm:px-4 py-2.5 sticky w-full z-20 top-0 left-0 border-b border-gray-200">
@@ -27,7 +32,7 @@ class MainNavBar extends Component {
               ></img>
             </Link>
             {user.loggedIn ? (
-              <NavUser user={user} />
+              <NavUser user={user} {...this.props} />
             ) : (
               <NavNoUser user={user} />
             )}
