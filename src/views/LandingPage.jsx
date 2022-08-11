@@ -32,7 +32,7 @@ class IndexPage extends Component {
                 A tool for efficient and fast credit scoring
               </h5>
               <div className="mt-8">
-                <button className="bg-eggyellow rounded-none p-2 hover:bg-eggyellow2">
+                <button className="bg-eggyellow rounded-none p-2 px-4 hover:bg-eggyellow2">
                   Get Started
                 </button>
               </div>
@@ -43,9 +43,12 @@ class IndexPage extends Component {
               <img className="w-full landingGrid1" alt="bg" src={maskGroup1} />
             </div>
             <div className="w-1/2">
-              <div className="container w-full h-full bg-darkblue p-2">
+              <div
+                className="container w-full h-full bg-darkblue p-2"
+                id="aboutUs"
+              >
                 <div className="p-6">
-                  <h2 className="text-lightblue ml-4 text-2xl mb-4 font-bold">
+                  <h2 className="text-lightblue ml-4 text-3xl mb-4 font-bold">
                     About Us
                   </h2>
                   <p className="text-white text-left normal-case p-4 font-medium">
@@ -62,9 +65,12 @@ class IndexPage extends Component {
           </div>
           <div className="flex">
             <div className="w-1/2">
-              <div className="container w-full h-full bg-darkblue p-2">
+              <div
+                className="container w-full h-full bg-darkblue p-2"
+                id="howItWorks"
+              >
                 <div className="p-6">
-                  <h2 className="text-lightblue ml-4 text-2xl mb-4 font-bold">
+                  <h2 className="text-lightblue ml-4 text-3xl mb-4 font-bold">
                     How it works
                   </h2>
                   <p className="text-white text-left normal-case p-4 font-medium">

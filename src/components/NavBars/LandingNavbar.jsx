@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 
 import AICELogo from "../../assets/images/aicelogo1.png";
 import "../../assets/stylesheets/main-nav.css";
@@ -39,20 +40,20 @@ class LandingNavBar extends Component {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/"
+                  <NavHashLink
+                    to="/#aboutUs"
                     className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
                     About
-                  </Link>
+                  </NavHashLink>
                 </li>
                 <li>
-                  <Link
-                    to="/"
+                  <NavHashLink
+                    to="/#howItWorks"
                     className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
                     How it works
-                  </Link>
+                  </NavHashLink>
                 </li>
                 <li>
                   <Link
