@@ -1,0 +1,13 @@
+/* .landingContainer {
+    height: 100vh;
+} */
+
+/* .landingMainImage {
+    height: 500px;
+    background-image: url('../images/markus-spiske-iar-afB0QQw-unsplash.png');
+    filter: opacity(0.3);
+} */
+
+.backgroundLandingImage {
+    filter: opacity(0.3);
+}
