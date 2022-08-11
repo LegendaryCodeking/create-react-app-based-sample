@@ -33,7 +33,7 @@ class LogInForm extends Component {
     const { error } = Joi.validate(this.state.account, this.schema, JOIoptions);
 
     if (!error) return null;
-    //console.log("validationResult: ", error);
+    //
 
     const errors = {};
 
@@ -49,17 +49,16 @@ class LogInForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit clicked");
 
     const { username, password } = this.state.account;
 
     const errors = this.validate();
-    console.log("errors: ", errors);
+
     this.setState({ errors: errors || {} });
     if (errors) return;
-    console.log("submitting");
+
     this.props.onLogin(username, password);
-    //console.log("this.props: ", this.props);
+    //
   };
   render() {
     const { account, errors } = this.state;

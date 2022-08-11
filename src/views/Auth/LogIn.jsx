@@ -13,9 +13,10 @@ class LoginPage extends Component {
 
   onLogin = (username, password) => {
     let userObject = {
-      username: "collinsnyamao",
-      password: "123456789",
+      username: username,
+      password: password,
     };
+    let user = {};
     console.log("userObject: ", userObject);
 
     this.setState({ loading: true });
@@ -24,14 +25,31 @@ class LoginPage extends Component {
       axios
         .post("http://localhost:8888/login", userObject)
         .then((response) => {
+          let { data, status } = response;
+          console.log("data: ", data);
           this.setState({ loading: false });
           console.log("response: ", response);
+
+          if (status === 200 && data.status === "failed") {
+            console.log("check your error");
+
+            user.loggedIn = false;
+            this.props.onLogin(user);
+          } else if (status === 200 && data.status === "success") {
+            user.username = username;
+            user.token = data.token;
+            user.loggedIn = true;
+            user.email = data.email;
+            this.props.onLogin(user);
+            console.log(this.props);
+            this.props.history.push("/cst");
+          }
         })
         .catch((error) => {
           this.setState({ loading: false });
           console.log("error: ", error);
         });
-    }, 10000);
+    }, 1000);
   };
 
   render() {

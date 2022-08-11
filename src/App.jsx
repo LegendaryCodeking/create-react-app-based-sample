@@ -7,12 +7,42 @@ import MainLayout from "./layouts/MainLayout";
 
 class App extends Component {
   state = {
-    user: {
-      name: "Jane Doe",
-      email: "jane@aiceafrica.com",
-      loggedIn: true,
-    },
+    user: {},
   };
+
+  onLogin = (user) => {
+    //console.log("user set: ", user);
+    if (user.loggedIn) {
+      this.setState({
+        user: {
+          username: user.username,
+          email: user.email,
+          loggedIn: true,
+          token: user.token,
+        },
+      });
+
+      //console.log("this.props: ", this.props);
+    } else {
+      this.setState({
+        user: {
+          loggedIn: false,
+        },
+      });
+    }
+  };
+
+  onLogOut = () => {
+    this.setState({
+      user: {
+        loggedIn: false,
+      },
+    });
+  };
+
+  componentDidUpdate() {
+    console.log("component updated", this.props);
+  }
   render() {
     let { user } = this.state;
     return (
@@ -20,9 +50,17 @@ class App extends Component {
         <Route user={user} path="/" exact component={IndexPage} />
         <Route
           path="/cst"
-          render={(props) => <MainLayout user={user} {...props} />}
+          render={(props) => (
+            <MainLayout onLogOut={this.onLogOut} user={user} {...props} />
+          )}
         ></Route>
-        <Route user={user} path="/auth" component={AuthLayout} />
+        <Route
+          user={user}
+          path="/auth"
+          component={(props) => (
+            <AuthLayout onLogin={this.onLogin} {...props} />
+          )}
+        />
         <Redirect from="*" to="/" />
       </Switch>
     );

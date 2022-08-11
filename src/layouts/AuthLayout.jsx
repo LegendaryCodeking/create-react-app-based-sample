@@ -9,6 +9,12 @@ import SignUpPage from "../views/Auth/SignUp";
 
 class AuthLayout extends Component {
   state = {};
+
+  onLogin = (user) => {
+    console.log("user AUL: ", this.props);
+
+    this.props.onLogin(user);
+  };
   render() {
     return (
       <>
@@ -23,7 +29,13 @@ class AuthLayout extends Component {
               }}
             ></div> */}
             <Switch>
-              <Route path="/auth/login" exact component={LoginPage} />
+              <Route
+                path="/auth/login"
+                exact
+                component={(props) => (
+                  <LoginPage {...props} onLogin={this.onLogin} />
+                )}
+              ></Route>
               <Route path="/auth/register" exact component={SignUpPage} />
               <Redirect from="/auth" to="/auth/login" />
             </Switch>

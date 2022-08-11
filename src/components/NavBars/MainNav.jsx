@@ -14,6 +14,10 @@ class MainNavBar extends Component {
     },
   };
 
+  onLogOut = () => {
+    this.props.onLogOut();
+  };
+
   constructor(props) {
     super();
   }
@@ -32,9 +36,9 @@ class MainNavBar extends Component {
               ></img>
             </Link>
             {user.loggedIn ? (
-              <NavUser user={user} {...this.props} />
+              <NavUser onLogOut={this.onLogOut} user={user} {...this.props} />
             ) : (
-              <NavNoUser user={user} />
+              <NavNoUser user={user} {...this.props} />
             )}
             <div
               className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"

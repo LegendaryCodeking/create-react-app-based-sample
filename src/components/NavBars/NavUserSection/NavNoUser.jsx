@@ -8,6 +8,10 @@ import {
 
 class NavNoUser extends Component {
   state = {};
+  switchToLogin = () => {
+    this.props.history.push("/auth");
+    //console.log(this.props);
+  };
   render() {
     return (
       <div className="flex md:order-2">
@@ -21,7 +25,8 @@ class NavNoUser extends Component {
 
         <button
           type="button"
-          className="text-white border border-eggyellow hover:bg-eggyellow hover:text-darkblue ml-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
+          onClick={this.switchToLogin}
+          className="text-white border border-eggyellow hover:bg-eggyellow hover:text-darkblue ml-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
         >
           <FontAwesomeIcon icon={faArrowRightToBracket} />
           <span className="ml-2">Log In</span>

@@ -13,6 +13,7 @@ class NavUser extends Component {
   logOutUser = (user) => {
     console.log("user: ", user);
     //this.props.history.push("/auth");
+    this.props.onLogOut();
   };
   render() {
     let { user } = this.props;
@@ -24,9 +25,9 @@ class NavUser extends Component {
           label={<Avatar alt="User settings" img={profilePic} rounded={true} />}
         >
           <Dropdown.Header>
-            <span className="block text-sm">{user.name}</span>
+            <span className="block text-sm">{user.username}</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              {user.email}
             </span>
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>

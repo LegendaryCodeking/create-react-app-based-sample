@@ -12,12 +12,24 @@ import Reports from "../views/Main/ReportsPage";
 
 class MainLayout extends Component {
   state = {};
+  onLogOut = () => {
+    this.props.onLogOut();
+  };
+
+  componentDidMount() {
+    console.log("main lay props", this.props);
+    const { user, history } = this.props;
+    if (user.loggedIn) {
+    } else {
+      history.push("/auth");
+    }
+  }
   render() {
     let { user } = this.props;
     return (
       <>
         <div className="relative">
-          <NavBar user={user} {...this.props} />
+          <NavBar onLogOut={this.onLogOut} user={user} {...this.props} />
           <div className="mx-auto p-2 bg-darkblue">
             <span className="text-white mt-2 ml-2 font-bold">
               AICE Credit scoring tool
