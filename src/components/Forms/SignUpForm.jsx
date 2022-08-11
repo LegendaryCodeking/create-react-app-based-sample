@@ -12,7 +12,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 class SignUpForm extends Component {
-  state = {};
+  state = {
+    newUser: {
+      username: "",
+      personalEmail: "",
+      companyEmail: "",
+      companyDesignation: "",
+      loanNumber: 0,
+      location: "",
+      numberOfCustomer: 0,
+      password: "",
+      confirmPassword: "",
+      fullName: "",
+    },
+  };
   render() {
     return (
       <div className="mx-auto form-container-signup">

@@ -7,9 +7,7 @@ import logo from "../../assets/images/aicelogo1.png";
 import "../../assets/stylesheets/signup.css";
 
 class SignUpPage extends Component {
-  state = {
-    users: [],
-  };
+  state = {};
 
   async componentDidMount() {
     let { data } = await axios.get("http://localhost:8888/users");

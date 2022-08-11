@@ -12,11 +12,15 @@ class NavNoUser extends Component {
     this.props.history.push("/auth");
     //console.log(this.props);
   };
+  switchToRegister = () => {
+    this.props.history.push("/auth/register");
+  };
   render() {
     return (
       <div className="flex md:order-2">
         <button
           type="button"
+          onClick={this.switchToRegister}
           className="text-darkblue bg-gradient-to-r from-gradient-start to-gradient-end hover:bg-gradient-to-l hover:bg-from-gradient-start hover:bg-gradient-end focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
         >
           <FontAwesomeIcon icon={faUserPlus} />
