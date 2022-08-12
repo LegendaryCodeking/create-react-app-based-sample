@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+//import FormAlert from "./FormComponents/FormAlert";
+
+import Joi from "joi-browser";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -10,6 +14,7 @@ import {
   faUsers,
   faMapLocation,
 } from "@fortawesome/free-solid-svg-icons";
+import RegisterRequirements from "../Cards/RegistrationRequirements";
 
 class SignUpForm extends Component {
   state = {
@@ -18,15 +23,106 @@ class SignUpForm extends Component {
       personalEmail: "",
       companyEmail: "",
       companyDesignation: "",
-      loanNumber: 0,
+      loanCount: "",
       location: "",
-      numberOfCustomer: 0,
+      numberOfCustomers: "",
       password: "",
       confirmPassword: "",
       fullName: "",
+      companyType: "",
     },
+    errors: {},
+    loading: false,
+  };
+
+  complexityOptions = {
+    min: 5,
+    max: 250,
+    lowerCase: 1,
+    upperCase: 1,
+    numeric: 1,
+    symbol: 1,
+    requirementCount: 2,
+  };
+
+  schema = {
+    fullName: Joi.string().min(4).required().label("Full name"),
+    username: Joi.string().min(5).max(20).required().label("User name"),
+    personalEmail: Joi.string().required().label("Personal email"),
+    companyDesignation: Joi.string().required().label("Company designation"),
+    companyType: Joi.required().label("Company type"),
+    companyEmail: Joi.string().email().required().label("Company email"),
+    loanCount: Joi.number().min(0).required().label("Loan Number"),
+    numberOfCustomers: Joi.number()
+      .min(0)
+      .required()
+      .label("Number of customers"),
+    location: Joi.string().min(4).max(20).required().label("Location"),
+    password: Joi.string().min(8).max(25).required().label("Password"),
+    confirmPassword: Joi.any()
+      .valid(Joi.ref("password"))
+      .required()
+      .options({ language: { any: { allowOnly: "must match password" } } }),
+  };
+
+  validate = () => {
+    const JOIoptions = {
+      abortEarly: true,
+    };
+    const { error } = Joi.validate(this.state.newUser, this.schema, JOIoptions);
+
+    if (!error) return null;
+
+    const errors = {};
+
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
+  };
+
+  handleChange = ({ currentTarget: input }) => {
+    const newUser = { ...this.state.newUser };
+    newUser[input.name] = input.value;
+    this.setState({ newUser });
+  };
+  submitForm = (e) => {
+    e.preventDefault();
+
+    const {
+      /* username, */
+      password,
+      /* personalEmail,
+      companyEmail,
+      companyDesignation,
+      loanCount,
+      location,
+      numberOfCustomers,
+      confirmPassword,
+      fullName,
+      companyType, */
+    } = this.state.newUser;
+
+    const errors = this.validate();
+
+    this.setState({ errors: errors || {} });
+
+    let passwordTest =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        password
+      );
+
+    if (!passwordTest) {
+      this.setState({
+        errors: { passwordStrength: "Password does not meet requirements" },
+      });
+    }
+    if (errors) return;
+
+    console.log("submitting");
   };
   render() {
+    const { newUser, errors } = this.state;
+    const { loading } = this.props;
+    console.log("loading: ", loading);
     return (
       <div className="mx-auto form-container-signup">
         <form className="text-eggyellow bg-darkblue shadow-md rounded pt-6 pb-4 mb-2">
@@ -35,7 +131,7 @@ class SignUpForm extends Component {
               <span className="text-sm">WELCOME</span>
             </div> */}
             <div className="mb-2">
-              <span className="text-white text-sm">
+              <span className="text-white font-bold text-sm">
                 ARTIFICIAL INTELLIGENCE CENTER OF EXCELLENCE AFRICA
               </span>
             </div>
@@ -43,12 +139,22 @@ class SignUpForm extends Component {
               <span className="text-darkblue text-sm">Create an account</span>
             </div>
           </div>
+          <div className="mb-4">
+            {Object.entries(errors).length > 0 ? (
+              <RegisterRequirements errors={errors} />
+            ) : (
+              ""
+            )}
+          </div>
           <div className="mb-4 flex">
             <div className="w-6/12 flex p-2">
               <input
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Full name"
+                value={newUser.fullName}
+                onChange={this.handleChange}
+                name="fullName"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faUser} />
@@ -59,6 +165,10 @@ class SignUpForm extends Component {
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Username"
+                autoComplete="username"
+                onChange={this.handleChange}
+                value={newUser.username}
+                name="username"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faUser} />
@@ -71,6 +181,9 @@ class SignUpForm extends Component {
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Personal email"
+                onChange={this.handleChange}
+                value={newUser.personalEmail}
+                name="personalEmail"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faEnvelope} />
@@ -81,6 +194,9 @@ class SignUpForm extends Component {
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Company designation"
+                onChange={this.handleChange}
+                value={newUser.companyDesignation}
+                name="companyDesignation"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faLock} />
@@ -92,8 +208,11 @@ class SignUpForm extends Component {
               <select
                 className="rounded-none form-select appearance-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Type of company"
+                onChange={this.handleChange}
+                name="companyType"
+                value={newUser.companyType}
               >
-                <option>Choose one...</option>
+                <option>Type of company</option>
                 <option>1</option>
                 <option>2</option>
               </select>
@@ -103,6 +222,9 @@ class SignUpForm extends Component {
                 type="email"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Company email address"
+                name="companyEmail"
+                value={newUser.companyEmail}
+                onChange={this.handleChange}
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faEnvelope} />
@@ -115,6 +237,9 @@ class SignUpForm extends Component {
                 type="number"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Number of loans per month"
+                onChange={this.handleChange}
+                value={newUser.loanCount}
+                name="loanCount"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon
@@ -128,6 +253,9 @@ class SignUpForm extends Component {
                 type="number"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Current number of customers"
+                onChange={this.handleChange}
+                value={newUser.numberOfCustomers}
+                name="numberOfCustomers"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faUsers} />
@@ -140,6 +268,9 @@ class SignUpForm extends Component {
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Location"
+                name="location"
+                onChange={this.handleChange}
+                value={newUser.location}
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon
@@ -153,6 +284,10 @@ class SignUpForm extends Component {
                 type="password"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Password"
+                name="password"
+                autoComplete="new-password"
+                onChange={this.handleChange}
+                value={newUser.password}
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faLock} />
@@ -165,6 +300,9 @@ class SignUpForm extends Component {
                 type="password"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Confirm password"
+                value={newUser.confirmPassword}
+                onChange={this.handleChange}
+                name="confirmPassword"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faLock} />
@@ -175,6 +313,7 @@ class SignUpForm extends Component {
             <button
               className="bg-white m-auto hover:bg-eggyellow2 place-self-center text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline w-6/12"
               type="button"
+              onClick={this.submitForm}
             >
               <FontAwesomeIcon className="text-xs" icon={faUserPlus} />
               <span className="ml-2 text-sm font-bold">Sign Up</span>
