@@ -87,19 +87,7 @@ class SignUpForm extends Component {
   submitForm = (e) => {
     e.preventDefault();
 
-    const {
-      /* username, */
-      password,
-      /* personalEmail,
-      companyEmail,
-      companyDesignation,
-      loanCount,
-      location,
-      numberOfCustomers,
-      confirmPassword,
-      fullName,
-      companyType, */
-    } = this.state.newUser;
+    const { password } = this.state.newUser;
 
     const errors = this.validate();
 
@@ -118,6 +106,7 @@ class SignUpForm extends Component {
     if (errors) return;
 
     console.log("submitting");
+    this.props.onRegister(this.state.newUser);
   };
   render() {
     const { newUser, errors } = this.state;

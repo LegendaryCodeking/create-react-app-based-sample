@@ -10,10 +10,34 @@ class SignUpPage extends Component {
   state = {};
 
   async componentDidMount() {
-    let { data } = await axios.get("http://localhost:8888/users");
+    /* let { data } = await axios.get("http://localhost:8888/users");
     this.setState({ users: data });
-    console.log("response: ", data);
+    console.log("response: ", data); */
   }
+
+  onRegister = (user) => {
+    console.log("user: ", user);
+
+    let userObject = {};
+
+    axios
+      .post("http://127.0.0.1:8888/register", user)
+      .then((result) => {
+        console.log("result: ", result);
+        userObject.username = user.username;
+        userObject.token = result.data.token;
+        userObject.loggedIn = true;
+        userObject.email = user.personalEmail;
+
+        this.props.onLogin(userObject);
+        this.props.history.push("/cst");
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        userObject.loggedIn = false;
+        this.props.onLogin(userObject);
+      });
+  };
   render() {
     return (
       <section className="h-screen">
@@ -30,7 +54,7 @@ class SignUpPage extends Component {
               <img src={logo} className="loginLogo" alt="Sample" />
             </div>
             <div className="flex  bg-darkblue xl:justify-center lg:justify-between justify-center items-center bg-slate-800 xl:w-6/12 lg:w-6/12 md:w-6/12 h-full">
-              <SignUpForm />
+              <SignUpForm onRegister={this.onRegister} />
             </div>
           </div>
         </div>

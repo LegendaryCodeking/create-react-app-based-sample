@@ -36,7 +36,13 @@ class AuthLayout extends Component {
                   <LoginPage {...props} onLogin={this.onLogin} />
                 )}
               ></Route>
-              <Route path="/auth/register" exact component={SignUpPage} />
+              <Route
+                path="/auth/register"
+                exact
+                component={(props) => (
+                  <SignUpPage {...props} onLogin={this.onLogin} />
+                )}
+              />
               <Redirect from="/auth" to="/auth/login" />
             </Switch>
             {/* <SecondaryFooter absolute /> */}
