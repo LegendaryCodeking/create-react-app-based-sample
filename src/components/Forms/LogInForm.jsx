@@ -74,7 +74,7 @@ class LogInForm extends Component {
 
     setTimeout(() => {
       axios
-        .post("http://localhost:8888/login", userObject)
+        .post(process.env.REACT_APP_SERVER_URL + "/login", userObject)
         .then((response) => {
           let { data, status } = response;
           console.log("data: ", data);

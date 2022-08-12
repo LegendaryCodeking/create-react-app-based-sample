@@ -116,7 +116,7 @@ class SignUpForm extends Component {
     let userObject = {};
 
     axios
-      .post("http://127.0.0.1:8888/register", user)
+      .post(process.env.REACT_APP_SERVER_URL + "/register", user)
       .then((result) => {
         if (result.data.status === "success") {
           userObject.username = user.username;
