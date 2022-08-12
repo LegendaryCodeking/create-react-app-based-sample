@@ -9,7 +9,6 @@ import {
   faLock,
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import FormAlert from "./FormComponents/FormAlert";
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
 
