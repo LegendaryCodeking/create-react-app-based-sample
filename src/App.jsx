@@ -41,7 +41,7 @@ class App extends Component {
   };
 
   componentDidUpdate() {
-    console.log("component updated", this.props);
+    //console.log("component updated", this.props);
   }
   render() {
     let { user } = this.state;

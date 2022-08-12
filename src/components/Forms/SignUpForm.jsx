@@ -3,6 +3,7 @@ import React, { Component } from "react";
 //import FormAlert from "./FormComponents/FormAlert";
 
 import Joi from "joi-browser";
+import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -106,7 +107,39 @@ class SignUpForm extends Component {
     if (errors) return;
 
     console.log("submitting");
-    this.props.onRegister(this.state.newUser);
+    this.onRegister(this.state.newUser);
+  };
+
+  onRegister = (user) => {
+    console.log("user: ", user);
+
+    let userObject = {};
+
+    axios
+      .post("http://127.0.0.1:8888/register", user)
+      .then((result) => {
+        if (result.data.status === "success") {
+          userObject.username = user.username;
+          userObject.token = result.data.token;
+          userObject.loggedIn = true;
+          userObject.email = user.personalEmail;
+
+          this.props.onLogin(userObject);
+          this.props.history.push("/cst");
+        } else {
+          console.log("error", result.data.status);
+          this.setState({
+            errors: {
+              apiError: result.data.reason,
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        userObject.loggedIn = false;
+        this.props.onLogin(userObject);
+      });
   };
   render() {
     const { newUser, errors } = this.state;

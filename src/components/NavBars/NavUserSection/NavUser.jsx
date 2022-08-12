@@ -22,7 +22,14 @@ class NavUser extends Component {
         <Dropdown
           arrowIcon={false}
           inline={true}
-          label={<Avatar alt="User settings" img={profilePic} rounded={true} />}
+          label={
+            <Avatar
+              alt="User settings"
+              style={{ filter: "blur(0.5)" }}
+              img={profilePic}
+              rounded={true}
+            />
+          }
         >
           <Dropdown.Header>
             <span className="block text-sm">{user.username}</span>

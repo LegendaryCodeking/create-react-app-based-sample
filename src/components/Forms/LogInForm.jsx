@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Joi from "joi-browser";
+import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +10,7 @@ import {
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import FormAlert from "./FormComponents/FormAlert";
+import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
 
 class LogInForm extends Component {
@@ -57,8 +59,54 @@ class LogInForm extends Component {
     this.setState({ errors: errors || {} });
     if (errors) return;
 
-    this.props.onLogin(username, password);
+    this.onLogin(username, password);
     //
+  };
+
+  onLogin = (username, password) => {
+    let userObject = {
+      username: username,
+      password: password,
+    };
+    let user = {};
+    console.log("userObject: ", userObject);
+
+    this.setState({ loading: true });
+
+    setTimeout(() => {
+      axios
+        .post("http://localhost:8888/login", userObject)
+        .then((response) => {
+          let { data, status } = response;
+          console.log("data: ", data);
+          this.setState({ loading: false });
+          console.log("response: ", response);
+
+          if (status === 200 && data.status === "failed") {
+            //console.log("check your error");
+
+            this.setState({
+              errors: {
+                error: data.reason,
+              },
+            });
+            /* user.loggedIn = false;
+            this.props.onLogin(user); */
+          } else if (status === 200 && data.status === "success") {
+            user.username = username;
+            user.token = data.token;
+            user.loggedIn = true;
+            user.email = data.email;
+            this.props.onLogin(user);
+            console.log(this.props);
+            this.props.history.push("/cst");
+          }
+        })
+        .catch((error) => {
+          this.setState({ loading: false });
+          console.log("error: ", error);
+        });
+    }, 1000);
   };
   render() {
     const { account, errors } = this.state;
@@ -77,13 +125,8 @@ class LogInForm extends Component {
             </div>
           </div>
           <div className="mb-4">
-            {errors.username ? (
-              <FormAlert data={errors.username} type={"failure"} name="Error" />
-            ) : (
-              ""
-            )}
-            {errors.password ? (
-              <FormAlert data={errors.password} type={"failure"} name="Error" />
+            {Object.entries(errors).length > 0 ? (
+              <RegisterRequirements errors={errors} />
             ) : (
               ""
             )}

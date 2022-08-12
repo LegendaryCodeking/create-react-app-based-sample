@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 import SignUpForm from "../../components/Forms/SignUpForm";
 
@@ -15,29 +14,10 @@ class SignUpPage extends Component {
     console.log("response: ", data); */
   }
 
-  onRegister = (user) => {
-    console.log("user: ", user);
-
-    let userObject = {};
-
-    axios
-      .post("http://127.0.0.1:8888/register", user)
-      .then((result) => {
-        console.log("result: ", result);
-        userObject.username = user.username;
-        userObject.token = result.data.token;
-        userObject.loggedIn = true;
-        userObject.email = user.personalEmail;
-
-        this.props.onLogin(userObject);
-        this.props.history.push("/cst");
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-        userObject.loggedIn = false;
-        this.props.onLogin(userObject);
-      });
+  onLogin = (user) => {
+    this.props.onLogin(user);
   };
+
   render() {
     return (
       <section className="h-screen">
@@ -54,7 +34,7 @@ class SignUpPage extends Component {
               <img src={logo} className="loginLogo" alt="Sample" />
             </div>
             <div className="flex  bg-darkblue xl:justify-center lg:justify-between justify-center items-center bg-slate-800 xl:w-6/12 lg:w-6/12 md:w-6/12 h-full">
-              <SignUpForm onRegister={this.onRegister} />
+              <SignUpForm onLogin={this.onLogin} />
             </div>
           </div>
         </div>
