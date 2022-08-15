@@ -77,7 +77,7 @@ class LogInForm extends Component {
     this.setState({ loading: true });
 
     const { data, status } = await http.post(
-      config.apiEndoint + "/loginh",
+      config.apiEndoint + "/login",
       userObject
     );
     console.log("status: ", status);
