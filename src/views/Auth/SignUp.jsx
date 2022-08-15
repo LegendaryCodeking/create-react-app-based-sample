@@ -18,6 +18,10 @@ class SignUpPage extends Component {
     this.props.onLogin(user);
   };
 
+  onLoading = (value) => {
+    this.props.onLoading(value);
+  };
+
   render() {
     const { loading } = this.props;
     return (
@@ -39,6 +43,7 @@ class SignUpPage extends Component {
                 loading={loading}
                 {...this.props}
                 onLogin={this.onLogin}
+                onLoading={this.onLoading}
               />
             </div>
           </div>

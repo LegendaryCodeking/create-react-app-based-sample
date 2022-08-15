@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 class LogInForm extends Component {
   state = {
@@ -54,6 +55,7 @@ class LogInForm extends Component {
     e.preventDefault();
 
     const { username, password } = this.state.account;
+    this.setLoading(true);
 
     const errors = this.validate();
 
@@ -75,13 +77,14 @@ class LogInForm extends Component {
     this.setState({ loading: true });
 
     const { data, status } = await http.post(
-      config.apiEndoint + "/hlogin",
+      config.apiEndoint + "/login",
       userObject
     );
     console.log("status: ", status);
     console.log("data: ", data);
 
-    this.setState({ loading: false });
+    //this.setState({ loading: false });
+    this.setLoading(false);
 
     if (status === 200 && data.status === "failed") {
       //console.log("check your error");
@@ -121,6 +124,10 @@ class LogInForm extends Component {
         });
     }, 1000); */
   };
+
+  setLoading = (value) => {
+    this.props.onLoading(value);
+  };
   render() {
     const { account, errors } = this.state;
     const { loading } = this.props;
@@ -151,6 +158,7 @@ class LogInForm extends Component {
             <div className="flex">
               <input
                 autoFocus
+                disabled={loading}
                 type="text"
                 autoComplete="username"
                 value={account.username}
@@ -171,6 +179,7 @@ class LogInForm extends Component {
             <div className="flex">
               <input
                 type="password"
+                disabled={loading}
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Password"
                 autoComplete="current-password"
@@ -204,6 +213,24 @@ class LogInForm extends Component {
                 <span className="ml-2 font-bold text-sm">Log In</span>
               </div>
             </button>
+          </div>
+          <div className="flex mb-4 mt-4">
+            <div className="w-1/2">
+              <Link
+                to="/auth/register"
+                className="text italic text-xs text-eggyellow font-bold hover:text-eggyellow2 hover:cursor-pointer float-left"
+              >
+                Create account ?
+              </Link>
+            </div>
+            <div className="w-1/2">
+              <Link
+                to="/auth"
+                className="text italic text-xs text-eggyellow font-bold hover:text-eggyellow2 hover:cursor-pointer float-right"
+              >
+                Forgot password
+              </Link>
+            </div>
           </div>
         </form>
       </div>

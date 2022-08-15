@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 //import { Link } from "react-router-dom";
 
-import { Dropdown, Avatar } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 
-import profilePic from "../../../assets/images/profile-picture-3.jpeg";
+//import profilePic from "../../../assets/images/avatar.webp";
 import { NavLink } from "react-router-dom";
+import Avatar from "react-avatar";
 //import { Redirect } from "react-router-dom";
 
 class NavUser extends Component {
@@ -24,10 +25,14 @@ class NavUser extends Component {
           inline={true}
           label={
             <Avatar
-              alt="User settings"
-              style={{ filter: "blur(0.5)" }}
-              img={profilePic}
-              rounded={true}
+              color={Avatar.getRandomColor("sitebase", [
+                "red",
+                "green",
+                "blue",
+              ])}
+              name={user.username}
+              className="rounded-full ring ring-lightblue"
+              size="45px"
             />
           }
         >

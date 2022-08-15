@@ -15,6 +15,10 @@ class AuthLayout extends Component {
 
     this.props.onLogin(user);
   };
+
+  onLoading = (value) => {
+    this.props.onLoading(value);
+  };
   render() {
     const { loading } = this.props;
     return (
@@ -38,6 +42,7 @@ class AuthLayout extends Component {
                     loading={loading}
                     {...props}
                     onLogin={this.onLogin}
+                    onLoading={this.onLoading}
                   />
                 )}
               ></Route>
@@ -49,6 +54,7 @@ class AuthLayout extends Component {
                     loading={loading}
                     {...props}
                     onLogin={this.onLogin}
+                    onLoading={this.onLoading}
                   />
                 )}
               />

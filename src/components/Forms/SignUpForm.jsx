@@ -17,6 +17,7 @@ import {
   faMapLocation,
 } from "@fortawesome/free-solid-svg-icons";
 import RegisterRequirements from "../Cards/RegistrationRequirements";
+import { Spinner } from "flowbite-react";
 
 class SignUpForm extends Component {
   state = {
@@ -108,6 +109,7 @@ class SignUpForm extends Component {
     if (errors) return;
 
     console.log("submitting");
+    this.setLoading(true);
     this.onRegister(this.state.newUser);
   };
 
@@ -120,6 +122,8 @@ class SignUpForm extends Component {
       config.apiEndoint + "/register",
       user
     );
+
+    this.setLoading(false);
 
     if (data.status === "success" && status === 200) {
       userObject.username = user.username;
@@ -146,6 +150,10 @@ class SignUpForm extends Component {
         userObject.loggedIn = false;
         this.props.onLogin(userObject);
       }); */
+  };
+
+  setLoading = (value) => {
+    this.props.onLoading(value);
   };
   render() {
     const { newUser, errors } = this.state;
@@ -343,8 +351,20 @@ class SignUpForm extends Component {
               type="button"
               onClick={this.submitForm}
             >
-              <FontAwesomeIcon className="text-xs" icon={faUserPlus} />
-              <span className="ml-2 text-sm font-bold">Sign Up</span>
+              <div className={loading ? "" : "hidden"}>
+                <Spinner size="sm" light={true} />
+                <span className="ml-2 text-darkblue font-bold text-sm">
+                  Loading...
+                </span>
+              </div>
+
+              <div className={!loading ? "" : "hidden"}>
+                <FontAwesomeIcon
+                  className="text-xs font-bold"
+                  icon={faUserPlus}
+                />
+                <span className="ml-2 font-bold text-sm">Sign Up</span>
+              </div>
             </button>
           </div>
         </form>

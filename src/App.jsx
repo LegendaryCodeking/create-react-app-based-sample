@@ -44,6 +44,10 @@ class App extends Component {
     });
   };
 
+  onLoading = (value) => {
+    this.setState({ loading: value });
+  };
+
   componentDidUpdate() {
     //console.log("component updated", this.props);
   }
@@ -64,7 +68,12 @@ class App extends Component {
             user={user}
             path="/auth"
             component={(props) => (
-              <AuthLayout loading={loading} onLogin={this.onLogin} {...props} />
+              <AuthLayout
+                loading={loading}
+                onLoading={this.onLoading}
+                onLogin={this.onLogin}
+                {...props}
+              />
             )}
           />
           <Redirect from="*" to="/" />
