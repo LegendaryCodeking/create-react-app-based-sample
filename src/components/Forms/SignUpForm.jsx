@@ -118,10 +118,11 @@ class SignUpForm extends Component {
 
     let userObject = {};
 
-    const { data, status } = await http.post(
-      config.apiEndoint + "/register",
-      user
-    );
+    const { data, status } = await http
+      .post(config.apiEndoint + "/register", user)
+      .catch((err) => {
+        this.setLoading(false);
+      });
 
     this.setLoading(false);
 
