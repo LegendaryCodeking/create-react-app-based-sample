@@ -6,16 +6,14 @@ import logo from "../../assets/images/aicelogo1.png";
 import "../../assets/stylesheets/login.css";
 
 class LoginPage extends Component {
-  state = {
-    loading: false,
-  };
+  state = {};
 
   onLogin = (user) => {
     this.props.onLogin(user);
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading } = this.props;
     return (
       <section className="h-screen">
         <div className="h-full text-gray-800">
@@ -33,8 +31,8 @@ class LoginPage extends Component {
             <div className="flex  bg-darkblue xl:justify-center lg:justify-between justify-center items-center bg-slate-800 xl:w-5/12 lg:w-5/12 md:w-6/12 h-full">
               <LogInForm
                 {...this.props}
-                onLogin={this.onLogin}
                 loading={loading}
+                onLogin={this.onLogin}
               />
             </div>
           </div>

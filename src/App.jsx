@@ -5,9 +5,13 @@ import IndexPage from "./views/LandingPage";
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 class App extends Component {
   state = {
     user: {},
+    loading: false,
   };
 
   onLogin = (user) => {
@@ -44,25 +48,28 @@ class App extends Component {
     //console.log("component updated", this.props);
   }
   render() {
-    let { user } = this.state;
+    let { user, loading } = this.state;
     return (
-      <Switch>
-        <Route user={user} path="/" exact component={IndexPage} />
-        <Route
-          path="/cst"
-          render={(props) => (
-            <MainLayout onLogOut={this.onLogOut} user={user} {...props} />
-          )}
-        ></Route>
-        <Route
-          user={user}
-          path="/auth"
-          component={(props) => (
-            <AuthLayout onLogin={this.onLogin} {...props} />
-          )}
-        />
-        <Redirect from="*" to="/" />
-      </Switch>
+      <React.Fragment>
+        <ToastContainer autoClose={2000} />
+        <Switch>
+          <Route user={user} path="/" exact component={IndexPage} />
+          <Route
+            path="/cst"
+            render={(props) => (
+              <MainLayout onLogOut={this.onLogOut} user={user} {...props} />
+            )}
+          ></Route>
+          <Route
+            user={user}
+            path="/auth"
+            component={(props) => (
+              <AuthLayout loading={loading} onLogin={this.onLogin} {...props} />
+            )}
+          />
+          <Redirect from="*" to="/" />
+        </Switch>
+      </React.Fragment>
     );
   }
 }

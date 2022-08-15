@@ -16,6 +16,7 @@ class AuthLayout extends Component {
     this.props.onLogin(user);
   };
   render() {
+    const { loading } = this.props;
     return (
       <>
         {/* <SecondaryNavBar transparent /> */}
@@ -33,14 +34,22 @@ class AuthLayout extends Component {
                 path="/auth/login"
                 exact
                 component={(props) => (
-                  <LoginPage {...props} onLogin={this.onLogin} />
+                  <LoginPage
+                    loading={loading}
+                    {...props}
+                    onLogin={this.onLogin}
+                  />
                 )}
               ></Route>
               <Route
                 path="/auth/register"
                 exact
                 component={(props) => (
-                  <SignUpPage {...props} onLogin={this.onLogin} />
+                  <SignUpPage
+                    loading={loading}
+                    {...props}
+                    onLogin={this.onLogin}
+                  />
                 )}
               />
               <Redirect from="/auth" to="/auth/login" />

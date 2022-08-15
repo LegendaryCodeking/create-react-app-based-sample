@@ -19,6 +19,7 @@ class SignUpPage extends Component {
   };
 
   render() {
+    const { loading } = this.props;
     return (
       <section className="h-screen">
         <div className="h-full text-gray-800">
@@ -34,7 +35,11 @@ class SignUpPage extends Component {
               <img src={logo} className="loginLogo" alt="Sample" />
             </div>
             <div className="flex  bg-darkblue xl:justify-center lg:justify-between justify-center items-center bg-slate-800 xl:w-6/12 lg:w-6/12 md:w-6/12 h-full">
-              <SignUpForm onLogin={this.onLogin} />
+              <SignUpForm
+                loading={loading}
+                {...this.props}
+                onLogin={this.onLogin}
+              />
             </div>
           </div>
         </div>

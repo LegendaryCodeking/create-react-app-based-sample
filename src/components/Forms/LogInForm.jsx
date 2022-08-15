@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import Joi from "joi-browser";
-import axios from "axios";
+import http from "../../services/httpService";
+import config from "../../config.json";
+import { toast } from "react-toastify";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -62,7 +64,7 @@ class LogInForm extends Component {
     //
   };
 
-  onLogin = (username, password) => {
+  onLogin = async (username, password) => {
     let userObject = {
       username: username,
       password: password,
@@ -72,40 +74,52 @@ class LogInForm extends Component {
 
     this.setState({ loading: true });
 
-    setTimeout(() => {
-      axios
-        .post(process.env.REACT_APP_SERVER_URL + "/login", userObject)
+    const { data, status } = await http.post(
+      config.apiEndoint + "/hlogin",
+      userObject
+    );
+    console.log("status: ", status);
+    console.log("data: ", data);
+
+    this.setState({ loading: false });
+
+    if (status === 200 && data.status === "failed") {
+      //console.log("check your error");
+
+      this.setState({
+        errors: {
+          error: data.reason,
+        },
+      });
+      /* user.loggedIn = false;
+            this.props.onLogin(user); */
+    } else if (status === 200 && data.status === "success") {
+      user.username = username;
+      user.token = data.token;
+      user.loggedIn = true;
+      user.email = data.email;
+      this.props.onLogin(user);
+      console.log(this.props);
+
+      toast.success("Login successful! Redirecting you...");
+
+      setTimeout(() => {
+        this.props.history.push("/cst");
+      }, 3000);
+    }
+
+    /* setTimeout(() => {
+      http
+        .post(config.apiEndoint + "/login", userObject)
         .then((response) => {
           let { data, status } = response;
           console.log("data: ", data);
-          this.setState({ loading: false });
-          console.log("response: ", response);
-
-          if (status === 200 && data.status === "failed") {
-            //console.log("check your error");
-
-            this.setState({
-              errors: {
-                error: data.reason,
-              },
-            });
-            /* user.loggedIn = false;
-            this.props.onLogin(user); */
-          } else if (status === 200 && data.status === "success") {
-            user.username = username;
-            user.token = data.token;
-            user.loggedIn = true;
-            user.email = data.email;
-            this.props.onLogin(user);
-            console.log(this.props);
-            this.props.history.push("/cst");
-          }
         })
         .catch((error) => {
           this.setState({ loading: false });
           console.log("error: ", error);
         });
-    }, 1000);
+    }, 1000); */
   };
   render() {
     const { account, errors } = this.state;

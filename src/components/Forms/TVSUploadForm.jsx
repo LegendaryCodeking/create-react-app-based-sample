@@ -11,7 +11,7 @@ class TVSUploadForm extends Component {
   state = {
     fileUploadStatus: "not-set",
     fileUploadProgress: "",
-    formReadyForSecondaryInput: true,
+    formReadyForSecondaryInput: false,
   };
   render() {
     const { formReadyForSecondaryInput } = this.state;

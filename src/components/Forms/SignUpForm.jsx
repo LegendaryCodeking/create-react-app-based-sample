@@ -3,7 +3,8 @@ import React, { Component } from "react";
 //import FormAlert from "./FormComponents/FormAlert";
 
 import Joi from "joi-browser";
-import axios from "axios";
+import http from "../../services/httpService";
+import config from "../../config.json";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -110,36 +111,41 @@ class SignUpForm extends Component {
     this.onRegister(this.state.newUser);
   };
 
-  onRegister = (user) => {
+  onRegister = async (user) => {
     console.log("user: ", user);
 
     let userObject = {};
 
-    axios
-      .post(process.env.REACT_APP_SERVER_URL + "/register", user)
-      .then((result) => {
-        if (result.data.status === "success") {
-          userObject.username = user.username;
-          userObject.token = result.data.token;
-          userObject.loggedIn = true;
-          userObject.email = user.personalEmail;
+    const { data, status } = await http.post(
+      config.apiEndoint + "/register",
+      user
+    );
 
-          this.props.onLogin(userObject);
-          this.props.history.push("/cst");
-        } else {
-          console.log("error", result.data.status);
-          this.setState({
-            errors: {
-              apiError: result.data.reason,
-            },
-          });
-        }
-      })
+    if (data.status === "success" && status === 200) {
+      userObject.username = user.username;
+      userObject.token = data.token;
+      userObject.loggedIn = true;
+      userObject.email = user.personalEmail;
+
+      this.props.onLogin(userObject);
+      this.props.history.push("/cst");
+    } else {
+      console.log("error", data.status);
+      this.setState({
+        errors: {
+          apiError: data.reason,
+        },
+      });
+    }
+
+    /* http
+      .post(config.apiEndoint + "/register", user)
+      .then((result) => {})
       .catch((error) => {
         console.log("error: ", error);
         userObject.loggedIn = false;
         this.props.onLogin(userObject);
-      });
+      }); */
   };
   render() {
     const { newUser, errors } = this.state;
