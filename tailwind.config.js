@@ -21,7 +21,7 @@ module.exports = {
       lightblue: '#22ffff',
       gray: {
         100: '#f7fafc',
-        // ...
+        disabled: "rgb(107 114 128)",
         900: '#1a202c',
       },
     },

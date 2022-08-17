@@ -30,16 +30,18 @@ class NavUser extends Component {
                 "green",
                 "blue",
               ])}
-              name={user.username}
+              name={user.fullName}
               className="rounded-full ring ring-lightblue"
               size="45px"
             />
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">{user.username}</span>
+            <div className="flex">
+              <span className="block text-sm font-bold">{user.fullName}</span>
+            </div>
             <span className="block truncate text-sm font-medium">
-              {user.email}
+              {user.personalEmail ? user.personalEmail : user.companyEmail}
             </span>
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>
@@ -47,9 +49,7 @@ class NavUser extends Component {
           <Dropdown.Item>Earnings</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>
-            <NavLink to="/auth" onClick={(e) => this.logOutUser(user)}>
-              Sign Out
-            </NavLink>
+            <NavLink to="/logout">Sign Out</NavLink>
           </Dropdown.Item>
         </Dropdown>
       </div>

@@ -5,14 +5,19 @@ import AICELogo from "../../assets/images/aicelogo1.png";
 import "../../assets/stylesheets/main-nav.css";
 import NavNoUser from "./NavUserSection/NavNoUser";
 import NavUser from "./NavUserSection/NavUser";
+import auth from "../../services/authService";
+
 class MainNavBar extends Component {
   state = {
-    user: {
-      name: "Jane Doe",
-      email: "jane@aiceafrica.com",
-      loggedIn: true,
-    },
+    user: {},
+    loggedIn: false,
   };
+
+  componentDidMount() {
+    const loggedIn = auth.userLoggedIn();
+    const user = auth.getCurrentUser();
+    this.setState({ loggedIn, user });
+  }
 
   onLogOut = () => {
     this.props.onLogOut();
@@ -24,6 +29,7 @@ class MainNavBar extends Component {
   render() {
     //console.log("route props", this.props);
     let { user } = this.props;
+    let { loggedIn } = this.state;
     return (
       <>
         <nav className="bg-darkblue px-2 sm:px-4 py-2.5 sticky w-full z-20 top-0 left-0 border-b border-gray-200">
@@ -35,7 +41,7 @@ class MainNavBar extends Component {
                 alt="Flowbite Logo"
               ></img>
             </Link>
-            {user.loggedIn ? (
+            {loggedIn ? (
               <NavUser onLogOut={this.onLogOut} user={user} {...this.props} />
             ) : (
               <NavNoUser user={user} {...this.props} />

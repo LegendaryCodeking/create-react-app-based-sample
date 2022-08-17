@@ -8,10 +8,6 @@ import "../../assets/stylesheets/login.css";
 class LoginPage extends Component {
   state = {};
 
-  onLogin = (user) => {
-    this.props.onLogin(user);
-  };
-
   onLoading = (value) => {
     this.props.onLoading(value);
   };
@@ -35,8 +31,8 @@ class LoginPage extends Component {
               <LogInForm
                 {...this.props}
                 loading={loading}
-                onLogin={this.onLogin}
                 onLoading={this.onLoading}
+                onLogin={this.props.onLogin}
               />
             </div>
           </div>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Joi from "joi-browser";
 import http from "../../services/httpService";
+import auth from "../../services/authService";
 import config from "../../config.json";
 import { toast } from "react-toastify";
 
@@ -71,7 +72,7 @@ class LogInForm extends Component {
       username: username,
       password: password,
     };
-    let user = {};
+    //let user = {};
     console.log("userObject: ", userObject);
 
     this.setState({ loading: true });
@@ -99,12 +100,8 @@ class LogInForm extends Component {
       /* user.loggedIn = false;
             this.props.onLogin(user); */
     } else if (status === 200 && data.status === "success") {
-      user.username = username;
-      user.token = data.token;
-      user.loggedIn = true;
-      user.email = data.email;
-      this.props.onLogin(user);
-      console.log(this.props);
+      auth.logIn(data.token);
+      this.props.onLogin();
 
       toast.success("Login successful! Redirecting you...");
 
@@ -112,19 +109,6 @@ class LogInForm extends Component {
         this.props.history.push("/cst");
       }, 3000);
     }
-
-    /* setTimeout(() => {
-      http
-        .post(config.apiEndoint + "/login", userObject)
-        .then((response) => {
-          let { data, status } = response;
-          console.log("data: ", data);
-        })
-        .catch((error) => {
-          this.setState({ loading: false });
-          console.log("error: ", error);
-        });
-    }, 1000); */
   };
 
   setLoading = (value) => {

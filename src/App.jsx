@@ -7,50 +7,31 @@ import MainLayout from "./layouts/MainLayout";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import auth from "./services/authService";
+import LogOut from "./components/LogOut";
 
 class App extends Component {
   state = {
     user: {},
+    loggedIn: true,
     loading: false,
   };
 
-  onLogin = (user) => {
-    //console.log("user set: ", user);
-    if (user.loggedIn) {
-      this.setState({
-        user: {
-          username: user.username,
-          email: user.email,
-          loggedIn: true,
-          token: user.token,
-        },
-      });
+  componentDidMount() {
+    //const token = localStorage.getItem("token");
+    const user = auth.getCurrentUser();
+    this.setState({ user });
+  }
 
-      //console.log("this.props: ", this.props);
-    } else {
-      this.setState({
-        user: {
-          loggedIn: false,
-        },
-      });
-    }
-  };
-
-  onLogOut = () => {
-    this.setState({
-      user: {
-        loggedIn: false,
-      },
-    });
+  onLogin = () => {
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   };
 
   onLoading = (value) => {
     this.setState({ loading: value });
   };
 
-  componentDidUpdate() {
-    //console.log("component updated", this.props);
-  }
   render() {
     let { user, loading } = this.state;
     return (
@@ -60,10 +41,11 @@ class App extends Component {
           <Route user={user} path="/" exact component={IndexPage} />
           <Route
             path="/cst"
-            render={(props) => (
-              <MainLayout onLogOut={this.onLogOut} user={user} {...props} />
-            )}
+            render={(props) => <MainLayout user={user} {...props} />}
           ></Route>
+          <Route path="/logout">
+            <LogOut />
+          </Route>
           <Route
             user={user}
             path="/auth"

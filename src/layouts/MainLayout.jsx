@@ -9,6 +9,7 @@ import DataDescriptionPage from "../views/Main/DataDescriptionPage";
 import DataPrediction from "../views/Main/DataPredictionPage";
 import PredictedData from "../views/Main/PredictedDataPage";
 import Reports from "../views/Main/ReportsPage";
+//import LogOut from "../components/LogOut";
 
 class MainLayout extends Component {
   state = {};
@@ -18,9 +19,17 @@ class MainLayout extends Component {
 
   componentDidMount() {
     console.log("main lay props", this.props);
-    const { user, history } = this.props;
-    if (user.loggedIn) {
-    } else {
+    const { history } = this.props;
+
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        history.push("/cst/dashboard");
+      } else {
+        history.push("/auth");
+      }
+    } catch (error) {
+      console.log("error: ", error);
       history.push("/auth");
     }
   }
@@ -59,6 +68,7 @@ class MainLayout extends Component {
                 exact
                 component={PredictedData}
               />
+              {/* <Route path="/logout" exact component={LogOut} /> */}
               <Route path="/cst/reports" exact component={Reports} />
               <Redirect from="/cst" to="/cst/dashboard" />
             </Switch>

@@ -10,12 +10,6 @@ import SignUpPage from "../views/Auth/SignUp";
 class AuthLayout extends Component {
   state = {};
 
-  onLogin = (user) => {
-    console.log("user AUL: ", this.props);
-
-    this.props.onLogin(user);
-  };
-
   onLoading = (value) => {
     this.props.onLoading(value);
   };
@@ -41,8 +35,8 @@ class AuthLayout extends Component {
                   <LoginPage
                     loading={loading}
                     {...props}
-                    onLogin={this.onLogin}
                     onLoading={this.onLoading}
+                    onLogin={this.props.onLogin}
                   />
                 )}
               ></Route>
@@ -53,7 +47,6 @@ class AuthLayout extends Component {
                   <SignUpPage
                     loading={loading}
                     {...props}
-                    onLogin={this.onLogin}
                     onLoading={this.onLoading}
                   />
                 )}
