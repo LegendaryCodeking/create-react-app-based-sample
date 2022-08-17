@@ -12,7 +12,7 @@ class TVSUploadForm extends Component {
   state = {
     fileUploadStatus: "not-set",
     fileUploadProgress: "",
-    formReadyForSecondaryInput: true,
+    formReadyForSecondaryInput: false,
     selectedFile: null,
     nextButtonDisabled: true,
   };
