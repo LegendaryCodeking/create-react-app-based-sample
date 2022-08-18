@@ -5,9 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 class BinaryApprovedInput extends Component {
-  state = {};
+  state = {
+    value: 0,
+  };
+
+  onChange = (e) => {
+    const { value } = e.target;
+    const tranferValue = value === "0" ? false : true;
+    this.props.onChange(tranferValue, "approved");
+  };
   render() {
-    const { formReadyForSecondaryInput } = this.props;
+    const { formReadyForSecondaryInput, value } = this.props;
+    let setValue = value ? 1 : 0;
     return (
       <div className={formReadyForSecondaryInput ? "flex" : "hidden"}>
         <div className="w-2/12">
@@ -24,11 +33,13 @@ class BinaryApprovedInput extends Component {
           </div>
         </div>
         <div className="w-10/12">
-          <select className="bg-darkblue form-select appearance-none border border-white text-white text-sm focus:ring-eggyellow focus:border-eggyellow block w-full p-2.5">
-            <option>United States</option>
-            <option>Canada</option>
-            <option>France</option>
-            <option>Germany</option>
+          <select
+            onChange={this.onChange}
+            value={setValue}
+            className="bg-darkblue form-select appearance-none border border-white text-white text-sm focus:ring-eggyellow focus:border-eggyellow block w-full p-2.5"
+          >
+            <option value={0}>0</option>
+            <option value={1}>1</option>
           </select>
         </div>
       </div>

@@ -32,7 +32,7 @@ class NavUser extends Component {
               ])}
               name={user.fullName}
               className="rounded-full ring ring-lightblue"
-              size="45px"
+              size="40px"
             />
           }
         >

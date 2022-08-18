@@ -12,7 +12,6 @@ class FileUploadInput extends Component {
     selectedFile: null,
     uploadData: [],
     disableUploadButton: true,
-    loading: false,
   };
 
   onChange = (event) => {
@@ -30,7 +29,8 @@ class FileUploadInput extends Component {
           const worksheet = workbook.Sheets[sheetName];
           const json = XLSX.utils.sheet_to_json(worksheet);
           //console.log(json);
-          this.setState({ uploadData: json, disableUploadButton: false });
+          this.setState({ uploadData: json });
+          this.props.onFileReadyForUpload(false);
 
           /* this.props.onUpload({
             upload_data: json,
@@ -57,7 +57,7 @@ class FileUploadInput extends Component {
   };
 
   render() {
-    const { loading, disableUploadButton } = this.state;
+    const { loading, disableUploadButton } = this.props;
     console.log("loading: ", loading);
     return (
       <div className={this.state.show ? "flex" : "hidden"}>
@@ -81,13 +81,10 @@ class FileUploadInput extends Component {
             <button
               disabled={disableUploadButton}
               onClick={this.uploadFileData}
-              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled"
+              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled p-2"
             >
               <div className={loading ? "" : "hidden"}>
                 <Spinner size="sm" light={true} />
-                <span className="ml-2 text-darkblue font-bold text-sm">
-                  Loading...
-                </span>
               </div>
               <div className={!loading ? "" : "hidden"}>
                 <FontAwesomeIcon
