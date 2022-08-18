@@ -46,6 +46,7 @@ class AuthLayout extends Component {
                 component={(props) => (
                   <SignUpPage
                     loading={loading}
+                    onLogin={this.props.onLogin}
                     {...props}
                     onLoading={this.onLoading}
                   />

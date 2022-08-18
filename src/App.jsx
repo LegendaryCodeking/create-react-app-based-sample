@@ -36,7 +36,7 @@ class App extends Component {
     let { user, loading } = this.state;
     return (
       <React.Fragment>
-        <ToastContainer autoClose={2000} />
+        <ToastContainer autoClose={1000} />
         <Switch>
           <Route user={user} path="/" exact component={IndexPage} />
           <Route

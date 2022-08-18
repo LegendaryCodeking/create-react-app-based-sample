@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import http from "../../services/httpService";
 import config from "../../config.json";
+import auth from "../../services/authService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -116,8 +117,6 @@ class SignUpForm extends Component {
   onRegister = async (user) => {
     console.log("user: ", user);
 
-    let userObject = {};
-
     const { data, status } = await http
       .post(config.apiEndoint + "/register", user)
       .catch((err) => {
@@ -127,12 +126,9 @@ class SignUpForm extends Component {
     this.setLoading(false);
 
     if (data.status === "success" && status === 200) {
-      userObject.username = user.username;
-      userObject.token = data.token;
-      userObject.loggedIn = true;
-      userObject.email = user.personalEmail;
+      auth.logIn(data.token);
 
-      this.props.onLogin(userObject);
+      this.props.onLogin();
       this.props.history.push("/cst");
     } else {
       console.log("error", data.status);

@@ -14,10 +14,6 @@ class SignUpPage extends Component {
     console.log("response: ", data); */
   }
 
-  onLogin = (user) => {
-    this.props.onLogin(user);
-  };
-
   onLoading = (value) => {
     this.props.onLoading(value);
   };
@@ -42,7 +38,7 @@ class SignUpPage extends Component {
               <SignUpForm
                 loading={loading}
                 {...this.props}
-                onLogin={this.onLogin}
+                onLogin={this.props.onLogin}
                 onLoading={this.onLoading}
               />
             </div>

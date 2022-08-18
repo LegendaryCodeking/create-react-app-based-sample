@@ -107,7 +107,7 @@ class LogInForm extends Component {
 
       setTimeout(() => {
         this.props.history.push("/cst");
-      }, 3000);
+      }, 1000);
     }
   };
 
@@ -119,7 +119,10 @@ class LogInForm extends Component {
     const { loading } = this.props;
     return (
       <div className="mx-auto form-container">
-        <form className="text-eggyellow bg-darkblue shadow-md rounded px-4 pt-6 pb-4 mb-2">
+        <form
+          autoComplete="off"
+          className="text-eggyellow bg-darkblue shadow-md rounded px-4 pt-6 pb-4 mb-2"
+        >
           <div className="mt-2 mb-2 p-2 text-eggyellow text-center">
             <div className="mb-2">
               <span className="text-sm">WELCOME</span>
@@ -146,7 +149,7 @@ class LogInForm extends Component {
                 autoFocus
                 disabled={loading}
                 type="text"
-                autoComplete="username"
+                autoComplete="off"
                 value={account.username}
                 onChange={this.handleChange}
                 name="username"
@@ -168,7 +171,7 @@ class LogInForm extends Component {
                 disabled={loading}
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Password"
-                autoComplete="current-password"
+                autoComplete="off"
                 name="password"
                 value={account.password}
                 onChange={this.handleChange}
@@ -182,6 +185,8 @@ class LogInForm extends Component {
             <button
               className="bg-white disabled:bg-gray-500 hover:bg-eggyellow2 text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline w-full"
               type="button"
+              name="submitBtn"
+              id="submitBtn"
               onClick={this.handleSubmit}
               disabled={this.validate()}
             >
