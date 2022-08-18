@@ -5,6 +5,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import DescriptionStatsCards from "../../components/Stats/DescriptionStatsCards";
 //import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import DataDescriptionSearchInput from "../../components/Forms/FormComponents/DataDescriptionSearchInput";
+import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 //import DataSummaryChartsSection from "../../components/DataSummaryChartsContainer";
 
 class DataDescriptionPage extends Component {
@@ -52,10 +53,8 @@ class DataDescriptionPage extends Component {
             </ul>
           </div>
           <DescriptionStatsCards />
-          {/* <DescriptionSummaryTable /> */}
-          <div className="container p-4">
-            <DataDescriptionSearchInput show />
-          </div>
+          <DescriptionSummaryTable />
+
           {/* <div className="container">
             <DataSummaryChartsSection />
           </div> */}

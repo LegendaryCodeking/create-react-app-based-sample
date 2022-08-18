@@ -148,14 +148,6 @@ class TVSUploadForm extends Component {
               loading={nextLoading}
               float="right"
             />
-            {/* <button
-              className="bg-white disabled:bg-gray-disabled hover:bg-eggyellow2 text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline float-right"
-              type="button"
-              disabled={nextButtonDisabled}
-              onClick={this.submitDescription}
-            >
-              <span className=" font-bold text-sm">Next</span>
-            </button> */}
           </div>
         </div>
       </form>

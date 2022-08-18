@@ -9,7 +9,7 @@ class DataDescriptionSearchInput extends Component {
   render() {
     const { show } = this.props;
     return (
-      <div className={show ? "flex" : "hidden"}>
+      <div className={`flex px-4 pt-4 pb-4 mb-2 ${show ? "" : "hidden"}`}>
         <div className="w-2/12">
           <div className="h-full flex justify-start">
             <span className="py-4 text-sm text-white">
