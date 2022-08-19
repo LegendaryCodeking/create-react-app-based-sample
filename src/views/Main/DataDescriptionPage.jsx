@@ -6,14 +6,14 @@ import DescriptionStatsCards from "../../components/Stats/DescriptionStatsCards"
 //import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import DataDescriptionSearchInput from "../../components/Forms/FormComponents/DataDescriptionSearchInput";
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
-//import DataSummaryChartsSection from "../../components/DataSummaryChartsContainer";
+import DataSummaryChartsSection from "../../components/DataSummaryChartsContainer";
 
 class DataDescriptionPage extends Component {
   state = {};
   render() {
     return (
-      <div className="bg-darkblue pt-4" style={{ height: "100vh " }}>
-        <div className="mx-auto container">
+      <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
+        <div className="mx-auto container pb-4">
           <div
             className="p-4 mb-6 text-sm text-darkblue bg-lightblue"
             role="alert"
@@ -54,10 +54,8 @@ class DataDescriptionPage extends Component {
           </div>
           <DescriptionStatsCards />
           <DescriptionSummaryTable />
-
-          {/* <div className="container">
-            <DataSummaryChartsSection />
-          </div> */}
+          <DataDescriptionSearchInput show />
+          <DataSummaryChartsSection />
         </div>
       </div>
     );
