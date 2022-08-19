@@ -7,26 +7,50 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 class AgGridTable extends Component {
   state = {
-    rowData: [
-      { make: "Toyota", model: "Celica", price: 35000 },
-      { make: "Ford", model: "Mondeo", price: 32000 },
-      { make: "Ford", model: "Mondeo", price: 32000 },
-      { make: "Ford", model: "Mondeo", price: 32000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-    ],
-    columnDefs: [{ field: "make" }, { field: "model" }, { field: "price" }],
+    rowData: [],
+    columnDefs: [],
   };
+
+  constructor(props) {
+    super(props);
+    this.gridRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const { data, headers } = this.props.data;
+    console.log("summaryData: ", this.props.data);
+
+    if (data && headers) {
+      let columnsDefArray = [];
+      headers.forEach((header) => {
+        //console.log("header: ", header);
+
+        let colObject = {
+          field: header,
+          width: 200,
+          minWidth: 50,
+          resizable: true,
+        };
+
+        if (header === "Columns") {
+          colObject.pinned = "left";
+        }
+        //header === "Column" ? (colObject["pinned"] = "left") : "";
+
+        columnsDefArray.push(colObject);
+      });
+      this.setState({ rowData: data, columnDefs: columnsDefArray });
+    }
+  }
 
   gridReady = (params) => {
     let gridApi = params.api;
+    this.gridApi = gridApi;
     //let gridColumnApi = params.columnApi;
-
-    gridApi.sizeColumnsToFit();
+    setTimeout(() => {
+      //gridApi.sizeColumnsToFit();
+      gridApi.redrawRows();
+    }, 2000);
   };
   render() {
     const { rowData, columnDefs } = this.state;
@@ -36,6 +60,7 @@ class AgGridTable extends Component {
         style={{ height: "24rem", width: "100%" }}
       >
         <AgGridReact
+          ref={this.gridRef}
           onGridReady={this.gridReady}
           rowData={rowData}
           pagination={true}

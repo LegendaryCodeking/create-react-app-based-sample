@@ -1,16 +1,34 @@
 import React, { Component } from "react";
+import plumber from "../../services/dataHelpers";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import DescriptionStatsCards from "../../components/Stats/DescriptionStatsCards";
 //import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import DataDescriptionSearchInput from "../../components/Forms/FormComponents/DataDescriptionSearchInput";
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import DataSummaryChartsSection from "../../components/DataSummaryChartsContainer";
 
+import sample_data from "../../assets/json/sample-summary.json";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+
 class DataDescriptionPage extends Component {
-  state = {};
+  state = {
+    summaryData: {},
+  };
+  componentDidMount() {
+    //const describedData = this.props.TVSResult;
+    const describedData = sample_data;
+    console.log("TVSResult: ", describedData);
+    if (describedData) {
+      console.log("formatting");
+      const formattedData = plumber.formatDataSummaryData(describedData);
+      this.setState({ summaryData: formattedData });
+      console.log("formattedData: ", formattedData);
+    }
+  }
   render() {
+    const { summaryData } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container pb-4">
@@ -53,7 +71,7 @@ class DataDescriptionPage extends Component {
             </ul>
           </div>
           <DescriptionStatsCards />
-          <DescriptionSummaryTable />
+          <DescriptionSummaryTable data={summaryData} />
           <DataDescriptionSearchInput show />
           <DataSummaryChartsSection />
         </div>

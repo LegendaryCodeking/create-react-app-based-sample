@@ -15,6 +15,11 @@ class App extends Component {
     user: {},
     loggedIn: true,
     loading: false,
+    TVSResultData: [],
+  };
+
+  onNext = (data) => {
+    this.setState({ TVSResultData: data });
   };
 
   componentDidMount() {
@@ -33,7 +38,7 @@ class App extends Component {
   };
 
   render() {
-    let { user, loading } = this.state;
+    let { user, loading, TVSResultData } = this.state;
     return (
       <React.Fragment>
         <ToastContainer autoClose={1000} />
@@ -41,7 +46,14 @@ class App extends Component {
           <Route user={user} path="/" exact component={IndexPage} />
           <Route
             path="/cst"
-            render={(props) => <MainLayout user={user} {...props} />}
+            render={(props) => (
+              <MainLayout
+                TVSResult={TVSResultData}
+                onNext={this.onNext}
+                user={user}
+                {...props}
+              />
+            )}
           ></Route>
           <Route path="/logout">
             <LogOut />

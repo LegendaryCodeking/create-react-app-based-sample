@@ -51,12 +51,22 @@ class MainLayout extends Component {
               <Route
                 path="/cst/dashboard"
                 exact
-                component={TargetVariableSettingPage}
+                component={(props) => (
+                  <TargetVariableSettingPage
+                    {...props}
+                    onNext={this.props.onNext}
+                  />
+                )}
               />
               <Route
                 exact
                 path="/cst/data-description"
-                component={DataDescriptionPage}
+                component={(props) => (
+                  <DataDescriptionPage
+                    {...props}
+                    TVSResult={this.props.TVSResult}
+                  />
+                )}
               />
               <Route
                 path="/cst/data-prediction"

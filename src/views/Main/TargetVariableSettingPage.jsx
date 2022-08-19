@@ -35,7 +35,10 @@ class TargetVariableSettingPage extends Component {
               </li>
             </ul>
           </div>
-          <TVSUploadForm {...this.props}></TVSUploadForm>
+          <TVSUploadForm
+            {...this.props}
+            onNext={this.props.onNext}
+          ></TVSUploadForm>
         </div>
       </div>
     );

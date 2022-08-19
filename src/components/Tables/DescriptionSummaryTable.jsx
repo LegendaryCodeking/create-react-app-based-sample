@@ -92,7 +92,7 @@ class DescriptionSummaryTable extends Component {
           </div>
         </div>
         <div className="w-full h-96">
-          <AgGridTable />
+          <AgGridTable data={this.props.data} />
         </div>
       </div>
     );

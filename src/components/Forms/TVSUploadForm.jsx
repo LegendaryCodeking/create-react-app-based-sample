@@ -7,7 +7,7 @@ import BinaryRejectedInput from "./FormComponents/binaryRejectedInput";
 
 import config from "../../config.json";
 import http from "../../services/httpService";
-import dataHelpers from "../../functions/dataFunctions";
+import plumber from "../../services/dataHelpers";
 import { toast } from "react-toastify";
 import api from "../../services/api";
 import LoadingButton from "../Buttons/LoadingButton";
@@ -40,7 +40,7 @@ class TVSUploadForm extends Component {
 
     if (data.status) {
       this.setState({ formReadyForSecondaryInput: true });
-      let dataHeaders = dataHelpers.getDataHeaders(fileData.upload_data);
+      let dataHeaders = plumber.getDataHeaders(fileData.upload_data);
       this.setState({ dataHeaders });
       this.setState({ nextButtonDisabled: false });
     }
@@ -77,12 +77,13 @@ class TVSUploadForm extends Component {
 
     this.setState({ nextLoading: true, nextButtonDisabled: true });
 
-    const response = await api.postDescription({
+    const { data } = await api.postDescription({
       target_variable: selectedVariable,
       approved_binary: approved,
       rejected_binary: rejected,
     });
-    console.log("response: ", response);
+    console.log("response: ", data);
+    this.props.onNext(data);
     this.setState({ nextLoading: false });
     this.props.history.push("/cst/data-description");
   };
