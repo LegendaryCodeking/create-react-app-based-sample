@@ -8,6 +8,7 @@ import AgGridTable from "./AgGridTable";
 class DescriptionSummaryTable extends Component {
   state = {};
   render() {
+    const { data } = this.props;
     return (
       <div className="w-full bg-darkblue text-white mb-4">
         <div className=" bg-darkblue border border-b-1 py-2 px-2 w-full flex">
@@ -17,7 +18,7 @@ class DescriptionSummaryTable extends Component {
             </span>
           </div>
           <div className="w-1/2">
-            <div className="font-bold text-eggyellow float-right mr-2">
+            <div className="font-bold text-eggyellow float-right mr-2" hidden>
               <div className="flex md:order-2">
                 <button
                   type="button"
@@ -92,7 +93,7 @@ class DescriptionSummaryTable extends Component {
           </div>
         </div>
         <div className="w-full h-96">
-          <AgGridTable data={this.props.data} />
+          <AgGridTable tableData={data} />
         </div>
       </div>
     );

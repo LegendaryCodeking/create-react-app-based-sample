@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import plumber from "../../services/dataHelpers";
+import api from "../../services/api";
 
 import DescriptionStatsCards from "../../components/Stats/DescriptionStatsCards";
 //import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
@@ -7,7 +8,7 @@ import DataDescriptionSearchInput from "../../components/Forms/FormComponents/Da
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import DataSummaryChartsSection from "../../components/DataSummaryChartsContainer";
 
-import sample_data from "../../assets/json/sample-summary.json";
+//import sample_data from "../../assets/json/sample-summary.json";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
@@ -15,20 +16,32 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 class DataDescriptionPage extends Component {
   state = {
     summaryData: {},
+    statsData: {},
   };
-  componentDidMount() {
-    //const describedData = this.props.TVSResult;
-    const describedData = sample_data;
+  async componentDidMount() {
+    const describedData = this.props.TVSResult;
+
     console.log("TVSResult: ", describedData);
     if (describedData) {
+      const { data } = await api.postDescription(describedData);
       console.log("formatting");
-      const formattedData = plumber.formatDataSummaryData(describedData);
+      const formattedData = plumber.formatDataSummaryData(data);
       this.setState({ summaryData: formattedData });
       console.log("formattedData: ", formattedData);
+      let statsData = {};
+      statsData.columnCount = formattedData.headers.length;
+      statsData.rowCount = formattedData.data.length;
+      this.setStats(statsData);
     }
   }
+
+  setStats(data) {
+    this.setState({
+      statsData: data,
+    });
+  }
   render() {
-    const { summaryData } = this.state;
+    const { summaryData, statsData } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container pb-4">
@@ -70,7 +83,7 @@ class DataDescriptionPage extends Component {
               </li>
             </ul>
           </div>
-          <DescriptionStatsCards />
+          <DescriptionStatsCards data={statsData} />
           <DescriptionSummaryTable data={summaryData} />
           <DataDescriptionSearchInput show />
           <DataSummaryChartsSection />

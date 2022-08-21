@@ -17,12 +17,18 @@ class AgGridTable extends Component {
   }
 
   componentDidMount() {
-    const { data, headers } = this.props.data;
-    console.log("summaryData: ", this.props.data);
+    const { data, headers } = this.props.tableData;
+    const current_data = this.props.tableData;
+    console.log("summaryData: ", data, headers);
+    this.updateTableData(current_data);
+  }
 
-    if (data && headers) {
+  updateTableData(data) {
+    let rowData = data.data;
+    let columnData = data.headers;
+    if (rowData && columnData) {
       let columnsDefArray = [];
-      headers.forEach((header) => {
+      columnData.forEach((header) => {
         //console.log("header: ", header);
 
         let colObject = {
@@ -39,7 +45,24 @@ class AgGridTable extends Component {
 
         columnsDefArray.push(colObject);
       });
-      this.setState({ rowData: data, columnDefs: columnsDefArray });
+      if (this.state.rowData !== rowData) {
+        this.setState({
+          rowData: rowData,
+          columnDefs: columnsDefArray,
+          currentData: data,
+        });
+      }
+    }
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    console.log("previousState: ", previousState);
+    console.log("previousProps: ", previousProps);
+    //const { currentData: previousData } = this.state;
+    const currData = this.props.tableData;
+
+    if (previousProps.tableData !== this.props.tableData) {
+      this.updateTableData(currData);
     }
   }
 

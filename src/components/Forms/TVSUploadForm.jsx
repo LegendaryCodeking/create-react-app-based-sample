@@ -9,7 +9,7 @@ import config from "../../config.json";
 import http from "../../services/httpService";
 import plumber from "../../services/dataHelpers";
 import { toast } from "react-toastify";
-import api from "../../services/api";
+
 import LoadingButton from "../Buttons/LoadingButton";
 
 class TVSUploadForm extends Component {
@@ -77,13 +77,13 @@ class TVSUploadForm extends Component {
 
     this.setState({ nextLoading: true, nextButtonDisabled: true });
 
-    const { data } = await api.postDescription({
+    /* const { data } = await api.postDescription(); */
+    //console.log("response: ", data);
+    this.props.onNext({
       target_variable: selectedVariable,
       approved_binary: approved,
       rejected_binary: rejected,
     });
-    console.log("response: ", data);
-    this.props.onNext(data);
     this.setState({ nextLoading: false });
     this.props.history.push("/cst/data-description");
   };
