@@ -1,3 +1,4 @@
 {
-  "apiEndoint": "http://127.0.0.1:8888"
+  "apiEndoint": "http://127.0.0.1:8888",
+  "mockUrl": "https://d71ceef5-aa04-44f4-8273-e65e74c8dd79.mock.pstmn.io"
 }

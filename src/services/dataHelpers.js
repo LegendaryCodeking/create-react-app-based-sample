@@ -52,7 +52,24 @@ function formatDataSummaryData(data) {
     return { headers: electedHeaders, data: finalArray }
 }
 
+function getBinarySums(data) {
+    let binaries = [0, 1]
+    let finalArray = [{ variable: 0, amount: 0 }, { variable: 1, amount: 0 }];
 
-const exportvariables = { getDataHeaders, formatDataSummaryData }
+    if (data) {
+        binaries.forEach((binary) => {
+            data.forEach((object) => {
+                finalArray[binary] = { variable: binary, amount: finalArray[binary].amount + object[binary] }
+            })
+        })
+
+        return finalArray;
+    } else {
+        return [];
+    }
+}
+
+
+const exportvariables = { getDataHeaders, formatDataSummaryData, getBinarySums }
 
 export default exportvariables;

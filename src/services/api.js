@@ -29,7 +29,7 @@ const routes = {
     }
 }
 const postDescription = async (requestObject) => {
-    const { data } = await http.post(config.apiEndoint + routes.description.path, requestObject);
+    const { data } = await http.post(config.mockUrl + routes.description.path, requestObject);
     return data;
 }
 

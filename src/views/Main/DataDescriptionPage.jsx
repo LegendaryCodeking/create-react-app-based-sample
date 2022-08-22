@@ -17,6 +17,34 @@ class DataDescriptionPage extends Component {
   state = {
     summaryData: {},
     statsData: {},
+    currentSearchVariable: "",
+    describedChartsData: [
+      {
+        variable: 0,
+        variableName: "ORIGINAL TERM",
+        0: 100,
+        1: 250,
+      },
+      {
+        variable: 1,
+        variableName: "ORIGINAL TERM",
+        0: 200,
+        1: 400,
+      },
+      {
+        variable: 2,
+        variableName: "ORIGINAL TERM",
+        0: 400,
+        1: 300,
+      },
+      {
+        variable: 3,
+        variableName: "ORIGINAL TERM",
+        0: 200,
+        1: 200,
+      },
+    ],
+    filteredChartData: [],
   };
   async componentDidMount() {
     const describedData = this.props.TVSResult;
@@ -34,14 +62,33 @@ class DataDescriptionPage extends Component {
       this.setStats(statsData);
     }
   }
+  onVariableChanged = (variable) => {
+    console.log("variable: ", variable);
 
+    this.setState({ currentSearchVariable: variable });
+    this.setChartsData(variable);
+  };
+
+  setChartsData = (variable) => {
+    console.log("variable: ", variable);
+    const { describedChartsData } = this.state;
+    console.log("describedChartsData: ", describedChartsData);
+
+    let filteredData = describedChartsData.filter(
+      (object) => object.variableName === variable
+    );
+
+    console.log("filteredData: ", filteredData);
+    this.setState({ filteredData: filteredData });
+  };
   setStats(data) {
     this.setState({
       statsData: data,
     });
   }
+
   render() {
-    const { summaryData, statsData } = this.state;
+    const { summaryData, statsData, filteredData } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container pb-4">
@@ -85,8 +132,12 @@ class DataDescriptionPage extends Component {
           </div>
           <DescriptionStatsCards data={statsData} />
           <DescriptionSummaryTable data={summaryData} />
-          <DataDescriptionSearchInput show />
-          <DataSummaryChartsSection />
+          <DataDescriptionSearchInput
+            show
+            data={summaryData}
+            onVariableChanged={this.onVariableChanged}
+          />
+          <DataSummaryChartsSection data={filteredData} />
         </div>
       </div>
     );

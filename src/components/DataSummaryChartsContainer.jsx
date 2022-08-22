@@ -15,12 +15,17 @@ class DataSummaryChartsSection extends Component {
                 Correlation of the target variable with other variables
               </span>
             </div>
-            <TargetVariableCorrelationBarChart />
+            <TargetVariableCorrelationBarChart data={this.props.data} />
           </div>
         </div>
         <div className="w-1/2 p-2">
           <div className="container bg-mediumblue">
-            <TargetVariableDistributionBarChart />
+            <div className="border-b border-gray-300 p-2 py-4">
+              <span className="text-sm ml-2">
+                Correlation of the target variable with other variables
+              </span>
+            </div>
+            <TargetVariableDistributionBarChart data={this.props.data} />
           </div>
         </div>
       </div>
