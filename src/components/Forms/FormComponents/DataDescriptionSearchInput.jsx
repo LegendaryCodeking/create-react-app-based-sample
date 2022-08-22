@@ -8,10 +8,13 @@ class DataDescriptionSearchInput extends Component {
   state = {
     selectedValues: [],
     selectedValue: "",
+    loading: false,
   };
 
   componentDidMount() {
     let { headers } = this.props.data;
+    const { loading } = this.props;
+    this.setState({ loading });
     console.log("headers: ", headers);
 
     if (headers) {
@@ -32,7 +35,7 @@ class DataDescriptionSearchInput extends Component {
   render() {
     const { show } = this.props;
     const { headers } = this.props.data;
-    const { selectedValue } = this.state;
+    const { selectedValue, loading } = this.state;
     return (
       <div className={`flex px-4 pt-4 ${show ? "" : "hidden"}`}>
         <div className="w-2/12">
@@ -52,6 +55,7 @@ class DataDescriptionSearchInput extends Component {
           <select
             onChange={this.onChange}
             value={selectedValue}
+            disabled={loading}
             className="bg-darkblue form-select appearance-none border border-white text-white text-sm focus:ring-eggyellow focus:border-eggyellow block w-full p-2.5"
           >
             <option disabled={true} value={""}>

@@ -16,34 +16,11 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 class DataDescriptionPage extends Component {
   state = {
     summaryData: {},
+    loading: false,
     statsData: {},
     currentSearchVariable: "",
-    describedChartsData: [
-      {
-        variable: 0,
-        variableName: "ORIGINAL TERM",
-        0: 100,
-        1: 250,
-      },
-      {
-        variable: 1,
-        variableName: "ORIGINAL TERM",
-        0: 200,
-        1: 400,
-      },
-      {
-        variable: 2,
-        variableName: "ORIGINAL TERM",
-        0: 400,
-        1: 300,
-      },
-      {
-        variable: 3,
-        variableName: "ORIGINAL TERM",
-        0: 200,
-        1: 200,
-      },
-    ],
+    barChartsRowData: [],
+    barChartsColumnData: {},
     filteredChartData: [],
     data_overview: {},
   };
@@ -64,11 +41,24 @@ class DataDescriptionPage extends Component {
       console.log("formattedData: ", formattedData);
     }
   }
-  onVariableChanged = (variable) => {
+  onVariableChanged = async (variable) => {
     console.log("variable: ", variable);
 
-    this.setState({ currentSearchVariable: variable });
-    this.setChartsData(variable);
+    const distroData = await api.postDistributionChanged({
+      variable_x: variable,
+    });
+    console.log("distroData: ", distroData);
+    if (distroData) {
+      let formattedDistroData = plumber.FormatDistroData(distroData, variable);
+      console.log("formattedDistroData: ", formattedDistroData);
+      this.setState({
+        barChartsRowData: formattedDistroData.rowData,
+        barChartsColumnData: formattedDistroData.columnData,
+      });
+    }
+
+    //this.setState({ currentSearchVariable: variable });
+    //this.setChartsData(variable);
   };
 
   setChartsData = (variable) => {
@@ -85,7 +75,13 @@ class DataDescriptionPage extends Component {
   };
 
   render() {
-    const { summaryData, filteredData, data_overview } = this.state;
+    const {
+      summaryData,
+      data_overview,
+      loading,
+      barChartsColumnData,
+      barChartsRowData,
+    } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container pb-4">
@@ -131,10 +127,16 @@ class DataDescriptionPage extends Component {
           <DescriptionSummaryTable data={summaryData} />
           <DataDescriptionSearchInput
             show
+            loading={loading}
             data={summaryData}
             onVariableChanged={this.onVariableChanged}
           />
-          <DataSummaryChartsSection data={filteredData} />
+          <DataSummaryChartsSection
+            data={{
+              columnData: barChartsColumnData,
+              rowData: barChartsRowData,
+            }}
+          />
         </div>
       </div>
     );

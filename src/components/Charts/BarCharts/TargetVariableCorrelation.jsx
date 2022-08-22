@@ -9,7 +9,11 @@ class TargetVariableCorrelationBarChart extends Component {
       subtitle: {
         text: "in billion U.S. dollars",
       },
-      data: [],
+      data: [
+        {
+          placeholder: "placeholder",
+        },
+      ],
       background: {
         fill: "#131823",
       },
@@ -27,6 +31,10 @@ class TargetVariableCorrelationBarChart extends Component {
               lineDash: [8, 3, 3, 3],
             },
           ],
+          title: {
+            text: "Variable",
+            enabled: true,
+          },
         },
         {
           type: "number",
@@ -35,43 +43,59 @@ class TargetVariableCorrelationBarChart extends Component {
             stroke: "green",
             lineDash: [8, 3, 3, 3],
           },
+          title: {
+            text: "Frequency",
+            enabled: true,
+          },
         },
       ],
-      series: [
-        {
-          type: "column",
-          xKey: "variable",
-          yKey: "0",
-          yName: "0",
-          stacked: true,
-        },
-        {
-          type: "column",
-          xKey: "variable",
-          yKey: "1",
-          yName: "1",
-          stacked: true,
-        },
-      ],
+      series: [],
     },
   };
 
   componentDidMount() {
-    const { data } = this.props;
-    console.log("data: ", data);
+    const { rowData, columnData } = this.props.data;
+    console.log("Target variable correlation chart data: ", this.props.data);
     const options = { ...this.state.options };
 
-    options.data = data;
+    options.data = rowData;
+
+    let serieData = [
+      {
+        type: "column",
+        xKey: columnData.x,
+        yKey: columnData.y,
+      },
+    ];
+
+    options.series = serieData;
 
     this.setState({ options });
   }
 
   componentDidUpdate(previousProps, previousState) {
-    let { data } = this.props;
-    if (previousState.options.data !== data) {
-      const options = { ...this.state.options };
+    //let { data } = this.props;
 
-      options.data = data;
+    console.log(
+      "previousState.options.data: ",
+      previousState.options.data,
+      this.props.data.rowData
+    );
+    if (previousState.options.data !== this.props.data.rowData) {
+      const options = { ...this.state.options };
+      const { rowData, columnData } = this.props.data;
+
+      options.data = rowData;
+
+      let serieData = [
+        {
+          type: "column",
+          xKey: columnData.x,
+          yKey: columnData.y,
+        },
+      ];
+
+      options.series = serieData;
 
       this.setState({ options });
     }

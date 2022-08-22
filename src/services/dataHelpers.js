@@ -69,7 +69,69 @@ function getBinarySums(data) {
     }
 }
 
+function FormatDistroData(data, variable) {
+    let distroData = data.result_variable_distribution;
+    let keys = Object.keys(distroData);
+    //let keysLength = keys.length;
+    //let frequencyData = distroData['Frequency'];
+    let objectsLength = Object.keys(distroData[keys[0]]).length;
+    let finalArray = []
 
-const exportvariables = { getDataHeaders, formatDataSummaryData, getBinarySums }
+    for (let index = 0; index < objectsLength; index++) {
+        let pushObject = {}
+        keys.forEach((key, index2) => {
+            pushObject[key] = distroData[key][index]
+        })
+        finalArray.push(pushObject);
+    }
+
+    console.log('finalArray: ', finalArray);
+
+    let headers = {};
+    headers.y = 'Frequency';
+    headers.z = variable;
+    headers.x = keys.filter((key) => {
+        if (key !== 'Frequency' && key !== 'Loan Status') {
+            return true;
+        } else {
+            return false;
+        }
+    })[0]
+
+    return {
+        rowData: finalArray,
+        columnData: headers
+    };
+
+}
+
+function formatBarchartDistributionData(data, variable) {
+    let strippedArray = [];
+
+    data.forEach((object) => {
+        strippedArray.push({
+            x: object[variable],
+            y: object['Frequency']
+        })
+    })
+
+    //strippedArray
+    let result = []
+
+    strippedArray.forEach(function (a) {
+        if (!this[a.x]) {
+            this[a.x] = { x: a.x, y: 0 };
+            result.push(this[a.x]);
+        }
+        this[a.x].y += a.y;
+    }, Object.create(null));
+
+    console.log(result);
+    console.log('strippedArray: ', strippedArray);
+    return result;
+}
+
+
+const exportvariables = { getDataHeaders, formatDataSummaryData, getBinarySums, FormatDistroData, formatBarchartDistributionData }
 
 export default exportvariables;
