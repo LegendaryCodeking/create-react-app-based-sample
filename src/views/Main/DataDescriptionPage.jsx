@@ -45,21 +45,23 @@ class DataDescriptionPage extends Component {
       },
     ],
     filteredChartData: [],
+    data_overview: {},
   };
   async componentDidMount() {
     const describedData = this.props.TVSResult;
 
     console.log("TVSResult: ", describedData);
     if (describedData) {
-      const { data } = await api.postDescription(describedData);
-      console.log("formatting");
-      const formattedData = plumber.formatDataSummaryData(data);
-      this.setState({ summaryData: formattedData });
+      const data = await api.postDescription(describedData);
+      console.log("data: ", data);
+      //console.log("formatting");
+      const data_overview = data.data_overview;
+      const formattedData = plumber.formatDataSummaryData(data.summary_table);
+      this.setState({
+        summaryData: formattedData,
+        data_overview: data_overview,
+      });
       console.log("formattedData: ", formattedData);
-      let statsData = {};
-      statsData.columnCount = formattedData.headers.length;
-      statsData.rowCount = formattedData.data.length;
-      this.setStats(statsData);
     }
   }
   onVariableChanged = (variable) => {
@@ -81,14 +83,9 @@ class DataDescriptionPage extends Component {
     console.log("filteredData: ", filteredData);
     this.setState({ filteredData: filteredData });
   };
-  setStats(data) {
-    this.setState({
-      statsData: data,
-    });
-  }
 
   render() {
-    const { summaryData, statsData, filteredData } = this.state;
+    const { summaryData, filteredData, data_overview } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container pb-4">
@@ -130,7 +127,7 @@ class DataDescriptionPage extends Component {
               </li>
             </ul>
           </div>
-          <DescriptionStatsCards data={statsData} />
+          <DescriptionStatsCards data={data_overview} />
           <DescriptionSummaryTable data={summaryData} />
           <DataDescriptionSearchInput
             show
