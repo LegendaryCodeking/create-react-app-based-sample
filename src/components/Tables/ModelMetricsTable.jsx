@@ -67,8 +67,8 @@ class ModelMetricsTable extends Component {
       <div className="w-full bg-darkblue text-white mb-4">
         <div className=" bg-darkblue border border-b-1 py-2 px-2 w-full flex">
           <div className="w-1/2">
-            <span className="font-bold text-eggyellow float-left mt-2 ml-2">
-              Summary Table
+            <span className="font-bold text-white text-xs float-left mt-2 ml-2">
+              Model performance metrics
             </span>
           </div>
           <div className="w-1/2">
@@ -149,12 +149,12 @@ class ModelMetricsTable extends Component {
         <div className="w-full h-96">
           <div
             className="ag-theme-alpine"
-            style={{ height: "20rem", width: "100%" }}
+            style={{ height: "15rem", width: "100%" }}
           >
             <AgGridReact
               onGridReady={this.gridReady}
               rowData={rowData}
-              pagination={true}
+              pagination={false}
               paginationPageSize={7}
               columnDefs={columnDefs}
             ></AgGridReact>
