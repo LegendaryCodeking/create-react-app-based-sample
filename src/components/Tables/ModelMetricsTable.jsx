@@ -52,7 +52,7 @@ class ModelMetricsTable extends Component {
 
   componentDidUpdate(previousProps, previousState) {
     console.log("grid reference ", this.gridRef);
-    const { api, columnApi } = this.gridRef.current;
+    const { api } = this.gridRef.current;
     if (previousProps !== this.props) {
       let { rowData, columnData } = this.props.data;
 

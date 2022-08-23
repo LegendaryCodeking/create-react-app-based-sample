@@ -79,7 +79,13 @@ class MainLayout extends Component {
                 component={PredictedData}
               />
               {/* <Route path="/logout" exact component={LogOut} /> */}
-              <Route path="/cst/reports" exact component={Reports} />
+              <Route
+                path="/cst/reports"
+                exact
+                component={(props) => (
+                  <Reports {...props} TVSResult={this.props.TVSResult} />
+                )}
+              />
               <Redirect from="/cst" to="/cst/dashboard" />
             </Switch>
             <Footer />
