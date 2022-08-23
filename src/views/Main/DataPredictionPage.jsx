@@ -5,6 +5,7 @@ import plumber from "../../services/dataHelpers";
 import PredictionStats from "../../components/Stats/DataPredictionStats";
 import ModelMetricsTable from "../../components/Tables/ModelMetricsTable";
 import PredictionSummaryCharts from "../../components/PredictionSummaryCharts";
+import PredictionApprovalStatusTable from "../../components/Tables/PredictionApprovalStatus";
 
 class DataPredictionPage extends Component {
   state = {
@@ -56,6 +57,7 @@ class DataPredictionPage extends Component {
           <PredictionStats data={statsData} />
           <ModelMetricsTable data={tableData} />
           <PredictionSummaryCharts data={confusionMatrixData} />
+          <PredictionApprovalStatusTable />
         </div>
       </div>
     );
