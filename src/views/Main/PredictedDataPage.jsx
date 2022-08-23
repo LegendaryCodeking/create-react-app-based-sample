@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+//import api from "../../services/api";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";

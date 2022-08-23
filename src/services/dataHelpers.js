@@ -155,9 +155,61 @@ function formatPieChartDistributionData(data) {
     console.log(result);
     console.log('strippedArray: ', strippedArray);
     return result;
+};
+
+
+function formatPerformanceMetricTableData(data) {
+    let metrics = data.metrics_table;
+    let metricColumns = metrics.columns;
+    let metricValues = metrics.values;
+    //let dataLength = metricColumns.length;
+    let valueLength = metricValues[0].length;
+    let flattenedArray = []
+
+
+
+    for (let index = 0; index < valueLength; index++) {
+        let metricObject = {}
+        metricColumns.forEach((column, index2) => {
+            metricObject[column] = metricValues[index2][index]
+        })
+        flattenedArray.push(metricObject)
+    }
+
+    let columns = []
+    metricColumns.forEach((column) => {
+        let headerName = humanizeText(column)
+        if (column === 'Class_ID') {
+            columns.push({
+                field: column,
+                pinned: 'left',
+                headerName: headerName
+            })
+        } else {
+            columns.push({
+                field: column,
+                headerName: headerName
+            })
+        }
+    })
+
+    return {
+        columnData: columns,
+        rowData: flattenedArray
+    };
 }
 
 
-const exportvariables = { getDataHeaders, formatDataSummaryData, getBinarySums, FormatDistroData, formatBarchartDistributionData, formatPieChartDistributionData }
+function humanizeText(str) {
+    var i, frags = str.split('_');
+    for (i = 0; i < frags.length; i++) {
+        frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+    return frags.join(' ');
+}
+
+const exportvariables = {
+    getDataHeaders, formatDataSummaryData, getBinarySums, FormatDistroData, formatBarchartDistributionData, formatPieChartDistributionData, formatPerformanceMetricTableData
+}
 
 export default exportvariables;

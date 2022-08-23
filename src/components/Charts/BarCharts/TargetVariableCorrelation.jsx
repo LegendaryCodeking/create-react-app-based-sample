@@ -55,7 +55,7 @@ class TargetVariableCorrelationBarChart extends Component {
 
   componentDidMount() {
     const { rowData, columnData } = this.props.data;
-    console.log("Target variable correlation chart data: ", this.props.data);
+
     const options = { ...this.state.options };
 
     options.data = rowData;

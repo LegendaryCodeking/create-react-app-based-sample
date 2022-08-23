@@ -30,6 +30,10 @@ const routes = {
     logout: {
         path: "/logout",
         method: "POST"
+    },
+    predict: {
+        path: "/predict",
+        method: "GET"
     }
 }
 const postDescription = async (requestObject) => {
@@ -42,6 +46,11 @@ const postDistributionChanged = async (requestObject) => {
     return data;
 }
 
-let exports = { postDescription, postDistributionChanged };
+const getPrediction = async () => {
+    const { data } = await http.get(config.mockUrl + routes.predict.path);
+    return data;
+}
+
+let exports = { postDescription, postDistributionChanged, getPrediction };
 
 export default exports;

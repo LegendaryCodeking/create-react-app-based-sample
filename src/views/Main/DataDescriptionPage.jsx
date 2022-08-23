@@ -27,30 +27,26 @@ class DataDescriptionPage extends Component {
   async componentDidMount() {
     const describedData = this.props.TVSResult;
 
-    console.log("TVSResult: ", describedData);
     if (describedData) {
       const data = await api.postDescription(describedData);
-      console.log("data: ", data);
-      //console.log("formatting");
+
+      //
       const data_overview = data.data_overview;
       const formattedData = plumber.formatDataSummaryData(data.summary_table);
       this.setState({
         summaryData: formattedData,
         data_overview: data_overview,
       });
-      console.log("formattedData: ", formattedData);
     }
   }
   onVariableChanged = async (variable) => {
-    console.log("variable: ", variable);
-
     const distroData = await api.postDistributionChanged({
       variable_x: variable,
     });
-    console.log("distroData: ", distroData);
+
     if (distroData) {
       let formattedDistroData = plumber.FormatDistroData(distroData, variable);
-      console.log("formattedDistroData: ", formattedDistroData);
+
       this.setState({
         barChartsRowData: formattedDistroData.rowData,
         barChartsColumnData: formattedDistroData.columnData,
@@ -62,15 +58,12 @@ class DataDescriptionPage extends Component {
   };
 
   setChartsData = (variable) => {
-    console.log("variable: ", variable);
     const { describedChartsData } = this.state;
-    console.log("describedChartsData: ", describedChartsData);
 
     let filteredData = describedChartsData.filter(
       (object) => object.variableName === variable
     );
 
-    console.log("filteredData: ", filteredData);
     this.setState({ filteredData: filteredData });
   };
 
