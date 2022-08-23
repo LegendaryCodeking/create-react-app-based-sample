@@ -72,7 +72,7 @@ class TargetVariableDistributionBarChart extends Component {
       {
         type: "column",
         xKey: "x",
-        yKey: "y",
+        yKey: "Frequency",
       },
     ];
 
@@ -96,7 +96,7 @@ class TargetVariableDistributionBarChart extends Component {
         {
           type: "column",
           xKey: "x",
-          yKey: "y",
+          yKey: "Frequency",
         },
       ];
 

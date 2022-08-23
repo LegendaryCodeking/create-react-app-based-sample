@@ -110,7 +110,33 @@ function formatBarchartDistributionData(data, variable) {
 
     data.forEach((object) => {
         strippedArray.push({
-            x: object[variable],
+            x: object['Loan Status'],
+            Frequency: object['Frequency']
+        })
+    })
+
+    //strippedArray
+    let result = []
+
+    strippedArray.forEach(function (a) {
+        if (!this[a.x]) {
+            this[a.x] = { x: a.x, Frequency: 0 };
+            result.push(this[a.x]);
+        }
+        this[a.x].Frequency += a.Frequency;
+    }, Object.create(null));
+
+    console.log(result);
+    console.log('strippedArray: ', strippedArray);
+    return result;
+}
+
+function formatPieChartDistributionData(data) {
+    let strippedArray = [];
+
+    data.forEach((object) => {
+        strippedArray.push({
+            x: object['Loan Status'],
             y: object['Frequency']
         })
     })
@@ -132,6 +158,6 @@ function formatBarchartDistributionData(data, variable) {
 }
 
 
-const exportvariables = { getDataHeaders, formatDataSummaryData, getBinarySums, FormatDistroData, formatBarchartDistributionData }
+const exportvariables = { getDataHeaders, formatDataSummaryData, getBinarySums, FormatDistroData, formatBarchartDistributionData, formatPieChartDistributionData }
 
 export default exportvariables;

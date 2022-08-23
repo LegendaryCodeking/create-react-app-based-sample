@@ -1,31 +1,91 @@
 import React, { Component } from "react";
 import { AgChartsReact } from "ag-charts-react";
+import plumber from "../../../services/dataHelpers";
 
 class CreditApprovalStatusPieChart extends Component {
   state = {
     options: {
       data: [
-        { label: "Android", value: 56.9 },
-        { label: "iOS", value: 22.5 },
-        { label: "BlackBerry", value: 6.8 },
-        { label: "Symbian", value: 8.5 },
-        { label: "Bada", value: 2.6 },
-        { label: "Windows", value: 1.9 },
+        {
+          x: 0,
+          y: 43,
+        },
+        {
+          x: 1,
+          y: 151,
+        },
       ],
       background: {
         fill: "#131823",
       },
+      theme: "ag-default-dark",
+      legend: {
+        position: "bottom",
+        item: {
+          paddingX: 50,
+          marker: {
+            shape: "circle", // 'square', 'diamond', 'cross', 'plus', 'triangle'
+          },
+        },
+      },
       series: [
         {
           type: "pie",
-          angleKey: "value",
-          labelKey: "label",
+          angleKey: "y",
+          labelKey: "x",
         },
       ],
     },
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    let { rowData } = this.props;
+    let { options } = this.state;
+
+    if (rowData) {
+      let formattedChartData = plumber.formatPieChartDistributionData(rowData);
+
+      console.log(
+        "Target variable distribution ON pie chart",
+        formattedChartData
+      );
+
+      options.data = formattedChartData;
+      options.series = [
+        {
+          type: "pie",
+          angleKey: "y",
+          labelKey: "x",
+        },
+      ];
+    }
+  }
+
+  componentDidUpdate(previosProps, previousState) {
+    if (previosProps !== this.props) {
+      let { rowData } = this.props;
+      let { options } = this.state;
+
+      if (rowData) {
+        let formattedChartData =
+          plumber.formatPieChartDistributionData(rowData);
+
+        console.log(
+          "Target variable distribution ON pie chart",
+          formattedChartData
+        );
+
+        options.data = formattedChartData;
+        options.series = [
+          {
+            type: "pie",
+            angleKey: "y",
+            labelKey: "x",
+          },
+        ];
+      }
+    }
+  }
   render() {
     return (
       <div
@@ -33,7 +93,7 @@ class CreditApprovalStatusPieChart extends Component {
         hidden={this.props.hidden}
         style={{ height: "30rem" }}
       >
-        <AgChartsReact options={this.state.options} />
+        <AgChartsReact className="text-white" options={this.state.options} />
       </div>
     );
   }
