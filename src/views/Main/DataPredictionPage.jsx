@@ -4,11 +4,14 @@ import plumber from "../../services/dataHelpers";
 
 import PredictionStats from "../../components/Stats/DataPredictionStats";
 import ModelMetricsTable from "../../components/Tables/ModelMetricsTable";
+import PredictionSummaryCharts from "../../components/PredictionSummaryCharts";
 
 class DataPredictionPage extends Component {
   state = {
     statsData: {},
     tableData: {},
+    confusionMatrixData: {},
+    ROCData: {},
   };
 
   async componentDidMount() {
@@ -33,6 +36,11 @@ class DataPredictionPage extends Component {
       //Step 3
 
       this.setState({ tableData });
+
+      //Step 4
+      let matrixData = predictionData.confusion_matrix.matrix;
+
+      this.setState({ confusionMatrixData: matrixData });
     }
   }
 
@@ -41,12 +49,13 @@ class DataPredictionPage extends Component {
   }
 
   render() {
-    const { statsData, tableData } = this.state;
+    const { statsData, tableData, confusionMatrixData } = this.state;
     return (
-      <div className="bg-darkblue pt-4" style={{ height: "100vh " }}>
+      <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container pb-4">
           <PredictionStats data={statsData} />
           <ModelMetricsTable data={tableData} />
+          <PredictionSummaryCharts data={confusionMatrixData} />
         </div>
       </div>
     );

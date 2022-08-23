@@ -33,6 +33,9 @@ class AgGridTable extends Component {
 
         let colObject = {
           field: header,
+          filter: true,
+          sortable: true,
+          unSortIcon: true,
           width: 200,
           minWidth: 50,
           resizable: true,

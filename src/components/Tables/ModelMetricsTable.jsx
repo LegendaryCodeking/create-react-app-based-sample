@@ -31,24 +31,35 @@ class ModelMetricsTable extends Component {
     ],
     columnDefs: [
       { field: "Class_ID", pinned: "left" },
-      { field: "Precision" },
-      { field: "Recall" },
-      { field: "F1_score" },
-      { field: "Support" },
+      { field: "Precision", filter: true },
+      { field: "Recall", filter: true },
+      { field: "F1_score", filter: true },
+      { field: "Support", filter: true },
     ],
   };
 
   componentDidMount() {
     let { rowData, columnData } = this.props.data;
+    //const { api, columnApi } = this.gridRef;
+    this.gridRef = React.createRef();
 
     this.setState({ rowData: rowData, columnDefs: columnData });
+
+    /* setTimeout(() => {
+      api.sizeColumnsToFit();
+    }, 500); */
   }
 
   componentDidUpdate(previousProps, previousState) {
+    console.log("grid reference ", this.gridRef);
+    const { api, columnApi } = this.gridRef.current;
     if (previousProps !== this.props) {
       let { rowData, columnData } = this.props.data;
 
       this.setState({ rowData: rowData, columnDefs: columnData });
+      setTimeout(() => {
+        api.sizeColumnsToFit();
+      }, 100);
     }
   }
 
@@ -64,7 +75,7 @@ class ModelMetricsTable extends Component {
   render() {
     const { rowData, columnDefs } = this.state;
     return (
-      <div className="w-full bg-darkblue text-white mb-4">
+      <div className="w-full bg-darkblue text-white mb-2">
         <div className=" bg-darkblue border border-b-1 py-2 px-2 w-full flex">
           <div className="w-1/2">
             <span className="font-bold text-white text-xs float-left mt-2 ml-2">
@@ -146,12 +157,13 @@ class ModelMetricsTable extends Component {
             </div>
           </div>
         </div>
-        <div className="w-full h-96">
+        <div className="w-full h-70">
           <div
             className="ag-theme-alpine"
             style={{ height: "15rem", width: "100%" }}
           >
             <AgGridReact
+              ref={this.gridRef}
               onGridReady={this.gridReady}
               rowData={rowData}
               pagination={false}

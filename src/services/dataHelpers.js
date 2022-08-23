@@ -183,12 +183,14 @@ function formatPerformanceMetricTableData(data) {
             columns.push({
                 field: column,
                 pinned: 'left',
+                lockPinned: true,
                 headerName: headerName
             })
         } else {
             columns.push({
                 field: column,
-                headerName: headerName
+                headerName: headerName,
+                filter: true
             })
         }
     })
@@ -208,8 +210,37 @@ function humanizeText(str) {
     return frags.join(' ');
 }
 
-const exportvariables = {
-    getDataHeaders, formatDataSummaryData, getBinarySums, FormatDistroData, formatBarchartDistributionData, formatPieChartDistributionData, formatPerformanceMetricTableData
+function formatROCData(data) {
+    console.log('plumber ROC data: ', data);
+    let ROCData = data.area_under_curve;
+    let falsePositiveRate = ROCData.false_positive_rate;
+    let truePositiveRate = ROCData.true_positive_rate;
+    let thresholds = ROCData.thresholds;
+    let valueLength = falsePositiveRate.length;
+
+    let givenArray = [];
+
+    for (let index = 0; index < valueLength; index++) {
+        let valueObject = {}
+        valueObject['false_positive'] = falsePositiveRate[index];
+        valueObject['true_positive'] = truePositiveRate[index];
+        valueObject['threshold'] = thresholds[index];
+        givenArray.push(valueObject);
+    }
+
+    return givenArray;
 }
+
+const exportvariables = {
+    getDataHeaders,
+    formatDataSummaryData,
+    getBinarySums,
+    FormatDistroData,
+    formatBarchartDistributionData,
+    formatPieChartDistributionData,
+    formatPerformanceMetricTableData,
+    formatROCData
+}
+
 
 export default exportvariables;
