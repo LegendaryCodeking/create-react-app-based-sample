@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import http from "../../services/httpService";
 import auth from "../../services/authService";
-import config from "../../config.json";
+//import config from "../../config.json";
 import { toast } from "react-toastify";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,9 @@ import {
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
+
+const server_url = process.env.REACT_APP_SERVER_URL;
+console.log("server_url: ", server_url);
 
 class LogInForm extends Component {
   state = {
@@ -78,7 +81,7 @@ class LogInForm extends Component {
     this.setState({ loading: true });
 
     const { data, status } = await http
-      .post(config.apiEndoint + "/login", userObject)
+      .post(server_url + "/login", userObject)
       .catch((err) => {
         console.log("caught error");
         this.setLoading(false);

@@ -4,7 +4,7 @@ import React, { Component } from "react";
 
 import Joi from "joi-browser";
 import http from "../../services/httpService";
-import config from "../../config.json";
+//import config from "../../config.json";
 import auth from "../../services/authService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +20,7 @@ import {
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
 
+const server_url = process.env.REACT_APP_SERVER_URL;
 class SignUpForm extends Component {
   state = {
     newUser: {
@@ -118,7 +119,7 @@ class SignUpForm extends Component {
     console.log("user: ", user);
 
     const { data, status } = await http
-      .post(config.apiEndoint + "/register", user)
+      .post(server_url + "/register", user)
       .catch((err) => {
         this.setLoading(false);
       });

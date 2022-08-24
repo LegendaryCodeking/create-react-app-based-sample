@@ -1,7 +1,7 @@
 import http from "./httpService"
 import config from "../config.json"
 
-
+//const server_url = process.env.REACT_APP_SERVER_URL;
 const routes = {
     description: {
         path: "/describe",
