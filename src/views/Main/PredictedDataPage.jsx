@@ -1,12 +1,40 @@
 import React, { Component } from "react";
-//import api from "../../services/api";
-
+import api from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import PredictedFileUpload from "../../components/Forms/FormComponents/PredictedFileUpload";
+import plumber from "../../services/dataHelpers";
+import PredictionApprovalStatusTable from "../../components/Tables/PredictionApprovalStatus";
 
 class PredictedDataPage extends Component {
-  state = {};
+  state = {
+    loadingFileUpload: false,
+    disableUploadButton: true,
+    predictedData: {},
+    tableData: {},
+  };
+
+  onUpload = async (fileData) => {
+    //console.log("data: ", data);
+    console.log("fileData: ", fileData);
+    this.setState({ loadingFileUpload: true, disableUploadButton: true });
+
+    const predictedData = await api.postForPrediction(fileData);
+    this.setState({ loadingFileUpload: false });
+    if (predictedData) {
+      const ApprovalStatusTableData =
+        plumber.formatApprovalStatusTableData(predictedData);
+      console.log("ApprovalStatusTableData: ", ApprovalStatusTableData);
+      let tableData = ApprovalStatusTableData;
+      this.setState({ tableData });
+    }
+  };
+
+  onFileReadyForUpload = (value) => {
+    this.setState({ disableUploadButton: value });
+  };
   render() {
+    const { loadingFileUpload, disableUploadButton, tableData } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100vh " }}>
         <div className="mx-auto container">
@@ -30,6 +58,13 @@ class PredictedDataPage extends Component {
               </li>
             </ul>
           </div>
+          <PredictedFileUpload
+            onFileReadyForUpload={this.onFileReadyForUpload}
+            disableUploadButton={disableUploadButton}
+            onUpload={this.onUpload}
+            loading={loadingFileUpload}
+          />
+          <PredictionApprovalStatusTable data={tableData} />
         </div>
       </div>
     );

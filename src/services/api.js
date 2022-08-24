@@ -34,6 +34,10 @@ const routes = {
     predict: {
         path: "/predict",
         method: "GET"
+    },
+    mlpredict: {
+        path: "/datapredict",
+        method: "POST"
     }
 }
 const postDescription = async (requestObject) => {
@@ -51,6 +55,11 @@ const getPrediction = async () => {
     return data;
 }
 
-let exports = { postDescription, postDistributionChanged, getPrediction };
+const postForPrediction = async (uploadData) => {
+    const { data } = await http.post(config.mockUrl + routes.mlpredict.path);
+    return data;
+}
+
+let exports = { postDescription, postDistributionChanged, getPrediction, postForPrediction };
 
 export default exports;

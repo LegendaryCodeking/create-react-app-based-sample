@@ -3,6 +3,11 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleCheck,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 class PredictionApprovalStatusTable extends Component {
   state = {
@@ -14,7 +19,43 @@ class PredictionApprovalStatusTable extends Component {
     columnData: [{ field: "make" }, { field: "model" }, { field: "price" }],
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    let { columnData, rowData } = this.props.data;
+    columnData = this.createColumnIcon(columnData);
+    this.setState({ columnData, rowData });
+  }
+
+  createColumnIcon = (columnsData) => {
+    columnsData.forEach((column) => {
+      if (column.field === "Status") {
+        column.cellRenderer = (params) => {
+          if (params.value === "Approved") {
+            return (
+              <span className="text-green-500 ml-4">
+                <FontAwesomeIcon icon={faCircleCheck} />
+              </span>
+            );
+          } else {
+            return (
+              <span className="text-red-600 ml-4">
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </span>
+            );
+          }
+        };
+      }
+    });
+
+    return columnsData;
+  };
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      let { columnData, rowData } = this.props.data;
+      columnData = this.createColumnIcon(columnData);
+      this.setState({ columnData, rowData });
+    }
+  }
 
   gridReady = (params) => {
     let gridApi = params.api;
@@ -28,7 +69,7 @@ class PredictionApprovalStatusTable extends Component {
   render() {
     const { rowData, columnData } = this.state;
     return (
-      <div className="w-full bg-darkblue text-white mb-2">
+      <div className="w-full bg-darkblue text-white mb-2 mt-8">
         <div className=" bg-darkblue border border-b-1 py-2 px-2 w-full flex">
           <div className="w-1/2">
             <span className="font-bold text-white text-xs float-left mt-2 ml-2">
@@ -113,12 +154,12 @@ class PredictionApprovalStatusTable extends Component {
         <div className="w-full h-70">
           <div
             className="ag-theme-alpine"
-            style={{ height: "15rem", width: "100%" }}
+            style={{ height: "25rem", width: "100%" }}
           >
             <AgGridReact
               onGridReady={this.gridReady}
               rowData={rowData}
-              pagination={false}
+              pagination={true}
               paginationPageSize={7}
               columnDefs={columnData}
             ></AgGridReact>

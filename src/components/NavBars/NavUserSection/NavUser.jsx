@@ -25,14 +25,10 @@ class NavUser extends Component {
           inline={true}
           label={
             <Avatar
-              color={Avatar.getRandomColor("sitebase", [
-                "red",
-                "green",
-                "blue",
-              ])}
+              color={Avatar.getRandomColor("sitebase", ["red", "green"])}
               name={user.fullName}
-              className="rounded-full ring ring-lightblue"
-              size="40px"
+              className="rounded-full ring-2 ring-lightblue ring-offset-4 ring-offset-darkblue"
+              size="35px"
             />
           }
         >

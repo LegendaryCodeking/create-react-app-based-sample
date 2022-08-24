@@ -8,41 +8,20 @@ class ROCChart extends Component {
   state = {
     options: {
       autoSize: true,
-      title: {
-        text: "Fuel Spending (2019)",
-      },
       background: {
         fill: "#131823",
       },
       theme: "ag-default-dark",
-      data: [
-        {
-          quarter: "Q1",
-          petrol: 200,
-          diesel: 100,
-        },
-        {
-          quarter: "Q2",
-          petrol: 300,
-          diesel: 130,
-        },
-        {
-          quarter: "Q3",
-          petrol: 350,
-          diesel: 160,
-        },
-        {
-          quarter: "Q4",
-          petrol: 400,
-          diesel: 200,
-        },
-      ],
       axes: [
         {
           type: "number",
           position: "left",
           tick: {
             count: 10,
+          },
+          title: {
+            text: "True positive rate",
+            enabled: true,
           },
         },
         {
@@ -51,6 +30,10 @@ class ROCChart extends Component {
           tick: {
             count: 10,
           },
+          title: {
+            text: "False positive rate",
+            enabled: true,
+          },
         },
       ],
       series: [
@@ -58,11 +41,20 @@ class ROCChart extends Component {
           xKey: "false_positive",
           yKey: "true_positive",
           yName: "True positive",
+          marker: {
+            size: 5,
+          },
+          data: [],
         },
         {
           xKey: "false_positive",
           yKey: "threshold",
           yName: "Threshold",
+          strokeWidth: 1,
+          strokeOpacity: 0.5,
+          lineDash: [3, 3],
+
+          data: [],
         },
       ],
     },
@@ -74,7 +66,8 @@ class ROCChart extends Component {
     if (data) {
       let ROCdata = plumber.formatROCData(data);
       console.log("ROCdata: ", ROCdata);
-      options.data = ROCdata;
+      options.series[0].data = ROCdata.TrueVsFalse;
+      options.series[1].data = ROCdata.FalseVsThresholdArray;
 
       this.setState({ options });
     }
