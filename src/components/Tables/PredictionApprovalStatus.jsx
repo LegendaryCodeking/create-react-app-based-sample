@@ -11,21 +11,20 @@ import {
 
 class PredictionApprovalStatusTable extends Component {
   state = {
-    rowData: [
-      { make: "Toyota", model: "Celica", price: 35000 },
-      { make: "Ford", model: "Mondeo", price: 32000 },
-      { make: "Porsche", model: "Boxster", price: 72000 },
-    ],
-    columnData: [{ field: "make" }, { field: "model" }, { field: "price" }],
+    rowData: [],
+    columnData: [],
   };
 
   componentDidMount() {
     let { columnData, rowData } = this.props.data;
-    columnData = this.createColumnIcon(columnData);
-    this.setState({ columnData, rowData });
+    if (columnData) {
+      columnData = this.createColumnIcon(columnData);
+      this.setState({ columnData, rowData });
+    }
   }
 
   createColumnIcon = (columnsData) => {
+    console.log("columnsData: ", columnsData);
     columnsData.forEach((column) => {
       if (column.field === "Status") {
         column.cellRenderer = (params) => {
@@ -50,11 +49,22 @@ class PredictionApprovalStatusTable extends Component {
   };
 
   componentDidUpdate(previousProps, previousState) {
+    const { api } = this.gridRef.current;
     if (previousProps !== this.props) {
       let { columnData, rowData } = this.props.data;
-      columnData = this.createColumnIcon(columnData);
-      this.setState({ columnData, rowData });
+      if (columnData) {
+        columnData = this.createColumnIcon(columnData);
+        this.setState({ columnData, rowData });
+        setTimeout(() => {
+          api.sizeColumnsToFit();
+        }, 100);
+      }
     }
+  }
+
+  constructor(props) {
+    super(props);
+    this.gridRef = React.createRef();
   }
 
   gridReady = (params) => {
@@ -64,7 +74,7 @@ class PredictionApprovalStatusTable extends Component {
     setTimeout(() => {
       gridApi.sizeColumnsToFit();
       //gridApi.redrawRows();
-    }, 100);
+    }, 2000);
   };
   render() {
     const { rowData, columnData } = this.state;
@@ -73,7 +83,7 @@ class PredictionApprovalStatusTable extends Component {
         <div className=" bg-darkblue border border-b-1 py-2 px-2 w-full flex">
           <div className="w-1/2">
             <span className="font-bold text-white text-xs float-left mt-2 ml-2">
-              Model performance metrics
+              Approval status
             </span>
           </div>
           <div className="w-1/2">
@@ -154,13 +164,14 @@ class PredictionApprovalStatusTable extends Component {
         <div className="w-full h-70">
           <div
             className="ag-theme-alpine"
-            style={{ height: "25rem", width: "100%" }}
+            style={{ height: "30rem", width: "100%" }}
           >
             <AgGridReact
               onGridReady={this.gridReady}
+              ref={this.gridRef}
               rowData={rowData}
               pagination={true}
-              paginationPageSize={7}
+              paginationPageSize={9}
               columnDefs={columnData}
             ></AgGridReact>
           </div>

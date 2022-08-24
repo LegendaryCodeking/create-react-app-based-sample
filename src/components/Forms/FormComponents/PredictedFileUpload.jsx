@@ -9,13 +9,15 @@ import * as XLSX from "xlsx";
 class PredictedFileUpload extends Component {
   state = {
     show: true,
-    selectedFile: null,
+    selectedFile: "",
     uploadData: [],
     disableUploadButton: true,
+    disableCancelButton: true,
   };
 
   onChange = (event) => {
-    console.log("e: ", event.target.files[0]);
+    console.log("e: ", event.target.value);
+    this.setState({ selectedFile: event.target.value });
     const sFile = event.target.files[0];
     const fileType = this.getFileType(sFile.name)[0];
     console.log("fileType: ", fileType);
@@ -29,7 +31,10 @@ class PredictedFileUpload extends Component {
           const worksheet = workbook.Sheets[sheetName];
           const json = XLSX.utils.sheet_to_json(worksheet);
           //console.log(json);
-          this.setState({ uploadData: json });
+          this.setState({
+            uploadData: json,
+            disableCancelButton: false,
+          });
           this.props.onFileReadyForUpload(false);
 
           /* this.props.onUpload({
@@ -41,6 +46,10 @@ class PredictedFileUpload extends Component {
     } else {
       toast.error("File does not meet requirements");
     }
+  };
+
+  onCancel = () => {
+    this.setState({ selectedFile: "" });
   };
 
   getFileType = (filename) => {
@@ -58,6 +67,7 @@ class PredictedFileUpload extends Component {
 
   render() {
     const { loading, disableUploadButton } = this.props;
+    const { disableCancelButton, selectedFile } = this.state;
     console.log("loading: ", loading);
     return (
       <div className={this.state.show ? "flex mb-4" : "hidden"}>
@@ -70,6 +80,7 @@ class PredictedFileUpload extends Component {
           <input
             className="form-control block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
             aria-describedby="user_avatar_help"
+            value={selectedFile}
             type="file"
             accept=".xlsx,.xls,.csv"
             onChange={this.onChange}
@@ -99,7 +110,8 @@ class PredictedFileUpload extends Component {
         <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
           <div className="flex h-full justify-end">
             <button
-              disabled={true}
+              disabled={disableCancelButton}
+              onClick={this.onCancel}
               className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled"
             >
               <FontAwesomeIcon className="text-xs font-bold" icon={faCancel} />
