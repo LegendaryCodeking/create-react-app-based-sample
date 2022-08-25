@@ -29,3 +29,18 @@ Cypress.Commands.add('login', (email, password) => {
     cy.get('input[name="password"]').type(password)
     cy.get('#submitBtn').click()
 })
+
+Cypress.Commands.add('register', (user) => {
+    cy.get('input[name="fullName"]').type(user.fullName)
+    cy.get('input[name="username"]').type(user.username)
+    cy.get('input[name="personalEmail"]').type(user.personalEmail)
+    cy.get('input[name="companyDesignation"]').type(user.companyDesignation)
+    cy.get('select[name="companyType"]').type(user.companyType)
+    cy.get('input[name="companyEmail"]').type(user.companyEmail)
+    cy.get('input[name="loanCount"]').type(user.loanCount)
+    cy.get('input[name="numberOfCustomers"]').type(user.numberOfCustomers)
+    cy.get('input[name="location"]').type(user.location)
+    cy.get('input[name="password"]').type(user.password)
+    cy.get('input[name="confirmPassword"]').type(user.confirmPassword)
+    cy.get('#registerSubmitButton').click()
+})

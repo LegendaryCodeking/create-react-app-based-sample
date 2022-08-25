@@ -347,6 +347,7 @@ class SignUpForm extends Component {
             <button
               className="bg-white m-auto hover:bg-eggyellow2 place-self-center text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline w-6/12"
               type="button"
+              id="registerSubmitButton"
               onClick={this.submitForm}
             >
               <div className={loading ? "" : "hidden"}>
