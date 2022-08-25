@@ -47,6 +47,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "secure-start": "HTTPS=true npm start",
     "build": "react-scripts build",
     "test-react": "react-scripts test",
     "test": "npx cypress run",
