@@ -3,7 +3,7 @@ import React, { Component } from "react";
 //import FormAlert from "./FormComponents/FormAlert";
 
 import Joi from "joi-browser";
-import http from "../../services/httpService";
+import api from "../../services/api";
 //import config from "../../config.json";
 import auth from "../../services/authService";
 
@@ -20,7 +20,6 @@ import {
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
 
-const server_url = process.env.REACT_APP_SERVER_URL;
 class SignUpForm extends Component {
   state = {
     newUser: {
@@ -118,24 +117,22 @@ class SignUpForm extends Component {
   onRegister = async (user) => {
     console.log("user: ", user);
 
-    const { data, status } = await http
-      .post(server_url + "/register", user)
-      .catch((err) => {
-        this.setLoading(false);
-      });
+    const response = await api.postRegister(user).catch((err) => {
+      this.setLoading(false);
+    });
 
     this.setLoading(false);
 
-    if (data.status === "success" && status === 200) {
-      auth.logIn(data.token);
+    if (response.data.status === "success" && response.status === 200) {
+      auth.logIn(response.data.token);
 
       this.props.onLogin();
       this.props.history.push("/cst");
     } else {
-      console.log("error", data.status);
+      console.log("error", response.data.status);
       this.setState({
         errors: {
-          apiError: data.reason,
+          apiError: response.data.reason,
         },
       });
     }

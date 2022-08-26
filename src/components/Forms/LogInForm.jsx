@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import Joi from "joi-browser";
-import http from "../../services/httpService";
+//import http from "../../services/httpService";
+import api from "../../services/api";
 import auth from "../../services/authService";
 //import config from "../../config.json";
 import { toast } from "react-toastify";
@@ -15,9 +16,6 @@ import {
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
-
-const server_url = process.env.REACT_APP_SERVER_URL;
-console.log("server_url: ", server_url);
 
 class LogInForm extends Component {
   state = {
@@ -80,30 +78,28 @@ class LogInForm extends Component {
 
     this.setState({ loading: true });
 
-    const { data, status } = await http
-      .post(server_url + "/login", userObject)
-      .catch((err) => {
-        console.log("caught error");
-        this.setLoading(false);
-      });
-    console.log("status: ", status);
-    console.log("data: ", data);
+    const response = await api.postLogin(userObject).catch((err) => {
+      console.log("caught error");
+      this.setLoading(false);
+    });
+    console.log("status: ", response.status);
+    console.log("data: ", response.data);
 
     //this.setState({ loading: false });
     this.setLoading(false);
 
-    if (status === 200 && data.status === "failed") {
+    if (response.status === 200 && response.data.status === "failed") {
       //console.log("check your error");
 
       this.setState({
         errors: {
-          error: data.reason,
+          error: response.data.reason,
         },
       });
       /* user.loggedIn = false;
             this.props.onLogin(user); */
-    } else if (status === 200 && data.status === "success") {
-      auth.logIn(data.token);
+    } else if (response.status === 200 && response.data.status === "success") {
+      auth.logIn(response.data.token);
       this.props.onLogin();
 
       toast.success("Login successful! Redirecting you...");

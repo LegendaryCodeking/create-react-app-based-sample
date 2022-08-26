@@ -1,7 +1,6 @@
 import http from "./httpService"
 import config from "../config.json"
 
-//const server_url = process.env.REACT_APP_SERVER_URL;
 const routes = {
     description: {
         path: "/describe",
@@ -60,6 +59,16 @@ const postForPrediction = async (uploadData) => {
     return data;
 }
 
-let exports = { postDescription, postDistributionChanged, getPrediction, postForPrediction };
+const postLogin = async (user) => {
+    const response = await http.post(config.mockUrl + routes.login.path);
+    return response;
+}
+
+const postRegister = async (user) => {
+    const response = await http.post(config.mockUrl + routes.register.path);
+    return response;
+}
+
+let exports = { postDescription, postDistributionChanged, getPrediction, postForPrediction, postLogin, postRegister };
 
 export default exports;
