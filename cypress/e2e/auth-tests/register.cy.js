@@ -17,6 +17,6 @@ describe('Register', () => {
         cy.visit('http://localhost:3000/auth/register')
         cy.location('pathname').should('eq', '/auth/register')
         cy.register(user);
-        cy.location('pathname').should('eq', '/auth/register')
+        cy.location('pathname').should('eq', '/cst/dashboard')
     })
 })

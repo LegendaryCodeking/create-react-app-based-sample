@@ -1,4 +1,4 @@
-describe('Auth api login test', () => {
+/* describe('Auth api login test', () => {
     it('tests login api', () => {
         cy.request('POST', Cypress.env('login_url'), {
             username: 'testuser',
@@ -33,4 +33,4 @@ describe('Auth api register test', () => {
             }
         )
     })
-})
+}) */
