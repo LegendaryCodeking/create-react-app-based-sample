@@ -5,8 +5,8 @@ import TargetVariableInput from "./FormComponents/targetVariableInput";
 import BinaryApprovedInput from "./FormComponents/binaryApprovedInput";
 import BinaryRejectedInput from "./FormComponents/binaryRejectedInput";
 
-import config from "../../config.json";
-import http from "../../services/httpService";
+//import config from "../../config.json";
+import api from "../../services/api";
 import plumber from "../../services/dataHelpers";
 import { toast } from "react-toastify";
 
@@ -31,14 +31,13 @@ class TVSUploadForm extends Component {
   onUpload = async (fileData) => {
     console.log("fileData: ", fileData);
     this.setState({ loadingFileUpload: true, disableUploadButton: true });
-    const { data } = await http
-      .post(config.mockUrl + "/upload", fileData)
-      .catch((error) => {
-        console.log("error: ", error);
-      });
+    const response = await api.postUploadData(fileData).catch((error) => {
+      console.log("error: ", error);
+    });
+    console.log("response: ", response);
     this.setState({ loadingFileUpload: false });
 
-    if (data.status) {
+    if (response.status === 200) {
       this.setState({ formReadyForSecondaryInput: true });
       let dataHeaders = plumber.getDataHeaders(fileData.upload_data);
       this.setState({ dataHeaders });

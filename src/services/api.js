@@ -6,6 +6,10 @@ const routes = {
         path: "/describe",
         method: "POST"
     },
+    upload: {
+        path: "/upload",
+        method: "POST"
+    },
     changeDistribution: {
         path: "/changedistribution",
         method: "POST"
@@ -69,6 +73,11 @@ const postRegister = async (user) => {
     return response;
 }
 
-let exports = { postDescription, postDistributionChanged, getPrediction, postForPrediction, postLogin, postRegister };
+const postUploadData = async (uploadData) => {
+    const response = await http.post(config.mockUrl + routes.upload.path, uploadData);
+    return response;
+}
+
+let exports = { postDescription, postDistributionChanged, getPrediction, postForPrediction, postLogin, postRegister, postUploadData };
 
 export default exports;
