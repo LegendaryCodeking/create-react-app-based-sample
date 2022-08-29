@@ -33,6 +33,7 @@ class TVSUploadForm extends Component {
     this.setState({ loadingFileUpload: true, disableUploadButton: true });
     const response = await api.postUploadData(fileData).catch((error) => {
       console.log("error: ", error);
+      response.status = 404;
     });
     console.log("response: ", response);
     this.setState({ loadingFileUpload: false });
