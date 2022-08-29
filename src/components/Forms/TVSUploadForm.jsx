@@ -32,7 +32,7 @@ class TVSUploadForm extends Component {
     console.log("fileData: ", fileData);
     this.setState({ loadingFileUpload: true, disableUploadButton: true });
     const { data } = await http
-      .post(config.apiEndoint + "/upload", fileData)
+      .post(config.mockUrl + "/upload", fileData)
       .catch((error) => {
         console.log("error: ", error);
       });
