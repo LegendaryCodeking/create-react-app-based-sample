@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import api from "../../services/api";
 //import config from "../../config.json";
-import auth from "../../services/authService";
+//import auth from "../../services/authService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,9 +13,9 @@ import {
   faLock,
   faUserPlus,
   faEnvelope,
-  faHandHoldingDollar,
-  faUsers,
+  faUserGroup,
   faMapLocation,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
@@ -23,17 +23,16 @@ import { Spinner } from "flowbite-react";
 class SignUpForm extends Component {
   state = {
     newUser: {
-      username: "",
+      userName: "",
       personalEmail: "",
       companyEmail: "",
       companyDesignation: "",
-      loanCount: "",
       location: "",
-      numberOfCustomers: "",
       password: "",
       confirmPassword: "",
-      fullName: "",
-      companyType: "",
+      companyName: "",
+      firstName: "",
+      lastName: "",
     },
     errors: {},
     loading: false,
@@ -50,17 +49,13 @@ class SignUpForm extends Component {
   };
 
   schema = {
-    fullName: Joi.string().min(4).required().label("Full name"),
-    username: Joi.string().min(5).max(20).required().label("User name"),
+    firstName: Joi.string().min(4).required().label("First name"),
+    lastName: Joi.string().min(4).required().label("Last name"),
+    userName: Joi.string().min(5).max(20).required().label("User name"),
     personalEmail: Joi.string().required().label("Personal email"),
     companyDesignation: Joi.string().required().label("Company designation"),
-    companyType: Joi.required().label("Company type"),
+    companyName: Joi.required().label("Company Name"),
     companyEmail: Joi.string().email().required().label("Company email"),
-    loanCount: Joi.number().min(0).required().label("Loan Number"),
-    numberOfCustomers: Joi.number()
-      .min(0)
-      .required()
-      .label("Number of customers"),
     location: Joi.string().min(4).max(20).required().label("Location"),
     password: Joi.string().min(8).max(25).required().label("Password"),
     confirmPassword: Joi.any()
@@ -117,17 +112,33 @@ class SignUpForm extends Component {
   onRegister = async (user) => {
     console.log("user: ", user);
 
-    const response = await api.postRegister(user).catch((err) => {
+    let { newUser } = this.state;
+
+    let registerUser = {
+      username: newUser.userName,
+      email: newUser.personalEmail,
+      company_email: newUser.companyEmail,
+      company_designation: newUser.companyDesignation,
+      company_location: newUser.location,
+      total_customers: 0,
+      password: newUser.password,
+      company_name: newUser.companyName,
+      first_name: newUser.firstName,
+      last_name: newUser.lastName,
+    };
+
+    const response = await api.postRegister(registerUser).catch((err) => {
       this.setLoading(false);
     });
+    console.log("response: ", response);
 
     this.setLoading(false);
 
-    if (response.data.status === "success" && response.status === 200) {
-      auth.logIn(response.data.token);
+    if (response.data.user.is_active && response.status === 200) {
+      //auth.logIn(response.data.token);
 
-      this.props.onLogin();
-      this.props.history.push("/cst");
+      //this.props.onLogin();
+      this.props.history.push("/auth/login");
     } else {
       console.log("error", response.data.status);
       this.setState({
@@ -136,15 +147,6 @@ class SignUpForm extends Component {
         },
       });
     }
-
-    /* http
-      .post(config.apiEndoint + "/register", user)
-      .then((result) => {})
-      .catch((error) => {
-        console.log("error: ", error);
-        userObject.loggedIn = false;
-        this.props.onLogin(userObject);
-      }); */
   };
 
   setLoading = (value) => {
@@ -182,10 +184,10 @@ class SignUpForm extends Component {
               <input
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Full name"
-                value={newUser.fullName}
+                placeholder="First Name"
+                value={newUser.firstName}
                 onChange={this.handleChange}
-                name="fullName"
+                name="firstName"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faUser} />
@@ -195,11 +197,10 @@ class SignUpForm extends Component {
               <input
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Username"
-                autoComplete="username"
+                placeholder="Last Name"
                 onChange={this.handleChange}
-                value={newUser.username}
-                name="username"
+                value={newUser.lastName}
+                name="lastName"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon className="text-darkblue" icon={faUser} />
@@ -211,7 +212,20 @@ class SignUpForm extends Component {
               <input
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Personal email"
+                placeholder="Username"
+                onChange={this.handleChange}
+                value={newUser.userName}
+                name="userName"
+              ></input>
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
+                <FontAwesomeIcon className="text-darkblue" icon={faUser} />
+              </span>
+            </div>
+            <div className="flex w-6/12 p-2">
+              <input
+                type="text"
+                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                placeholder="Personal Email"
                 onChange={this.handleChange}
                 value={newUser.personalEmail}
                 name="personalEmail"
@@ -220,33 +234,20 @@ class SignUpForm extends Component {
                 <FontAwesomeIcon className="text-darkblue" icon={faEnvelope} />
               </span>
             </div>
+          </div>
+          <div className="mb-4 flex">
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Company designation"
+                placeholder="Company name"
                 onChange={this.handleChange}
-                value={newUser.companyDesignation}
-                name="companyDesignation"
+                value={newUser.companyName}
+                name="companyName"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faLock} />
+                <FontAwesomeIcon className="text-darkblue" icon={faUserGroup} />
               </span>
-            </div>
-          </div>
-          <div className="mb-4 flex">
-            <div className="flex w-6/12 p-2">
-              <select
-                className="rounded-none form-select appearance-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Type of company"
-                onChange={this.handleChange}
-                name="companyType"
-                value={newUser.companyType}
-              >
-                <option>Type of company</option>
-                <option>1</option>
-                <option>2</option>
-              </select>
             </div>
             <div className="flex w-6/12 p-2">
               <input
@@ -265,43 +266,25 @@ class SignUpForm extends Component {
           <div className="mb-4 flex">
             <div className="flex w-6/12 p-2">
               <input
-                type="number"
+                type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Number of loans per month"
+                placeholder="Company designation"
                 onChange={this.handleChange}
-                value={newUser.loanCount}
-                name="loanCount"
+                value={newUser.companyDesignation}
+                name="companyDesignation"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon
-                  className="text-darkblue"
-                  icon={faHandHoldingDollar}
-                />
+                <FontAwesomeIcon className="text-darkblue" icon={faUserGear} />
               </span>
             </div>
-            <div className="flex w-6/12 p-2">
-              <input
-                type="number"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
-                placeholder="Current number of customers"
-                onChange={this.handleChange}
-                value={newUser.numberOfCustomers}
-                name="numberOfCustomers"
-              ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faUsers} />
-              </span>
-            </div>
-          </div>
-          <div className="mb-4 flex">
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
                 className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
                 placeholder="Location"
-                name="location"
                 onChange={this.handleChange}
                 value={newUser.location}
+                name="location"
               ></input>
               <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
                 <FontAwesomeIcon
@@ -310,6 +293,8 @@ class SignUpForm extends Component {
                 />
               </span>
             </div>
+          </div>
+          <div className="mb-4 flex">
             <div className="flex w-6/12 p-2">
               <input
                 type="password"
@@ -324,8 +309,6 @@ class SignUpForm extends Component {
                 <FontAwesomeIcon className="text-darkblue" icon={faLock} />
               </span>
             </div>
-          </div>
-          <div className="mb-4 flex">
             <div className="flex w-6/12 p-2">
               <input
                 type="password"
@@ -340,6 +323,21 @@ class SignUpForm extends Component {
               </span>
             </div>
           </div>
+          {/* <div className="mb-4 flex">
+            <div className="flex w-6/12 p-2">
+              <input
+                type="password"
+                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                placeholder="Confirm password"
+                value={newUser.confirmPassword}
+                onChange={this.handleChange}
+                name="confirmPassword"
+              ></input>
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
+                <FontAwesomeIcon className="text-darkblue" icon={faLock} />
+              </span>
+            </div>
+          </div> */}
           <div className="flex items-center justify-between content-center">
             <button
               className="bg-white m-auto hover:bg-eggyellow2 place-self-center text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline w-6/12"
