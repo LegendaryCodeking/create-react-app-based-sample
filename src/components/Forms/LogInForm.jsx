@@ -78,18 +78,16 @@ class LogInForm extends Component {
 
     this.setState({ loading: true });
 
-    const response = await api.postLogin(userObject).catch((err) => {
-      console.log("caught error");
-      this.setLoading(false);
-    });
+    const response = await api.postLogin(userObject);
     console.log("status: ", response.status);
-    console.log("data: ", response.data);
+    console.log("login response: ", response);
 
     //this.setState({ loading: false });
     this.setLoading(false);
 
     if (response.status === 200 && response.data.status === "failed") {
       //console.log("check your error");
+      toast.error(response.data.reason);
 
       this.setState({
         errors: {
@@ -98,8 +96,8 @@ class LogInForm extends Component {
       });
       /* user.loggedIn = false;
             this.props.onLogin(user); */
-    } else if (response.status === 200 && response.data.status === "success") {
-      auth.logIn(response.data.token);
+    } else if (response.status === 200 && response.data.user.token) {
+      auth.logIn(response.data.user.token);
       this.props.onLogin();
 
       toast.success("Login successful! Redirecting you...");
@@ -107,6 +105,8 @@ class LogInForm extends Component {
       setTimeout(() => {
         this.props.history.push("/cst");
       }, 1000);
+    } else if (response.status === 400 && response.data.status === "failed") {
+      toast.error(response.data.reason);
     }
   };
 
@@ -152,11 +152,11 @@ class LogInForm extends Component {
                 value={account.username}
                 onChange={this.handleChange}
                 name="username"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow invalid:border-red-600 block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Username"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-eggyellow bg-darkblue border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-eggyellow" icon={faUser} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faUser} />
               </span>
             </div>
           </div>
@@ -168,15 +168,15 @@ class LogInForm extends Component {
               <input
                 type="password"
                 disabled={loading}
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Password"
                 autoComplete="off"
                 name="password"
                 value={account.password}
                 onChange={this.handleChange}
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-eggyellow bg-darkblue border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-eggyellow" icon={faLock} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faLock} />
               </span>
             </div>
           </div>

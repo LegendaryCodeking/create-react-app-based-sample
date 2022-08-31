@@ -9,15 +9,45 @@ import Avatar from "react-avatar";
 //import { Redirect } from "react-router-dom";
 
 class NavUser extends Component {
-  state = {};
+  state = {
+    user: {
+      company_email: "",
+      company_name: "",
+      exp: "",
+      first_name: "",
+      id: "",
+      last_name: "",
+      personal_email: "",
+      username: "",
+    },
+  };
+
+  componentDidMount() {
+    this.setUser();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      this.setUser();
+    }
+  }
 
   logOutUser = (user) => {
     console.log("user: ", user);
     //this.props.history.push("/auth");
     this.props.onLogOut();
   };
+
+  setUser = () => {
+    let { user: propUser } = this.props;
+    console.log("propUser: ", propUser);
+
+    if (propUser) {
+      this.setState({ user: propUser });
+    }
+  };
   render() {
-    let { user } = this.props;
+    let { user } = this.state;
     return (
       <div className="flex items-center md:order-2">
         <Dropdown
@@ -25,19 +55,28 @@ class NavUser extends Component {
           inline={true}
           label={
             <Avatar
-              color={Avatar.getRandomColor("sitebase", ["red", "green"])}
-              name={user.fullName}
-              className="rounded-full ring-2 ring-lightblue ring-offset-4 ring-offset-darkblue"
+              color={Avatar.getRandomColor("sitebase", [
+                "yellowgreen",
+                "cornflowerblue",
+                "teal",
+                "steelblue",
+                "slategray",
+                "salmon",
+              ])}
+              name={user.first_name + " " + user.last_name}
+              className="rounded-full ring-2 ring-eggyellow ring-offset-4 ring-offset-darkblue"
               size="35px"
             />
           }
         >
           <Dropdown.Header>
             <div className="flex">
-              <span className="block text-sm font-bold">{user.fullName}</span>
+              <span className="block text-sm font-bold">
+                {user.first_name + " " + user.last_name}
+              </span>
             </div>
             <span className="block truncate text-sm font-medium">
-              {user.personalEmail ? user.personalEmail : user.companyEmail}
+              {user.personal_email ? user.personal_email : user.company_email}
             </span>
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>

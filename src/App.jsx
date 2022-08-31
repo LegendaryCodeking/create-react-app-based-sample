@@ -41,7 +41,12 @@ class App extends Component {
     let { user, loading, TVSResultData } = this.state;
     return (
       <React.Fragment>
-        <ToastContainer autoClose={1000} />
+        <ToastContainer
+          autoClose={1000}
+          position="bottom-right"
+          theme="colored"
+          hideProgressBar={true}
+        />
         <Switch>
           <Route user={user} path="/" exact component={IndexPage} />
           <Route

@@ -13,12 +13,13 @@ import {
   faLock,
   faUserPlus,
   faEnvelope,
-  faUserGroup,
   faMapLocation,
   faUserGear,
+  faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 import RegisterRequirements from "../Cards/RegistrationRequirements";
 import { Spinner } from "flowbite-react";
+import { toast } from "react-toastify";
 
 class SignUpForm extends Component {
   state = {
@@ -134,11 +135,13 @@ class SignUpForm extends Component {
 
     this.setLoading(false);
 
-    if (response.data.user.is_active && response.status === 200) {
+    if (response.data.status === "success" && response.status === 200) {
       //auth.logIn(response.data.token);
 
       //this.props.onLogin();
       this.props.history.push("/auth/login");
+    } else if (response.status === 200 && response.data.status === "failed") {
+      toast.error(response.data.response);
     } else {
       console.log("error", response.data.status);
       this.setState({
@@ -183,27 +186,27 @@ class SignUpForm extends Component {
             <div className="w-6/12 flex p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="First Name"
                 value={newUser.firstName}
                 onChange={this.handleChange}
                 name="firstName"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faUser} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faUser} />
               </span>
             </div>
             <div className="w-6/12 flex p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Last Name"
                 onChange={this.handleChange}
                 value={newUser.lastName}
                 name="lastName"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faUser} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faUser} />
               </span>
             </div>
           </div>
@@ -211,27 +214,27 @@ class SignUpForm extends Component {
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Username"
                 onChange={this.handleChange}
                 value={newUser.userName}
                 name="userName"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faUser} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faUser} />
               </span>
             </div>
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Personal Email"
                 onChange={this.handleChange}
                 value={newUser.personalEmail}
                 name="personalEmail"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faEnvelope} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faEnvelope} />
               </span>
             </div>
           </div>
@@ -239,27 +242,27 @@ class SignUpForm extends Component {
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Company name"
                 onChange={this.handleChange}
                 value={newUser.companyName}
                 name="companyName"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faUserGroup} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faBuilding} />
               </span>
             </div>
             <div className="flex w-6/12 p-2">
               <input
                 type="email"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Company email address"
                 name="companyEmail"
                 value={newUser.companyEmail}
                 onChange={this.handleChange}
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faEnvelope} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faEnvelope} />
               </span>
             </div>
           </div>
@@ -267,30 +270,27 @@ class SignUpForm extends Component {
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Company designation"
                 onChange={this.handleChange}
                 value={newUser.companyDesignation}
                 name="companyDesignation"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faUserGear} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faUserGear} />
               </span>
             </div>
             <div className="flex w-6/12 p-2">
               <input
                 type="text"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Location"
                 onChange={this.handleChange}
                 value={newUser.location}
                 name="location"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon
-                  className="text-darkblue"
-                  icon={faMapLocation}
-                />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faMapLocation} />
               </span>
             </div>
           </div>
@@ -298,28 +298,28 @@ class SignUpForm extends Component {
             <div className="flex w-6/12 p-2">
               <input
                 type="password"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Password"
                 name="password"
                 autoComplete="new-password"
                 onChange={this.handleChange}
                 value={newUser.password}
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faLock} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faLock} />
               </span>
             </div>
             <div className="flex w-6/12 p-2">
               <input
                 type="password"
-                className="rounded-none bg-darkblue border text-eggyellow focus:ring-eggyellow focus:border-eggyellow block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 "
+                className="rounded-none bg-darkblue border text-eggyellow peer focus:ring-2 focus:ring-eggyellow focus:border-none block flex-1 min-w-0 w-full text-sm border-eggyellow p-2.5 focus:border-r-0"
                 placeholder="Confirm password"
                 value={newUser.confirmPassword}
                 onChange={this.handleChange}
                 name="confirmPassword"
               ></input>
-              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow">
-                <FontAwesomeIcon className="text-darkblue" icon={faLock} />
+              <span className="inline-flex items-center px-3 text-sm text-darkblue bg-eggyellow border border-l-0 border-eggyellow peer-focus:ring-2 peer-focus:ring-eggyellow peer-focus:bg-darkblue peer-focus:text-eggyellow peer-focus:border-none peer-focus:border-l-0 peer-focus:ring-l-0">
+                <FontAwesomeIcon className="" icon={faLock} />
               </span>
             </div>
           </div>

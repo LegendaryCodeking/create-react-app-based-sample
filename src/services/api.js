@@ -17,7 +17,7 @@ const routes = {
         method: "POST"
     },
     login: {
-        path: "/login",
+        path: "/login/",
         method: "POST"
     },
     register: {
@@ -66,7 +66,7 @@ const postForPrediction = async (uploadData) => {
 }
 
 const postLogin = async (user) => {
-    const response = await http.post(url + routes.login.path);
+    const response = await http.post(url + routes.login.path, user);
     return response;
 }
 
