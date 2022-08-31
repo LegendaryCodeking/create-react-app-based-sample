@@ -34,3 +34,14 @@ describe('Auth api register test', () => {
         )
     })
 }) */
+
+describe('HEALTH CHECK', () => {
+    it('Performs a healthcheck of all backend systems', () => {
+        cy.request('POST', Cypress.env('health_check_url')).then(
+            (response) => {
+                // response.body is automatically serialized into JSON
+                expect(response.body).to.have.property('status', 200) // true
+            }
+        )
+    })
+})

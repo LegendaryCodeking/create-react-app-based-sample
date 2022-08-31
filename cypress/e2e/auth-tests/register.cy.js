@@ -1,22 +1,47 @@
 let user = {
     username: "testuser",
-    personalEmail: "test@email.com",
-    companyEmail: "test@company.com",
-    companyDesignation: "2",
-    loanCount: 2,
-    location: "Nairobi",
-    numberOfCustomers: 2,
+    email: 'testuser@gmail.com',
+    company_email: "testco@co.com",
+    company_designation: "Tester",
+    company_location: "Test Location",
+    total_customers: 0,
     password: "Password@123",
-    confirmPassword: "Password@123",
-    fullName: "Test User",
-    companyType: "Company type",
+    confirm_password: "Password@123",
+    company_name: "Test Company",
+    first_name: "Test",
+    last_name: "User",
 };
 
-describe('Register', () => {
+let userObject = {
+    username: "testuser",
+    email: 'testuser@gmail.com',
+    company_email: "testco@co.com",
+    company_designation: "Tester",
+    company_location: "Test Location",
+    total_customers: 0,
+    password: "Password@123",
+    company_name: "Test Company",
+    first_name: "Test",
+    last_name: "User",
+};
+
+/* describe('Register', () => {
     it('tests register page', () => {
         cy.visit('http://localhost:3000/auth/register')
         cy.location('pathname').should('eq', '/auth/register')
         cy.register(user);
-        cy.location('pathname').should('eq', '/cst/dashboard')
+        cy.location('pathname').should('eq', '/auth/login')
+    })
+}) */
+
+
+describe('USER REGISTRATION CHECK', () => {
+    it('Performs a healthcheck of register API', () => {
+        cy.request('POST', Cypress.env('register_url'), userObject).then(
+            (response) => {
+                // response.body is automatically serialized into JSON
+                expect(response.body).to.have.property('status', "failed") // true
+            }
+        )
     })
 })
