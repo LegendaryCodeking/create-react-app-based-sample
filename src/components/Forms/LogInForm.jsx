@@ -96,8 +96,8 @@ class LogInForm extends Component {
       });
       /* user.loggedIn = false;
             this.props.onLogin(user); */
-    } else if (response.status === 200 && response.data.user.token) {
-      auth.logIn(response.data.user.token);
+    } else if (response.status === 200 && response.data.status === "success") {
+      auth.logIn(response.data.token);
       this.props.onLogin();
 
       toast.success("Login successful! Redirecting you...");

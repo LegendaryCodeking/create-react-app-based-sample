@@ -5,15 +5,15 @@ let server_url = process.env.REACT_APP_SERVER_URL;
 let url = server_url
 const routes = {
     description: {
-        path: "/describe",
+        path: "/describe/",
         method: "POST"
     },
     upload: {
-        path: "/upload",
+        path: "/upload/",
         method: "POST"
     },
     changeDistribution: {
-        path: "/changedistribution",
+        path: "/changedistribution/",
         method: "POST"
     },
     login: {
@@ -45,6 +45,12 @@ const routes = {
         method: "POST"
     }
 }
+
+/* let config = {
+    headers: {
+        Authorization: "Token " + localStorage.getItem('token')
+    }
+} */
 const postDescription = async (requestObject) => {
     const { data } = await http.post(url + routes.description.path, requestObject);
     return data;
@@ -61,7 +67,7 @@ const getPrediction = async () => {
 }
 
 const postForPrediction = async (uploadData) => {
-    const { data } = await http.post(url + routes.mlpredict.path);
+    const { data } = await http.post(url + routes.mlpredict.path, uploadData);
     return data;
 }
 
@@ -76,6 +82,7 @@ const postRegister = async (user) => {
 }
 
 const postUploadData = async (uploadData) => {
+    console.log('uploading file data: ', uploadData);
     const response = await http.post(url + routes.upload.path, uploadData);
     return response;
 }

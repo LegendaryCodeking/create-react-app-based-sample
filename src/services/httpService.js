@@ -13,6 +13,12 @@ axios.interceptors.response.use(null, error => {
     return Promise.reject(error);
 })
 
+const getTokenIfExists = () => {
+    let token = localStorage.getItem('token') ? localStorage.getItem('token') : "";
+    return token;
+}
+axios.defaults.headers.common['Authorization'] = 'Token ' + getTokenIfExists();
+
 const exportParameters = {
     get: axios.get,
     post: axios.post,
