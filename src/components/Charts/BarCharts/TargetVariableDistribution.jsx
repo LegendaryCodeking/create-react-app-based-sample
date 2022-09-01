@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 //import * as agCharts from "ag-charts-community";
 import { AgChartsReact } from "ag-charts-react";
-import plumber from "../../../services/dataHelpers";
 
 class TargetVariableDistributionBarChart extends Component {
   state = {
@@ -49,68 +48,53 @@ class TargetVariableDistributionBarChart extends Component {
       series: [
         {
           type: "column",
-          xKey: "variable",
-          yKey: "amount",
+          xKey: "x",
+          yKey: "y",
         },
       ],
     },
   };
 
   componentDidMount() {
-    const { rowData, columnData } = this.props.data;
+    const { data } = this.props;
     //const refinedChartData = plumber.getBinarySums(data);
+    this.plotCharts(data);
+  }
+
+  plotCharts = (data) => {
     const options = { ...this.state.options };
-    let formattedRowData = plumber.formatBarchartDistributionData(
-      rowData,
-      columnData.z
-    );
 
-    console.log("Target variable distribution Row data", formattedRowData);
+    console.log("Target variable distribution Row data", data);
 
-    options.data = formattedRowData;
+    options.data = data;
     options.series = [
       {
         type: "column",
         xKey: "x",
-        yKey: "Frequency",
+        yKey: "y",
       },
     ];
 
     this.setState({ options });
-  }
+  };
 
   componentDidUpdate(previosProps, previousState) {
-    let { data } = this.props;
     //const refinedChartData = plumber.getBinarySums(data);
-    if (previosProps.data !== data) {
-      const options = { ...this.state.options };
-      const { rowData, columnData } = this.props.data;
-      let formattedRowData = plumber.formatBarchartDistributionData(
-        rowData,
-        columnData.z
-      );
-      console.log("Target variable distribution Row data", formattedRowData);
-
-      options.data = formattedRowData;
-      options.series = [
-        {
-          type: "column",
-          xKey: "x",
-          yKey: "Frequency",
-        },
-      ];
-
-      this.setState({ options });
+    if (previosProps !== this.props) {
+      const { data } = this.props;
+      this.plotCharts(data);
     }
   }
   render() {
+    const { options } = this.state;
+    const { hidden } = this.props;
     return (
       <div
         className="p-4 mb-4 bg-mediumblue"
-        hidden={this.props.hidden}
+        hidden={hidden}
         style={{ height: "30rem" }}
       >
-        <AgChartsReact options={this.state.options} />
+        <AgChartsReact options={options} />
       </div>
     );
   }

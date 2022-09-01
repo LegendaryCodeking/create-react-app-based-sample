@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartColumn, faPieChart } from "@fortawesome/free-solid-svg-icons";
+import plumber from "../services/dataHelpers";
+import api from "../services/api";
 
 import TargetVariableCorrelationBarChart from "./Charts/BarCharts/TargetVariableCorrelation";
 import TargetVariableDistributionBarChart from "./Charts/BarCharts/TargetVariableDistribution";
@@ -9,6 +11,72 @@ import CreditApprovalStatusPieChart from "./Charts/PieCharts/CreditApprovalStatu
 class DataSummaryChartsSection extends Component {
   state = {
     barChart: false,
+    chartOneData: [],
+    chartTwoData: {},
+  };
+
+  componentDidMount() {
+    let { independentVariable, targetVariable } = this.props;
+    console.log("mount prop independentVariable ", independentVariable);
+    console.log("mount prop targetVariable ", targetVariable);
+    this.plotCharts(independentVariable, targetVariable);
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      let { independentVariable, targetVariable } = this.props;
+      console.log("update prop independentVariable ", independentVariable);
+      console.log("update prop targetVariable ", targetVariable);
+      this.plotCharts(independentVariable, targetVariable);
+    }
+  }
+
+  plotCharts = async (independentVariable, targetVariable) => {
+    console.log(
+      "EXPECTED SUMMARY CHART VARIABLE independentVariable: ",
+      independentVariable
+    );
+    console.log(
+      "EXPECTED SUMMARY CHART VARIABLE targetVariable: ",
+      targetVariable
+    );
+    if (
+      independentVariable !== "" &&
+      independentVariable !== " " &&
+      independentVariable !== null &&
+      targetVariable !== "" &&
+      targetVariable !== " " &&
+      targetVariable !== null
+    ) {
+      console.log("CHARTS SUMMARY NOT EMPTY", independentVariable);
+      let data = await this.getChartData(independentVariable);
+      console.log("data summary: ", data);
+      if (data) {
+        const chartOneData = plumber.formatBarChartOne(
+          data,
+          independentVariable
+        );
+        const chartTwoData = plumber.formatBarChartOne(data, targetVariable);
+        console.log("formattedData: ", chartOneData);
+        console.log("formattedData: ", chartTwoData);
+        this.setState({ chartOneData, chartTwoData });
+      }
+    }
+  };
+
+  getChartData = async (independentVariable) => {
+    let response = await api.postDistributionChanged({
+      variable_x: independentVariable,
+    });
+    console.log("response: ", response);
+
+    if (response.status === 200) {
+      let data = response.data;
+      console.log("SUMMARY CHARTS  ==> data: ", data);
+      return data;
+    } else {
+      return {};
+    }
   };
 
   onChartChanged = () => {
@@ -19,7 +87,7 @@ class DataSummaryChartsSection extends Component {
     this.setState({ barChart: newBarValue });
   };
   render() {
-    const { barChart } = this.state;
+    const { barChart, chartOneData, chartTwoData } = this.state;
     return (
       <div className="flex mb-4 text-white p-4">
         <div className="w-1/2 p-2">
@@ -29,7 +97,7 @@ class DataSummaryChartsSection extends Component {
                 Correlation of the target variable with other variables
               </span>
             </div>
-            <TargetVariableCorrelationBarChart data={this.props.data} />
+            <TargetVariableCorrelationBarChart data={chartOneData} />
           </div>
         </div>
         <div className="w-1/2 p-2">
@@ -60,11 +128,11 @@ class DataSummaryChartsSection extends Component {
               </span>
             </div>
             <TargetVariableDistributionBarChart
-              data={this.props.data}
+              data={chartTwoData}
               hidden={barChart}
             />
             <CreditApprovalStatusPieChart
-              data={this.props.data}
+              data={chartTwoData}
               hidden={!barChart}
             />
           </div>

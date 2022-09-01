@@ -9,7 +9,7 @@ function getDataHeaders(data) {
 
 function formatDataSummaryData(data) {
 
-    let actual = data.result_summary;
+    let actual = data["result_summary"];
 
     let data_Headers = Object.keys(actual);
 
@@ -86,7 +86,7 @@ function FormatDistroData(data, variable) {
         finalArray.push(pushObject);
     }
 
-    console.log('finalArray: ', finalArray);
+    console.log('PLUMBER ==> FORMATDISTRIBUTION:  finalArray: ', finalArray);
 
     let headers = {};
     headers.y = 'Frequency';
@@ -126,9 +126,6 @@ function formatBarchartDistributionData(data, variable) {
         }
         this[a.x].Frequency += a.Frequency;
     }, Object.create(null));
-
-    console.log(result);
-    console.log('strippedArray: ', strippedArray);
     return result;
 }
 
@@ -153,8 +150,6 @@ function formatPieChartDistributionData(data) {
         this[a.x].y += a.y;
     }, Object.create(null));
 
-    console.log(result);
-    console.log('strippedArray: ', strippedArray);
     return result;
 };
 
@@ -212,7 +207,6 @@ function humanizeText(str) {
 }
 
 function formatROCData(data) {
-    console.log('plumber ROC data: ', data);
     let ROCData = data.area_under_curve;
     let falsePositiveRate = ROCData.false_positive_rate;
     let truePositiveRate = ROCData.true_positive_rate;
@@ -233,6 +227,8 @@ function formatROCData(data) {
         FalseVsThresholdArray.push(threshValueObject);
     }
 
+
+
     //FalseVsThresholdArray = _.sortBy(FalseVsThresholdArray, ['false_positive'])
     FalseVsThresholdArray = createDefaultAxisData();
     return {
@@ -250,15 +246,11 @@ function createDefaultAxisData() {
             threshold: index
         })
     }
-
-    console.log('dataArray: ', dataArray);
     return dataArray;
 }
 
 function formatApprovalStatusTableData(data) {
-    console.log('data: ', data);
     let predictedData = data.predicted_data;
-    console.log('predictedData: ', predictedData);
     let headers = Object.keys(predictedData);
     let variableLength = predictedData[headers[0]].length
     let flattenedArray = [];
@@ -299,7 +291,44 @@ function formatApprovalStatusTableData(data) {
         rowData: flattenedArray
     };
 }
+const formatBarChartOne = (data, variable) => {
+    let baseData = data["result_variable_distribution"];
+    //let title = data.title;
+    let chartData = []
+    let frequencyData = baseData['Frequency'];
+    let variableData = baseData[variable];
+    console.log('PLUMBER ==> FORMATCHARTONE:  variable: ', variable);
+    console.log('PLUMBER ==> FORMATCHARTONE:  data: ', data);
+    console.log('PLUMBER ==> FORMATCHARTONE:  freqData: ', frequencyData);
+    console.log('PLUMBER ==> FORMATCHARTONE:  varData: ', variableData);
 
+    for (let index = 0; index < Object.keys(frequencyData).length; index++) {
+        console.log('index: ', index);
+        chartData.push({ x: variableData[index], y: frequencyData[index] })
+    }
+
+    console.log('chartData: ', chartData);
+    return chartData;
+}
+const formatBarChartTwo = (data, variable) => {
+    let baseData = data["result_variable_distribution"];
+    //let title = data.title;
+    let chartData = []
+    let frequencyData = baseData['Frequency'];
+    let variableData = baseData[variable];
+    console.log('PLUMBER ==> FORMATCHARTONE:  variable: ', variable);
+    console.log('PLUMBER ==> FORMATCHARTONE:  data: ', data);
+    console.log('PLUMBER ==> FORMATCHARTONE:  freqData: ', frequencyData);
+    console.log('PLUMBER ==> FORMATCHARTONE:  varData: ', variableData);
+
+    for (let index = 0; index < Object.keys(frequencyData).length; index++) {
+        console.log('index: ', index);
+        chartData.push({ x: variableData[index], y: frequencyData[index] })
+    }
+
+    console.log('chartData: ', chartData);
+    return chartData;
+}
 const exportvariables = {
     getDataHeaders,
     formatDataSummaryData,
@@ -309,7 +338,9 @@ const exportvariables = {
     formatPieChartDistributionData,
     formatPerformanceMetricTableData,
     formatROCData,
-    formatApprovalStatusTableData
+    formatApprovalStatusTableData,
+    formatBarChartOne,
+    formatBarChartTwo
 }
 
 

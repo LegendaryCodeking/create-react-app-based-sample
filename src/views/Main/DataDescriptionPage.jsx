@@ -19,42 +19,32 @@ class DataDescriptionPage extends Component {
     loading: false,
     statsData: {},
     currentSearchVariable: "",
-    barChartsRowData: [],
-    barChartsColumnData: {},
+    chartsData: {},
     filteredChartData: [],
     data_overview: {},
+    targetVariable: "",
+    independentVariable: "",
   };
   async componentDidMount() {
     const describedData = this.props.TVSResult;
 
     if (describedData) {
       const data = await api.postDescription(describedData);
-
       //
       const data_overview = data.data_overview;
-      const formattedData = plumber.formatDataSummaryData(data.summary_table);
+      const formattedData = plumber.formatDataSummaryData(
+        data["summary_table"]
+      );
+      console.log("Data description page formattedData: ", formattedData);
       this.setState({
         summaryData: formattedData,
         data_overview: data_overview,
+        targetVariable: describedData["target_variable"],
       });
     }
   }
   onVariableChanged = async (variable) => {
-    const distroData = await api.postDistributionChanged({
-      variable_x: variable,
-    });
-
-    if (distroData) {
-      let formattedDistroData = plumber.FormatDistroData(distroData, variable);
-
-      this.setState({
-        barChartsRowData: formattedDistroData.rowData,
-        barChartsColumnData: formattedDistroData.columnData,
-      });
-    }
-
-    //this.setState({ currentSearchVariable: variable });
-    //this.setChartsData(variable);
+    this.setState({ independentVariable: variable });
   };
 
   setChartsData = (variable) => {
@@ -72,8 +62,9 @@ class DataDescriptionPage extends Component {
       summaryData,
       data_overview,
       loading,
-      barChartsColumnData,
-      barChartsRowData,
+      targetVariable,
+      independentVariable,
+      chartsData,
     } = this.state;
     return (
       <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
@@ -121,14 +112,14 @@ class DataDescriptionPage extends Component {
           <DataDescriptionSearchInput
             show
             loading={loading}
+            targetVariable={targetVariable}
             data={summaryData}
             onVariableChanged={this.onVariableChanged}
           />
           <DataSummaryChartsSection
-            data={{
-              columnData: barChartsColumnData,
-              rowData: barChartsRowData,
-            }}
+            data={chartsData}
+            independentVariable={independentVariable}
+            targetVariable={targetVariable}
           />
         </div>
       </div>

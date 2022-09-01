@@ -54,50 +54,33 @@ class TargetVariableCorrelationBarChart extends Component {
   };
 
   componentDidMount() {
-    const { rowData, columnData } = this.props.data;
+    const { data } = this.props;
 
+    this.plotChart(data);
+  }
+
+  plotChart = (data) => {
     const options = { ...this.state.options };
 
-    options.data = rowData;
+    options.data = data;
 
     let serieData = [
       {
         type: "column",
-        xKey: columnData.x,
-        yKey: columnData.y,
+        xKey: "x",
+        yKey: "y",
       },
     ];
 
     options.series = serieData;
 
     this.setState({ options });
-  }
+  };
 
   componentDidUpdate(previousProps, previousState) {
     //let { data } = this.props;
-
-    console.log(
-      "previousState.options.data: ",
-      previousState.options.data,
-      this.props.data.rowData
-    );
-    if (previousState.options.data !== this.props.data.rowData) {
-      const options = { ...this.state.options };
-      const { rowData, columnData } = this.props.data;
-
-      options.data = rowData;
-
-      let serieData = [
-        {
-          type: "column",
-          xKey: columnData.x,
-          yKey: columnData.y,
-        },
-      ];
-
-      options.series = serieData;
-
-      this.setState({ options });
+    if (previousProps !== this.props) {
+      this.plotChart(this.props.data);
     }
   }
   render() {

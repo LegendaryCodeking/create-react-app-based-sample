@@ -57,8 +57,8 @@ const postDescription = async (requestObject) => {
 }
 
 const postDistributionChanged = async (requestObject) => {
-    const { data } = await http.post(url + routes.changeDistribution.path, requestObject);
-    return data;
+    const response = await http.post(url + routes.changeDistribution.path, requestObject);
+    return response;
 }
 
 const getPrediction = async () => {

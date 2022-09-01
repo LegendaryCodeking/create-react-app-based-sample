@@ -13,11 +13,26 @@ axios.interceptors.response.use(null, error => {
     return Promise.reject(error);
 })
 
+axios.interceptors.request.use((config) => {
+    console.log('config: ', config);
+    let requestURL = config.url;
+    let loginURL = process.env.REACT_APP_SERVER_URL + '/login/';
+    let registerURL = process.env.REACT_APP_SERVER_URL + '/register/';
+
+    if (requestURL !== loginURL && requestURL !== registerURL) {
+        console.log("not login");
+        config.headers['Authorization'] = 'Token ' + getTokenIfExists();
+    }
+    return config;
+}, (error) => {
+    console.log('error: ', error);
+    return Promise.reject(error);
+})
+
 const getTokenIfExists = () => {
     let token = localStorage.getItem('token') ? localStorage.getItem('token') : "";
     return token;
 }
-axios.defaults.headers.common['Authorization'] = 'Token ' + getTokenIfExists();
 
 const exportParameters = {
     get: axios.get,

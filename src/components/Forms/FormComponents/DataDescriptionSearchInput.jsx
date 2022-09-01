@@ -9,32 +9,51 @@ class DataDescriptionSearchInput extends Component {
     selectedValues: [],
     selectedValue: "",
     loading: false,
+    headers: [],
   };
 
   componentDidMount() {
-    let { headers } = this.props.data;
-    const { loading } = this.props;
+    let { data, targetVariable, loading } = this.props;
+    let headers = data.headers;
     this.setState({ loading });
     console.log("headers: ", headers);
 
     if (headers) {
       console.log("headers set");
+      headers = headers.filter((header) => header !== targetVariable);
+      this.setState({ headers });
     }
-
-    console.log("this.props.data: ", this.props.data);
 
     /* if (headers.length === 0) {
     } */
   }
 
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      let { data, targetVariable, loading } = this.props;
+      let headers = data.headers;
+      this.setState({ loading });
+      console.log("headers: ", headers);
+
+      if (headers) {
+        console.log("headers set");
+        headers = headers.filter((header) => header !== targetVariable);
+        this.setState({ headers });
+      }
+    }
+  }
+
   onChange = (e) => {
     let variable = e.target.value;
-    this.setState({ selectedValue: variable });
-    this.props.onVariableChanged(variable);
+    if (variable !== "" || variable !== " ") {
+      console.log("****************", variable);
+      this.setState({ selectedValue: variable });
+      this.props.onVariableChanged(variable);
+    }
   };
   render() {
     const { show } = this.props;
-    const { headers } = this.props.data;
+    const { headers } = this.state;
     const { selectedValue, loading } = this.state;
     return (
       <div className={`flex px-4 pt-4 ${show ? "" : "hidden"}`}>
