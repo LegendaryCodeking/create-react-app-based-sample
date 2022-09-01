@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import * as agCharts from "ag-charts-community";
+
 import { AgChartsReact } from "ag-charts-react";
 
 class TargetVariableDistributionBarChart extends Component {
@@ -9,7 +9,11 @@ class TargetVariableDistributionBarChart extends Component {
       subtitle: {
         text: "in billion U.S. dollars",
       },
-      data: [],
+      data: [
+        {
+          placeholder: "placeholder",
+        },
+      ],
       background: {
         fill: "#131823",
       },
@@ -28,46 +32,45 @@ class TargetVariableDistributionBarChart extends Component {
             },
           ],
           title: {
-            text: "Binary",
+            text: "Variable",
             enabled: true,
           },
         },
         {
           type: "number",
           position: "left",
-          gridStyle: {
-            stroke: "green",
-            lineDash: [8, 3, 3, 3],
-          },
+          gridStyle: [
+            {
+              stroke: "white",
+              lineDash: [8, 3, 3, 3],
+            },
+            {
+              stroke: "white",
+              lineDash: [8, 3, 3, 3],
+            },
+          ],
           title: {
             text: "Frequency",
             enabled: true,
           },
         },
       ],
-      series: [
-        {
-          type: "column",
-          xKey: "x",
-          yKey: "y",
-        },
-      ],
+      series: [],
     },
   };
 
   componentDidMount() {
     const { data } = this.props;
-    //const refinedChartData = plumber.getBinarySums(data);
-    this.plotCharts(data);
+
+    this.plotChart(data);
   }
 
-  plotCharts = (data) => {
+  plotChart = (data) => {
     const options = { ...this.state.options };
 
-    console.log("Target variable distribution Row data", data);
-
     options.data = data;
-    options.series = [
+
+    let serieData = [
       {
         type: "column",
         xKey: "x",
@@ -75,26 +78,22 @@ class TargetVariableDistributionBarChart extends Component {
       },
     ];
 
+    options.series = serieData;
+
     this.setState({ options });
   };
 
-  componentDidUpdate(previosProps, previousState) {
-    //const refinedChartData = plumber.getBinarySums(data);
-    if (previosProps !== this.props) {
-      const { data } = this.props;
-      this.plotCharts(data);
+  componentDidUpdate(previousProps, previousState) {
+    //let { data } = this.props;
+    if (previousProps !== this.props) {
+      this.plotChart(this.props.data);
     }
   }
   render() {
-    const { options } = this.state;
-    const { hidden } = this.props;
+    //const root = am5.Root.new("chartdiv");
     return (
-      <div
-        className="p-4 mb-4 bg-mediumblue"
-        hidden={hidden}
-        style={{ height: "30rem" }}
-      >
-        <AgChartsReact options={options} />
+      <div className="p-4 mb-4 bg-mediumblue" style={{ height: "30rem" }}>
+        <AgChartsReact options={this.state.options} />
       </div>
     );
   }

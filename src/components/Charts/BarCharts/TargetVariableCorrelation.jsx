@@ -39,10 +39,16 @@ class TargetVariableCorrelationBarChart extends Component {
         {
           type: "number",
           position: "left",
-          gridStyle: {
-            stroke: "green",
-            lineDash: [8, 3, 3, 3],
-          },
+          gridStyle: [
+            {
+              stroke: "white",
+              lineDash: [8, 3, 3, 3],
+            },
+            {
+              stroke: "white",
+              lineDash: [8, 3, 3, 3],
+            },
+          ],
           title: {
             text: "Frequency",
             enabled: true,

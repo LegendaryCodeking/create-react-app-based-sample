@@ -6,7 +6,7 @@ import api from "../services/api";
 
 import TargetVariableCorrelationBarChart from "./Charts/BarCharts/TargetVariableCorrelation";
 import TargetVariableDistributionBarChart from "./Charts/BarCharts/TargetVariableDistribution";
-import CreditApprovalStatusPieChart from "./Charts/PieCharts/CreditApprovalStatus";
+//import CreditApprovalStatusPieChart from "./Charts/PieCharts/CreditApprovalStatus";
 
 class DataSummaryChartsSection extends Component {
   state = {
@@ -57,8 +57,8 @@ class DataSummaryChartsSection extends Component {
           independentVariable
         );
         const chartTwoData = plumber.formatBarChartOne(data, targetVariable);
-        console.log("formattedData: ", chartOneData);
-        console.log("formattedData: ", chartTwoData);
+        console.log("Chart 1 data: ", chartOneData);
+        console.log("Chart 2 data: ", chartTwoData);
         this.setState({ chartOneData, chartTwoData });
       }
     }
@@ -131,10 +131,10 @@ class DataSummaryChartsSection extends Component {
               data={chartTwoData}
               hidden={barChart}
             />
-            <CreditApprovalStatusPieChart
+            {/* <CreditApprovalStatusPieChart
               data={chartTwoData}
               hidden={!barChart}
-            />
+            /> */}
           </div>
         </div>
       </div>
