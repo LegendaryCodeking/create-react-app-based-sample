@@ -5,8 +5,8 @@ import plumber from "../services/dataHelpers";
 import api from "../services/api";
 
 import TargetVariableCorrelationBarChart from "./Charts/BarCharts/TargetVariableCorrelation";
-import TargetVariableDistributionBarChart from "./Charts/BarCharts/TargetVariableDistribution";
-//import CreditApprovalStatusPieChart from "./Charts/PieCharts/CreditApprovalStatus";
+//import TargetVariableDistributionBarChart from "./Charts/BarCharts/TargetVariableDistribution";
+import CreditApprovalStatusPieChart from "./Charts/PieCharts/CreditApprovalStatus";
 
 class DataSummaryChartsSection extends Component {
   state = {
@@ -127,14 +127,14 @@ class DataSummaryChartsSection extends Component {
                 />
               </span>
             </div>
-            <TargetVariableDistributionBarChart
+            {/* <TargetVariableDistributionBarChart
+              data={chartTwoData}
+              hidden={barChart}
+            /> */}
+            <CreditApprovalStatusPieChart
               data={chartTwoData}
               hidden={barChart}
             />
-            {/* <CreditApprovalStatusPieChart
-              data={chartTwoData}
-              hidden={!barChart}
-            /> */}
           </div>
         </div>
       </div>

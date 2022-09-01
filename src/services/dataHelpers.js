@@ -329,6 +329,18 @@ const formatBarChartTwo = (data, variable) => {
     console.log('chartData: ', chartData);
     return chartData;
 }
+
+const rollUpPieArray = (arr) => {
+
+    const map = new Map();
+    for (const { x, y } of arr) {
+        const currSum = map.get(x) || 0;
+        map.set(x, currSum + y);
+    }
+    const res = Array.from(map, ([x, y]) => ({ x, y }));
+    //console.log(res);
+    return res;
+}
 const exportvariables = {
     getDataHeaders,
     formatDataSummaryData,
@@ -340,7 +352,8 @@ const exportvariables = {
     formatROCData,
     formatApprovalStatusTableData,
     formatBarChartOne,
-    formatBarChartTwo
+    formatBarChartTwo,
+    rollUpPieArray
 }
 
 

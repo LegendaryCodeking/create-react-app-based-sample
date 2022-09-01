@@ -27,6 +27,7 @@ class DataDescriptionPage extends Component {
   };
   async componentDidMount() {
     const describedData = this.props.TVSResult;
+    console.log("describedData: ", describedData);
 
     if (describedData) {
       const data = await api.postDescription(describedData);
@@ -35,7 +36,6 @@ class DataDescriptionPage extends Component {
       const formattedData = plumber.formatDataSummaryData(
         data["summary_table"]
       );
-      console.log("Data description page formattedData: ", formattedData);
       this.setState({
         summaryData: formattedData,
         data_overview: data_overview,

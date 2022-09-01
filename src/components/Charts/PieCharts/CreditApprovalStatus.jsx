@@ -1,34 +1,42 @@
 import React, { Component } from "react";
 import { AgChartsReact } from "ag-charts-react";
-
+import plumber from "../../../services/dataHelpers";
 class CreditApprovalStatusPieChart extends Component {
   state = {
     options: {
-      data: [],
-      background: {
-        fill: "#131823",
-      },
+      data: [
+        { value: 56.9 },
+        { value: 22.5 },
+        { value: 6.8 },
+        { value: 8.5 },
+        { value: 2.6 },
+        { value: 1.9 },
+      ],
       theme: "ag-default-dark",
-      legend: {
-        position: "bottom",
-        item: {
-          paddingX: 50,
-          marker: {
-            shape: "circle", // 'square', 'diamond', 'cross', 'plus', 'triangle'
-          },
+      series: [
+        {
+          type: "pie",
+          angleKey: "value",
         },
-      },
-      series: [],
+      ],
     },
   };
 
   componentDidMount() {
-    //this.plotCharts();
+    const { data } = this.props;
+
+    if (data) {
+      this.plotCharts();
+    }
   }
 
   plotCharts = () => {
     let { options } = this.state;
     let { data } = this.props;
+    console.log("PIE PROP data: ", data);
+
+    const pieData = plumber.rollUpPieArray(data);
+    console.log("pieData: ", pieData);
 
     options.data = data;
     options.series = [
@@ -43,7 +51,10 @@ class CreditApprovalStatusPieChart extends Component {
   };
   componentDidUpdate(previosProps, previousState) {
     if (previosProps !== this.props) {
-      //this.plotCharts();
+      let { data } = this.props;
+      if (data) {
+        this.plotCharts();
+      }
     }
   }
   render() {
@@ -52,7 +63,7 @@ class CreditApprovalStatusPieChart extends Component {
     return (
       <div
         className="p-4 mb-4 bg-mediumblue"
-        hidden={hidden}
+        hidden={false}
         style={{ height: "30rem" }}
       >
         <AgChartsReact className="text-white" options={options} />

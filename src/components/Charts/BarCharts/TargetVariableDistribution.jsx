@@ -61,6 +61,7 @@ class TargetVariableDistributionBarChart extends Component {
 
   componentDidMount() {
     const { data } = this.props;
+    console.log("pie data: ", data);
 
     this.plotChart(data);
   }
@@ -84,9 +85,10 @@ class TargetVariableDistributionBarChart extends Component {
   };
 
   componentDidUpdate(previousProps, previousState) {
-    //let { data } = this.props;
+    let { data } = this.props;
     if (previousProps !== this.props) {
-      this.plotChart(this.props.data);
+      console.log("pie data update: ", data);
+      this.plotChart(data);
     }
   }
   render() {
