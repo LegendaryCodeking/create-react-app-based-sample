@@ -59,7 +59,7 @@ class CreditApprovalStatusPieChart extends Component {
   }
   render() {
     const { options } = this.state;
-    const { hidden } = this.props;
+    //const { hidden } = this.props;
     return (
       <div
         className="p-4 mb-4 bg-mediumblue"
