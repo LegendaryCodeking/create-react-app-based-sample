@@ -12,6 +12,7 @@ import DataSummaryChartsSection from "../../components/DataSummaryChartsContaine
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import LoadingOverlay from "react-loading-overlay";
 
 class DataDescriptionPage extends Component {
   state = {
@@ -24,6 +25,8 @@ class DataDescriptionPage extends Component {
     data_overview: {},
     targetVariable: "",
     independentVariable: "",
+    overlayActive: true,
+    overlayText: "Loading your data...",
   };
   async componentDidMount() {
     const describedData = this.props.TVSResult;
@@ -32,15 +35,18 @@ class DataDescriptionPage extends Component {
     if (describedData) {
       const data = await api.postDescription(describedData);
       //
-      const data_overview = data.data_overview;
-      const formattedData = plumber.formatDataSummaryData(
-        data["summary_table"]
-      );
-      this.setState({
-        summaryData: formattedData,
-        data_overview: data_overview,
-        targetVariable: describedData["target_variable"],
-      });
+      if (data) {
+        const data_overview = data.data_overview;
+        const formattedData = plumber.formatDataSummaryData(
+          data["summary_table"]
+        );
+        this.setState({
+          summaryData: formattedData,
+          data_overview: data_overview,
+          overlayActive: false,
+          targetVariable: describedData["target_variable"],
+        });
+      }
     }
   }
   onVariableChanged = async (variable) => {
@@ -65,64 +71,83 @@ class DataDescriptionPage extends Component {
       targetVariable,
       independentVariable,
       chartsData,
+      overlayActive,
+      overlayText,
     } = this.state;
     return (
-      <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
-        <div className="mx-auto container pb-4">
-          <div
-            className="p-4 mb-6 text-sm text-darkblue bg-lightblue"
-            role="alert"
-          >
-            <div className="p-1">
-              <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
-              <span className="ml-1 font-bold">Info</span>
+      <LoadingOverlay
+        active={overlayActive}
+        spinner
+        text={
+          <span className="font-bold text-sm text-eggyellow">
+            {overlayText}
+          </span>
+        }
+        styles={{
+          overlay: (base) => ({
+            ...base,
+            zIndex: "9 !important",
+          }),
+        }}
+      >
+        <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
+          <div className="mx-auto container pb-4">
+            <div
+              className="p-4 mb-6 text-sm text-darkblue bg-lightblue"
+              role="alert"
+            >
+              <div className="p-1">
+                <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
+                <span className="ml-1 font-bold">Info</span>
+              </div>
+              <ul>
+                <li>
+                  <span className="font-bold">Categorical Variables:</span> The
+                  number of variables in categorical or textual format ie
+                  strings.
+                </li>
+                <li>
+                  <span className="font-bold">Numerical Variables:</span>
+                  The number of variables that are in whole number or decimal
+                  format ie numbers.
+                </li>
+                <li>
+                  <span className="font-bold">Summary Table:</span>
+                  Representation of information on data variables. ie data
+                  summary report.
+                </li>
+                <li>
+                  <span className="font-bold">
+                    Co-relation with the target variable:
+                  </span>
+                  How other variables related to the dependent variable.
+                </li>
+                <li>
+                  <span className="font-bold">
+                    Distribution of the target variable:
+                  </span>
+                  The percentage represented by the approved and rejected
+                  variable in the data.
+                </li>
+              </ul>
             </div>
-            <ul>
-              <li>
-                <span className="font-bold">Categorical Variables:</span> The
-                number of variables in categorical or textual format ie strings.
-              </li>
-              <li>
-                <span className="font-bold">Numerical Variables:</span>
-                The number of variables that are in whole number or decimal
-                format ie numbers.
-              </li>
-              <li>
-                <span className="font-bold">Summary Table:</span>
-                Representation of information on data variables. ie data summary
-                report.
-              </li>
-              <li>
-                <span className="font-bold">
-                  Co-relation with the target variable:
-                </span>
-                How other variables related to the dependent variable.
-              </li>
-              <li>
-                <span className="font-bold">
-                  Distribution of the target variable:
-                </span>
-                The percentage represented by the approved and rejected variable
-                in the data.
-              </li>
-            </ul>
+            <DescriptionStatsCards data={data_overview} />
+            <DescriptionSummaryTable data={summaryData} />
+            <DataDescriptionSearchInput
+              show
+              loading={loading}
+              targetVariable={targetVariable}
+              data={summaryData}
+              onVariableChanged={this.onVariableChanged}
+            />
+            <DataSummaryChartsSection
+              data={chartsData}
+              independentVariable={independentVariable}
+              targetVariable={targetVariable}
+            />
           </div>
-          <DescriptionStatsCards data={data_overview} />
-          <DescriptionSummaryTable data={summaryData} />
-          <DataDescriptionSearchInput
-            show
-            loading={loading}
-            targetVariable={targetVariable}
-            data={summaryData}
-            onVariableChanged={this.onVariableChanged}
-          />
-          <DataSummaryChartsSection
-            data={chartsData}
-            independentVariable={independentVariable}
-            targetVariable={targetVariable}
-          />
         </div>
-      </div>
+      </LoadingOverlay>
     );
   }
 }

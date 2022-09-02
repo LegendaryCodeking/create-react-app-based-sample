@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import api from "../../services/api";
 import plumber from "../../services/dataHelpers";
 
+import LoadingOverlay from "react-loading-overlay";
 import PredictionStats from "../../components/Stats/DataPredictionStats";
 import ModelMetricsTable from "../../components/Tables/ModelMetricsTable";
 import PredictionSummaryCharts from "../../components/PredictionSummaryCharts";
@@ -13,6 +14,7 @@ class DataPredictionPage extends Component {
     tableData: {},
     confusionMatrixData: {},
     ROCData: {},
+    overlayActive: true,
   };
 
   async componentDidMount() {
@@ -21,6 +23,7 @@ class DataPredictionPage extends Component {
 
     if (predictionData) {
       //Step 1
+      this.setState({ overlayActive: false });
       let statsObject = {
         accuracy: predictionData.accuracy,
         area_under_curve: predictionData.auc_score,
@@ -50,15 +53,32 @@ class DataPredictionPage extends Component {
   }
 
   render() {
-    const { statsData, tableData, confusionMatrixData } = this.state;
+    const { statsData, tableData, confusionMatrixData, overlayActive } =
+      this.state;
     return (
-      <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
-        <div className="mx-auto container pb-4">
-          <PredictionStats data={statsData} />
-          <ModelMetricsTable data={tableData} />
-          <PredictionSummaryCharts data={confusionMatrixData} />
+      <LoadingOverlay
+        active={overlayActive}
+        spinner
+        text={
+          <span className="font-bold text-sm text-eggyellow">
+            loading prediction analytics...
+          </span>
+        }
+        styles={{
+          overlay: (base) => ({
+            ...base,
+            zIndex: "9 !important",
+          }),
+        }}
+      >
+        <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
+          <div className="mx-auto container pb-4">
+            <PredictionStats data={statsData} />
+            <ModelMetricsTable data={tableData} />
+            <PredictionSummaryCharts data={confusionMatrixData} />
+          </div>
         </div>
-      </div>
+      </LoadingOverlay>
     );
   }
 }

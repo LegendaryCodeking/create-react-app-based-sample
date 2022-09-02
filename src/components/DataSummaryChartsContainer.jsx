@@ -12,7 +12,14 @@ class DataSummaryChartsSection extends Component {
   state = {
     barChart: false,
     chartOneData: [],
-    chartTwoData: {},
+    chartTwoData: [],
+  };
+
+  humanizeText = (str) => {
+    str = str.toLowerCase();
+    let fChar = str.charAt(0).toUpperCase();
+    str = fChar + str.slice(1);
+    return str;
   };
 
   componentDidMount() {
@@ -88,13 +95,18 @@ class DataSummaryChartsSection extends Component {
   };
   render() {
     const { barChart, chartOneData, chartTwoData } = this.state;
+    const { targetVariable, independentVariable } = this.props;
+    const showStatus =
+      targetVariable !== "" && independentVariable !== "" ? true : false;
+    let t_variable = this.humanizeText(targetVariable);
+    let i_variable = this.humanizeText(independentVariable);
     return (
-      <div className="flex mb-4 text-white p-4">
+      <div className={showStatus ? "flex mb-4 text-white p-4" : "hidden"}>
         <div className="w-1/2 p-2">
           <div className="container bg-mediumblue">
             <div className="border-b border-gray-300 p-2 py-4">
               <span className="text-sm ml-2">
-                Correlation of the target variable with other variables
+                Correlation of the {t_variable} with other variables.
               </span>
             </div>
             <TargetVariableCorrelationBarChart data={chartOneData} />
@@ -104,7 +116,7 @@ class DataSummaryChartsSection extends Component {
           <div className="container bg-mediumblue">
             <div className="border-b border-gray-300 p-2 py-4">
               <span className="text-sm ml-2">
-                Distribution of the target variable agains loan status
+                Distribution of the {t_variable} against {i_variable}.
               </span>
               <span
                 className="border-none float-right mr-4 outline outline-2  outline-offset-2 rounded px-1 outline-lightblue hover:outline-eggyellow"
@@ -117,7 +129,7 @@ class DataSummaryChartsSection extends Component {
                 />
               </span>
               <span
-                className="border-none float-right mr-4 outline outline-2  outline-offset-2 rounded px-1 outline-lightblue hover:outline-eggyellow"
+                className="border-none hidden float-right mr-4 outline outline-2  outline-offset-2 rounded px-1 outline-lightblue hover:outline-eggyellow"
                 hidden={barChart}
               >
                 <FontAwesomeIcon

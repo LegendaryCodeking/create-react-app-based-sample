@@ -12,6 +12,9 @@ class CreditApprovalStatusPieChart extends Component {
         { value: 2.6 },
         { value: 1.9 },
       ],
+      background: {
+        fill: "#131823",
+      },
       theme: "ag-default-dark",
       series: [
         {
@@ -35,19 +38,21 @@ class CreditApprovalStatusPieChart extends Component {
     let { data } = this.props;
     console.log("PIE PROP data: ", data);
 
-    const pieData = plumber.rollUpPieArray(data);
-    console.log("pieData: ", pieData);
+    if (data) {
+      const pieData = plumber.rollUpPieArray(data);
+      console.log("pieData: ", pieData);
 
-    options.data = data;
-    options.series = [
-      {
-        type: "pie",
-        angleKey: "y",
-        labelKey: "x",
-      },
-    ];
+      options.data = data;
+      options.series = [
+        {
+          type: "pie",
+          angleKey: "y",
+          labelKey: "x",
+        },
+      ];
 
-    this.setState({ options });
+      this.setState({ options });
+    }
   };
   componentDidUpdate(previosProps, previousState) {
     if (previosProps !== this.props) {

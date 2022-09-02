@@ -331,15 +331,20 @@ const formatBarChartTwo = (data, variable) => {
 }
 
 const rollUpPieArray = (arr) => {
+    console.log('PI DATA arr FUNCTION: ', arr);
 
-    const map = new Map();
-    for (const { x, y } of arr) {
-        const currSum = map.get(x) || 0;
-        map.set(x, currSum + y);
+    if (arr) {
+        const map = new Map();
+        for (const { x, y } of arr) {
+            const currSum = map.get(x) || 0;
+            map.set(x, currSum + y);
+        }
+        const res = Array.from(map, ([x, y]) => ({ x, y }));
+        //console.log(res);
+        return res;
+    } else {
+        return []
     }
-    const res = Array.from(map, ([x, y]) => ({ x, y }));
-    //console.log(res);
-    return res;
 }
 const exportvariables = {
     getDataHeaders,
@@ -353,7 +358,8 @@ const exportvariables = {
     formatApprovalStatusTableData,
     formatBarChartOne,
     formatBarChartTwo,
-    rollUpPieArray
+    rollUpPieArray,
+    humanizeText
 }
 
 
