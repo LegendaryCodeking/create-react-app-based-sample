@@ -33,9 +33,10 @@ class DataDescriptionPage extends Component {
     console.log("describedData: ", describedData);
 
     if (describedData) {
-      const data = await api.postDescription(describedData);
+      const response = await api.postDescription(describedData);
+      const { data, status } = response;
       //
-      if (data) {
+      if (data && status === 200) {
         const data_overview = data.data_overview;
         const formattedData = plumber.formatDataSummaryData(
           data["summary_table"]
@@ -45,6 +46,10 @@ class DataDescriptionPage extends Component {
           data_overview: data_overview,
           overlayActive: false,
           targetVariable: describedData["target_variable"],
+        });
+      } else if (status === 500) {
+        this.setState({
+          overlayText: "Data fetching failed, please check your connection.",
         });
       }
     }

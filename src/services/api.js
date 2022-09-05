@@ -52,8 +52,8 @@ const routes = {
     }
 } */
 const postDescription = async (requestObject) => {
-    const { data } = await http.post(url + routes.description.path, requestObject);
-    return data;
+    const response = await http.post(url + routes.description.path, requestObject);
+    return response;
 }
 
 const postDistributionChanged = async (requestObject) => {
