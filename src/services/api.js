@@ -41,7 +41,7 @@ const routes = {
         method: "GET"
     },
     mlpredict: {
-        path: "/datapredict",
+        path: "/datapredict/",
         method: "POST"
     }
 }
@@ -62,13 +62,13 @@ const postDistributionChanged = async (requestObject) => {
 }
 
 const getPrediction = async () => {
-    const { data } = await http.get(url + routes.predict.path);
-    return data;
+    const response = await http.get(url + routes.predict.path);
+    return response;
 }
 
 const postForPrediction = async (uploadData) => {
-    const { data } = await http.post(url + routes.mlpredict.path, uploadData);
-    return data;
+    const response = await http.post(url + routes.mlpredict.path, uploadData);
+    return response;
 }
 
 const postLogin = async (user) => {

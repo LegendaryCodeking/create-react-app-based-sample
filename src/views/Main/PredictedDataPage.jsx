@@ -5,6 +5,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import PredictedFileUpload from "../../components/Forms/FormComponents/PredictedFileUpload";
 import plumber from "../../services/dataHelpers";
 import PredictionApprovalStatusTable from "../../components/Tables/PredictionApprovalStatus";
+import { toast } from "react-toastify";
 
 class PredictedDataPage extends Component {
   state = {
@@ -19,9 +20,13 @@ class PredictedDataPage extends Component {
     console.log("fileData: ", fileData);
     this.setState({ loadingFileUpload: true, disableUploadButton: true });
 
-    const predictedData = await api.postForPrediction(fileData);
+    const predictedResponse = await api.postForPrediction(fileData);
     this.setState({ loadingFileUpload: false });
-    if (predictedData) {
+    if (predictedResponse.status === 200) {
+      const predictedData = predictedResponse.data;
+      if (predictedData.status === "failed") {
+        toast.warn(predictedData.message);
+      }
       const ApprovalStatusTableData =
         plumber.formatApprovalStatusTableData(predictedData);
       console.log("ApprovalStatusTableData: ", ApprovalStatusTableData);

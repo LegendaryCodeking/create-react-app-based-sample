@@ -6,6 +6,7 @@ import LoadingOverlay from "react-loading-overlay";
 import PredictionStats from "../../components/Stats/DataPredictionStats";
 import ModelMetricsTable from "../../components/Tables/ModelMetricsTable";
 import PredictionSummaryCharts from "../../components/PredictionSummaryCharts";
+import { toast } from "react-toastify";
 //import PredictionApprovalStatusTable from "../../components/Tables/PredictionApprovalStatus";
 
 class DataPredictionPage extends Component {
@@ -18,11 +19,17 @@ class DataPredictionPage extends Component {
   };
 
   async componentDidMount() {
-    let predictionData = await api.getPrediction();
-    console.log("predictionData: ", predictionData);
+    let mlStatsResponse = await api.getPrediction();
+    console.log("mlStatsResponse: ", mlStatsResponse);
 
-    if (predictionData) {
+    if (mlStatsResponse.status === 200) {
       //Step 1
+      let predictionData = mlStatsResponse.data;
+
+      if (predictionData.status === "failed") {
+        toast.warn(predictionData.message);
+      }
+
       this.setState({ overlayActive: false });
       let statsObject = {
         accuracy: predictionData.accuracy,
@@ -45,6 +52,10 @@ class DataPredictionPage extends Component {
       let matrixData = predictionData.confusion_matrix.matrix;
 
       this.setState({ confusionMatrixData: matrixData });
+    } else if (mlStatsResponse.status === 500) {
+      this.setState({ overlayActive: false });
+    } else {
+      this.setState({ overlayActive: false });
     }
   }
 
