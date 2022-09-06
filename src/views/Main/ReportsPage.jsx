@@ -4,31 +4,63 @@ import api from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
+import generatePDF from "../../services/summaryReportGenerator";
+//import SummaryPDF from "../../components/PDF/SummaryPDF";
 
 class ReportsPage extends Component {
   state = {
     summaryData: {},
     data_overview: {},
+    reportData: {},
   };
 
+  getReportData = async () => {
+    let { TVSResult } = this.props;
+    let reportData = {};
+    if (TVSResult) {
+      let descriptionData = await this.getDescriptionData(TVSResult);
+      console.log("descriptionData: ", descriptionData);
+      reportData.summaryReportData = descriptionData;
+    }
+
+    return reportData;
+  };
+
+  getDescriptionData = async (tvs) => {
+    console.log("report page tvs: ", tvs);
+    const response = await api.postDescription(tvs);
+    if (response.status === 200 && response.data.status !== "failed") {
+      const data_summary = response.data["summary_table"];
+      const formattedData = plumber.formatDataSummaryData(data_summary);
+      return formattedData;
+    } else {
+      return {};
+    }
+  };
   async componentDidMount() {
     const describedData = this.props.TVSResult;
 
     if (describedData) {
-      const data = await api.postDescription(describedData);
+      //const data = await api.postDescription(describedData);
+      const reportData = await this.getReportData();
+      console.log("reportData: ", reportData);
 
+      this.setState({ reportData });
       //
-      const data_overview = data.data_overview;
+      /* const data_overview = data.data_overview;
       const formattedData = plumber.formatDataSummaryData(data.summary_table);
       this.setState({
         summaryData: formattedData,
         data_overview: data_overview,
-      });
+      }); */
     }
   }
   generateSummaryReport = () => {
-    //ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
-    //console.log("pdfStream: ", pdfStream);
+    const summaryData = this.state.reportData.summaryReportData;
+    if (summaryData) {
+      //create pdf
+      generatePDF(summaryData);
+    }
   };
   render() {
     const { summaryData } = this.state;
@@ -72,6 +104,7 @@ class ReportsPage extends Component {
               </div>
             </div>
           </div>
+          {/* <SummaryPDF /> */}
           <DescriptionSummaryTable data={summaryData} />
         </div>
       </div>

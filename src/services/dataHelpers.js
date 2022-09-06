@@ -346,6 +346,16 @@ const rollUpPieArray = (arr) => {
         return []
     }
 }
+
+const prioritizeHeaders = (headers, priorities) => {
+    let newheaders = []
+    if (headers.includes('Columns')) {
+        newheaders.push('Columns');
+    }
+    newheaders = newheaders.concat(priorities);
+
+    return newheaders;
+}
 const exportvariables = {
     getDataHeaders,
     formatDataSummaryData,
@@ -359,7 +369,8 @@ const exportvariables = {
     formatBarChartOne,
     formatBarChartTwo,
     rollUpPieArray,
-    humanizeText
+    humanizeText,
+    prioritizeHeaders
 }
 
 

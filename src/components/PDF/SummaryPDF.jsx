@@ -1,44 +1,10 @@
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  PDFViewer,
-} from "@react-pdf/renderer";
-// Create styles
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: "#d11fb6",
-    color: "white",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-  },
-  viewer: {
-    width: window.innerWidth, //the pdf viewer will take up all of the width and height
-    height: window.innerHeight,
-  },
-});
+import React, { Component } from "react";
 
-// Create Document Component
-function SummaryPDF() {
-  return (
-    <PDFViewer style={styles.viewer}>
-      {/* Start of the document*/}
-      <Document>
-        {/*render a single page*/}
-        <Page size="A4" style={styles.page}>
-          <View style={styles.section}>
-            <Text>Hello</Text>
-          </View>
-          <View style={styles.section}>
-            <Text>World</Text>
-          </View>
-        </Page>
-      </Document>
-    </PDFViewer>
-  );
+class SummaryReports extends Component {
+  state = {};
+  render() {
+    return <></>;
+  }
 }
-export default SummaryPDF;
+
+export default SummaryReports;
