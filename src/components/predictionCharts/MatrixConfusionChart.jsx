@@ -2,26 +2,38 @@ import React, { Component } from "react";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
-import api from "../../services/api";
+//import api from "../../services/api";
 
 class MatrixConfusionChart extends Component {
   state = {};
 
-  async componentDidMount() {
-    //let { data } = this.props;
-    let data = await api.getPrediction();
-    let matrixdata = data.confusion_matrix.matrix;
-    console.log("Matrix Data: ", matrixdata);
+  componentDidMount() {
+    let { chartData } = this.props;
 
-    if (matrixdata.length > 0) {
-      //
-      this.createChart(matrixdata);
+    if (Object.keys(chartData).length > 0) {
+      let matrixdata = chartData.confusion_matrix.matrix;
+      console.log("Matrix Data: ", matrixdata);
+
+      if (matrixdata.length > 0) {
+        //
+        this.createChart(matrixdata);
+      }
     }
   }
 
   componentDidUpdate(previousProps, previousState) {
     if (previousProps !== this.props) {
-      //this.createChart();
+      let { chartData } = this.props;
+
+      if (Object.keys(chartData).length > 0) {
+        let matrixdata = chartData.confusion_matrix.matrix;
+        console.log("Matrix Data: ", matrixdata);
+
+        if (matrixdata.length > 0) {
+          //
+          this.createChart(matrixdata);
+        }
+      }
     }
   }
 

@@ -16,6 +16,7 @@ class DataPredictionPage extends Component {
     confusionMatrixData: {},
     ROCData: {},
     overlayActive: true,
+    chartsData: {},
   };
 
   async componentDidMount() {
@@ -28,9 +29,13 @@ class DataPredictionPage extends Component {
 
       if (predictionData.status === "failed") {
         toast.warn(predictionData.message);
+        return;
       }
 
-      this.setState({ overlayActive: false });
+      console.log(
+        "DATA PREDICTION PAGE PASSED RETURN STATEMENT : DATA DID NOT FAIL"
+      );
+      this.setState({ overlayActive: false, chartsData: predictionData });
       let statsObject = {
         accuracy: predictionData.accuracy,
         area_under_curve: predictionData.auc_score,
@@ -64,15 +69,23 @@ class DataPredictionPage extends Component {
   }
 
   render() {
-    const { statsData, tableData, confusionMatrixData, overlayActive } =
-      this.state;
+    const {
+      statsData,
+      tableData,
+      confusionMatrixData,
+      overlayActive,
+      chartsData,
+    } = this.state;
     return (
       <LoadingOverlay
         active={overlayActive}
         spinner
         text={
-          <span className="font-bold text-sm text-eggyellow">
-            loading prediction analytics...
+          <span className="font-bold text-eggyellow">
+            Loading Model analytics...<br></br>
+            <span className="font-bold text-xs text-white">
+              This may take a while...
+            </span>
           </span>
         }
         styles={{
@@ -86,7 +99,10 @@ class DataPredictionPage extends Component {
           <div className="mx-auto container pb-4">
             <PredictionStats data={statsData} />
             <ModelMetricsTable data={tableData} />
-            <PredictionSummaryCharts data={confusionMatrixData} />
+            <PredictionSummaryCharts
+              chartsData={chartsData}
+              data={confusionMatrixData}
+            />
           </div>
         </div>
       </LoadingOverlay>

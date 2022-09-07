@@ -37,7 +37,7 @@ const routes = {
         method: "POST"
     },
     predict: {
-        path: "/predict",
+        path: "/predict/",
         method: "GET"
     },
     mlpredict: {

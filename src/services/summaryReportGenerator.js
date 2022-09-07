@@ -7,7 +7,7 @@ import "jspdf-autotable";
 // define a generatePDF function that accepts a tickets argument
 const generatePDF = (data) => {
     // initialize jsPDF
-    const doc = new jsPDF();
+    const doc = new jsPDF('letter');
     let headers = data.headers.slice(1, 5);
     let rows = data.data;
     headers[0] = 'Columns'

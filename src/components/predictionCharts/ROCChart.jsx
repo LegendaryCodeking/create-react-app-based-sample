@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import * as agCharts from "ag-charts-community";
 import { AgChartsReact } from "ag-charts-react";
-import api from "../../services/api";
+//import api from "../../services/api";
 import plumber from "../../services/dataHelpers";
 
 class ROCChart extends Component {
@@ -60,16 +60,33 @@ class ROCChart extends Component {
     },
   };
 
-  async componentDidMount() {
-    let data = await api.getPrediction();
+  componentDidMount() {
     const { options } = this.state;
-    if (data) {
+    let { chartData } = this.props;
+    if (Object.keys(chartData).length > 0) {
+      let data = chartData;
       let ROCdata = plumber.formatROCData(data);
       console.log("ROCdata: ", ROCdata);
       options.series[0].data = ROCdata.TrueVsFalse;
       options.series[1].data = ROCdata.FalseVsThresholdArray;
 
       this.setState({ options });
+    }
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      const { options } = this.state;
+      let { chartData } = this.props;
+      if (Object.keys(chartData).length > 0) {
+        let data = chartData;
+        let ROCdata = plumber.formatROCData(data);
+        console.log("ROCdata: ", ROCdata);
+        options.series[0].data = ROCdata.TrueVsFalse;
+        options.series[1].data = ROCdata.FalseVsThresholdArray;
+
+        this.setState({ options });
+      }
     }
   }
   render() {

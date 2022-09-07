@@ -61,7 +61,7 @@ class PredictedFileUpload extends Component {
     const { uploadData } = this.state;
     console.log("uploadData: ", uploadData);
     this.props.onUpload({
-      upload_data: uploadData,
+      newdata: uploadData,
     });
   };
 

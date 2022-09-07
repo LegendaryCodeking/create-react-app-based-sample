@@ -21,11 +21,13 @@ class PredictedDataPage extends Component {
     this.setState({ loadingFileUpload: true, disableUploadButton: true });
 
     const predictedResponse = await api.postForPrediction(fileData);
+    console.log("predictedResponse: ", predictedResponse);
     this.setState({ loadingFileUpload: false });
     if (predictedResponse.status === 200) {
       const predictedData = predictedResponse.data;
       if (predictedData.status === "failed") {
         toast.warn(predictedData.message);
+        return;
       }
       const ApprovalStatusTableData =
         plumber.formatApprovalStatusTableData(predictedData);
