@@ -76,14 +76,23 @@ class MainLayout extends Component {
               <Route
                 path="/cst/predicted-data"
                 exact
-                component={PredictedData}
+                component={(props) => {
+                  <PredictedData
+                    {...props}
+                    onApprovalData={this.props.onApprovalData}
+                  />;
+                }}
               />
               {/* <Route path="/logout" exact component={LogOut} /> */}
               <Route
                 path="/cst/reports"
                 exact
                 component={(props) => (
-                  <Reports {...props} TVSResult={this.props.TVSResult} />
+                  <Reports
+                    {...props}
+                    approvalData={this.props.approvalData}
+                    TVSResult={this.props.TVSResult}
+                  />
                 )}
               />
               <Redirect from="/cst" to="/cst/dashboard" />

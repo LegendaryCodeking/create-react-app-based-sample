@@ -32,6 +32,7 @@ class PredictedDataPage extends Component {
       const ApprovalStatusTableData =
         plumber.formatApprovalStatusTableData(predictedData);
       console.log("ApprovalStatusTableData: ", ApprovalStatusTableData);
+      this.props.onApprovalData(ApprovalStatusTableData);
       let tableData = ApprovalStatusTableData;
       this.setState({ tableData });
     }

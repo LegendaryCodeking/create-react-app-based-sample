@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import generatePDF from "../../services/summaryReportGenerator";
+import generateApprovalStatusReport from "../../services/approvalStatusReportGenerator";
+import { Spinner } from "flowbite-react";
+import sample from "../../samples/sampleApprovalStatusData.json";
 //import SummaryPDF from "../../components/PDF/SummaryPDF";
 
 class ReportsPage extends Component {
@@ -12,10 +15,14 @@ class ReportsPage extends Component {
     summaryData: {},
     data_overview: {},
     reportData: {},
+    reportButton1: false,
+    reportButton2: false,
+    reportButton3: false,
+    reportButton4: false,
   };
 
   getReportData = async () => {
-    let { TVSResult } = this.props;
+    let { TVSResult, approvalData } = this.props;
     let reportData = {};
     if (TVSResult) {
       let descriptionData = await this.getDescriptionData(TVSResult);
@@ -23,7 +30,32 @@ class ReportsPage extends Component {
       reportData.summaryReportData = descriptionData;
     }
 
+    let sData = plumber.formatApprovalStatusTableData(sample);
+    console.log("sample", sData);
+
+    if (Object.keys(approvalData).length > 0 || true) {
+      //remove second condition after sample data removal
+      //reportData.approvalData = approvalData;
+      let approvalData = sData;
+      let formattedApprovalData = this.formatApprovalData(approvalData);
+      reportData.approvalData = formattedApprovalData;
+    }
+
     return reportData;
+  };
+
+  formatApprovalData = (data) => {
+    let columns = [];
+    data.columnData.forEach((column) => {
+      columns.push(column.field);
+    });
+
+    let fData = {
+      headers: columns,
+      data: data.rowData,
+    };
+
+    return fData;
   };
 
   getDescriptionData = async (tvs) => {
@@ -59,47 +91,103 @@ class ReportsPage extends Component {
     const summaryData = this.state.reportData.summaryReportData;
     if (summaryData) {
       //create pdf
+      this.setState({ reportButton1: true });
       generatePDF(summaryData);
+
+      setTimeout(() => {
+        this.setState({ reportButton1: false });
+      }, 15000);
+    }
+  };
+
+  generateApprovalStatusReport = () => {
+    console.log("generating approval data");
+    const approvalData = this.state.reportData.approvalData;
+    if (approvalData) {
+      //create pdf
+      this.setState({ reportButton2: true });
+      generateApprovalStatusReport(approvalData);
+
+      setTimeout(() => {
+        this.setState({ reportButton2: false });
+      }, 15000);
     }
   };
   render() {
-    const { summaryData } = this.state;
+    const {
+      summaryData,
+      reportButton1,
+      reportButton2,
+      reportButton3,
+      reportButton4,
+    } = this.state;
     return (
       <div className="bg-darkblue pt-4 pb-4" style={{ height: "100%" }}>
         <div className="mx-auto container mb-4">
           <div className="flex mb-4 mt-4">
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs">
+              <div className="p-4 text-white text-xs flex justify-center">
                 <button
                   onClick={this.generateSummaryReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow"
+                  disabled={reportButton1}
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
                 >
-                  <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                  SUMMARY REPORT
+                  <div className={reportButton1 ? "" : "hidden"}>
+                    <Spinner size="sm" light={true} />
+                  </div>
+                  <div className={!reportButton1 ? "" : "hidden"}>
+                    <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
+                    <span className="text-sm">SUMMARY REPORT</span>
+                  </div>
                 </button>
               </div>
             </div>
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs">
-                <button className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow">
-                  <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                  STATUS APPROVAL REPORT
+              <div className="p-4 text-white text-xs justify-center">
+                <button
+                  disabled={reportButton2}
+                  onClick={this.generateApprovalStatusReport}
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                >
+                  <div className={reportButton2 ? "" : "hidden"}>
+                    <Spinner size="sm" light={true} />
+                  </div>
+                  <div className={!reportButton2 ? "" : "hidden"}>
+                    <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
+                    <span className="text-sm">APPROVAL STATUS REPORT</span>
+                  </div>
                 </button>
               </div>
             </div>
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs">
-                <button className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow">
-                  <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                  TEST PREDICTION REPORT
+              <div className="p-4 text-white text-xs justify-center">
+                <button
+                  disabled={reportButton3}
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                >
+                  <div className={reportButton3 ? "" : "hidden"}>
+                    <Spinner size="sm" light={true} />
+                  </div>
+                  <div className={!reportButton3 ? "" : "hidden"}>
+                    <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
+                    <span className="text-sm">ML STATISTICS REPORT</span>
+                  </div>
                 </button>
               </div>
             </div>
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs">
-                <button className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow">
-                  <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                  DOWNLOAD FULL REPORT
+              <div className="p-4 text-white text-xs justify-center">
+                <button
+                  disabled={reportButton4}
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                >
+                  <div className={reportButton4 ? "" : "hidden"}>
+                    <Spinner size="sm" light={true} />
+                  </div>
+                  <div className={!reportButton4 ? "" : "hidden"}>
+                    <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
+                    <span className="text-sm">FULL REPORT</span>
+                  </div>
                 </button>
               </div>
             </div>

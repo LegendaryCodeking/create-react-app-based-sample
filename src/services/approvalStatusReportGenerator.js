@@ -5,7 +5,7 @@ import "jspdf-autotable";
 //import { format } from "date-fns";
 
 // define a generatePDF function that accepts a tickets argument
-const generatePDF = async (data) => {
+const generateApprovalStatusReport = async (data) => {
     // initialize jsPDF
     const doc = new jsPDF("l", "mm", "letter");
     let headers = data.headers;
@@ -14,7 +14,7 @@ const generatePDF = async (data) => {
     //const pageHeight = 215.9;
     //headers[0] = 'Columns'
 
-    const fromIndex = headers.indexOf('Columns'); // 👉️ 0
+    const fromIndex = headers.indexOf('Number'); // 👉️ 0
     const toIndex = 0;
 
     const element = headers.splice(fromIndex, 1)[0];
@@ -43,10 +43,10 @@ const generatePDF = async (data) => {
     console.log(doc.getFontList())
     doc.setFont("Times", "bold")
     doc.setTextColor('#000b18')
-    doc.text("Closed tickets within the last one month.", 130, 15, { align: 'center' });
+    doc.text("Approval status", 130, 15, { align: 'center' });
     doc.setFontSize(8);
     doc.setFont("Times", "Roman")
-    doc.text("This is a summary of your provided data uploaded as a file in step 1.", 130, 25, { align: 'center' });
+    doc.text("This is a summary of approved states", 130, 25, { align: 'center' });
 
     // startY is basically margin-top
     doc.autoTable({
@@ -100,4 +100,4 @@ const generatePDF = async (data) => {
     console.log("done");
 };
 
-export default generatePDF;
+export default generateApprovalStatusReport;
