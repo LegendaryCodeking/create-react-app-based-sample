@@ -6,8 +6,11 @@ import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import generatePDF from "../../services/summaryReportGenerator";
 import generateApprovalStatusReport from "../../services/approvalStatusReportGenerator";
+import createMLstatsReport from "../../services/createMLstatsReport";
+import createFullReport from "../../services/createFullReport";
 import { Spinner } from "flowbite-react";
 import sample from "../../samples/sampleApprovalStatusData.json";
+import sampleMLdata from "../../samples/sampleMLstats.json";
 //import SummaryPDF from "../../components/PDF/SummaryPDF";
 
 class ReportsPage extends Component {
@@ -22,7 +25,7 @@ class ReportsPage extends Component {
   };
 
   getReportData = async () => {
-    let { TVSResult, approvalData } = this.props;
+    let { TVSResult, approvalData, mlStats } = this.props;
     let reportData = {};
     if (TVSResult) {
       let descriptionData = await this.getDescriptionData(TVSResult);
@@ -32,19 +35,26 @@ class ReportsPage extends Component {
 
     let sData = plumber.formatApprovalStatusTableData(sample);
     console.log("sample", sData);
+    let mlDataSample = plumber.formatPerformanceMetricTableData(sampleMLdata);
 
     if (Object.keys(approvalData).length > 0 || true) {
       //remove second condition after sample data removal
       //reportData.approvalData = approvalData;
       let approvalData = sData;
-      let formattedApprovalData = this.formatApprovalData(approvalData);
+      let formattedApprovalData = this.formatTableDataToPDF(approvalData);
       reportData.approvalData = formattedApprovalData;
+    }
+
+    if (Object.keys(mlStats).length > 0 || true) {
+      let MLstatsData = this.formatTableDataToPDF(mlDataSample);
+      console.log("MLstatsData: ", MLstatsData);
+      reportData.mlStats = MLstatsData;
     }
 
     return reportData;
   };
 
-  formatApprovalData = (data) => {
+  formatTableDataToPDF = (data) => {
     let columns = [];
     data.columnData.forEach((column) => {
       columns.push(column.field);
@@ -88,11 +98,12 @@ class ReportsPage extends Component {
     }
   }
   generateSummaryReport = () => {
+    const { user } = this.props;
     const summaryData = this.state.reportData.summaryReportData;
     if (summaryData) {
       //create pdf
       this.setState({ reportButton1: true });
-      generatePDF(summaryData);
+      generatePDF(summaryData, user);
 
       setTimeout(() => {
         this.setState({ reportButton1: false });
@@ -101,16 +112,47 @@ class ReportsPage extends Component {
   };
 
   generateApprovalStatusReport = () => {
+    const { user } = this.props;
     console.log("generating approval data");
     const approvalData = this.state.reportData.approvalData;
     if (approvalData) {
       //create pdf
       this.setState({ reportButton2: true });
-      generateApprovalStatusReport(approvalData);
+      generateApprovalStatusReport(approvalData, user);
 
       setTimeout(() => {
         this.setState({ reportButton2: false });
       }, 15000);
+    }
+  };
+
+  generateMLstatsReport = () => {
+    console.log("generating MLstats report");
+    const { user } = this.props;
+    const MLstatsData = this.state.reportData.mlStats;
+    if (MLstatsData) {
+      //create pdf
+      this.setState({ reportButton3: true });
+      createMLstatsReport(MLstatsData, user);
+
+      setTimeout(() => {
+        this.setState({ reportButton3: false });
+      }, 5000);
+    }
+  };
+
+  createFullReport = () => {
+    console.log("generating full report");
+    const { user } = this.props;
+    const { reportData } = this.state;
+    if (reportData) {
+      //create pdf
+      this.setState({ reportButton4: true });
+      createFullReport(reportData, user);
+
+      setTimeout(() => {
+        this.setState({ reportButton4: false });
+      }, 5000);
     }
   };
   render() {
@@ -143,7 +185,7 @@ class ReportsPage extends Component {
               </div>
             </div>
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs justify-center">
+              <div className="p-4 text-white text-xs flex justify-center">
                 <button
                   disabled={reportButton2}
                   onClick={this.generateApprovalStatusReport}
@@ -160,9 +202,10 @@ class ReportsPage extends Component {
               </div>
             </div>
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs justify-center">
+              <div className="p-4 text-white text-xs flex justify-center">
                 <button
                   disabled={reportButton3}
+                  onClick={this.generateMLstatsReport}
                   className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
                 >
                   <div className={reportButton3 ? "" : "hidden"}>
@@ -176,9 +219,10 @@ class ReportsPage extends Component {
               </div>
             </div>
             <div className="w-3/12">
-              <div className="p-4 text-white text-xs justify-center">
+              <div className="p-4 text-white text-xs flex justify-center">
                 <button
                   disabled={reportButton4}
+                  onClick={this.createFullReport}
                   className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
                 >
                   <div className={reportButton4 ? "" : "hidden"}>

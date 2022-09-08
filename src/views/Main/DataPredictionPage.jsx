@@ -17,6 +17,7 @@ class DataPredictionPage extends Component {
     ROCData: {},
     overlayActive: true,
     chartsData: {},
+    mlStats: {},
   };
 
   async componentDidMount() {
@@ -52,6 +53,7 @@ class DataPredictionPage extends Component {
       //Step 3
 
       this.setState({ tableData });
+      this.props.onMLstats(tableData);
 
       //Step 4
       let matrixData = predictionData.confusion_matrix.matrix;

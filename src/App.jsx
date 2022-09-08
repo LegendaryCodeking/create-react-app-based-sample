@@ -17,6 +17,7 @@ class App extends Component {
     loading: false,
     TVSResultData: [],
     approvalData: {},
+    mlStats: {},
   };
 
   onNext = (data) => {
@@ -42,8 +43,12 @@ class App extends Component {
     this.setState({ approvalData: data });
   };
 
+  setMLstats = (data) => {
+    this.setState({ mlStats: data });
+  };
+
   render() {
-    let { user, loading, TVSResultData, approvalData } = this.state;
+    let { user, loading, TVSResultData, approvalData, mlStats } = this.state;
     return (
       <React.Fragment>
         <ToastContainer
@@ -60,6 +65,8 @@ class App extends Component {
               <MainLayout
                 TVSResult={TVSResultData}
                 onNext={this.onNext}
+                onMLstats={this.setMLstats}
+                mlStats={mlStats}
                 user={user}
                 approvalData={approvalData}
                 onApprovalData={this.onApprovalData}

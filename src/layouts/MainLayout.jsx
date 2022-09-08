@@ -71,7 +71,9 @@ class MainLayout extends Component {
               <Route
                 path="/cst/data-prediction"
                 exact
-                component={DataPrediction}
+                component={(props) => (
+                  <DataPrediction onMLstats={this.props.onMLstats} {...props} />
+                )}
               />
               <Route
                 path="/cst/predicted-data"
@@ -90,6 +92,8 @@ class MainLayout extends Component {
                 component={(props) => (
                   <Reports
                     {...props}
+                    user={user}
+                    mlStats={this.props.mlStats}
                     approvalData={this.props.approvalData}
                     TVSResult={this.props.TVSResult}
                   />

@@ -5,7 +5,7 @@ import "jspdf-autotable";
 //import { format } from "date-fns";
 
 // define a generatePDF function that accepts a tickets argument
-const generateApprovalStatusReport = async (data, user) => {
+const generateMLstatsReport = async (data, user) => {
     // initialize jsPDF
     const doc = new jsPDF("l", "mm", "letter");
     let headers = data.headers;
@@ -14,7 +14,7 @@ const generateApprovalStatusReport = async (data, user) => {
     //const pageHeight = 215.9;
     //headers[0] = 'Columns'
 
-    const fromIndex = headers.indexOf('Number'); // 👉️ 0
+    const fromIndex = headers.indexOf('Class_ID'); // 👉️ 0
     const toIndex = 0;
 
     const element = headers.splice(fromIndex, 1)[0];
@@ -44,24 +44,30 @@ const generateApprovalStatusReport = async (data, user) => {
     doc.setFont("Times", "bold")
     doc.setTextColor('#226bab')
     doc.setFontSize(12);
-    doc.text("AICE - CREDIT SCORING TOOL [APPROVAL STATUS REPORT]", 130, 15, { align: 'center' });
+    doc.text("AICE - CREDIT SCORING TOOL [ML STATISTICS REPORT]", 130, 15, { align: 'center' });
     doc.setFontSize(8);
     doc.setTextColor('#000b18')
     doc.setFont("Times", "Roman")
-    doc.text("This reports includes analysis of status of approval from your provided data.", 130, 25, { align: 'center' });
-    doc.text("This representation includes analyzed data.", 130, 30, { align: 'center' });
+    doc.text("This reports includes a brief overvie of the machine learning model trained by your data.", 130, 25, { align: 'center' });
+    //doc.text("This representation includes.", 130, 30, { align: 'center' });
 
     // startY is basically margin-top
     doc.autoTable({
         columns: tableColumns,
         body: tableRows,
         startY: 40,
-        styles: { cellWidth: 80, overflow: 'linebreak' },
+        styles: { cellWidth: 50, overflow: 'linebreak' },
         pageBreak: 'auto',
         horizontalPageBreak: true,
         columnStyles: { 1: { cellWidth: 40 } },
         didParseCell: (data) => {
-            let specialCellArray = [
+            var rows = data.table.body;
+            if (data.row.index === rows.length - 1) {
+                data.cell.styles.fillColor = '#226bab';
+                data.cell.styles.textColor = '#fff'
+                data.cell.styles.fontStyle = 'bold'
+            }
+            /* let specialCellArray = [
                 "Column",
                 "count",
                 "top",
@@ -90,7 +96,7 @@ const generateApprovalStatusReport = async (data, user) => {
                 //console.log('data.cell.styles: ', data.cell.styles);
             }
 
-            console.log("column", data.column)
+            console.log("column", data.column) */
         },
         didDrawPage: (data) => {
             console.log('page data: ', data);
@@ -101,7 +107,6 @@ const generateApprovalStatusReport = async (data, user) => {
         }
     });
     const date = Date().split(" ");
-
     doc.addPage()
 
     let metaHeader = ['Detail', 'Description'];
@@ -131,4 +136,5 @@ const generateApprovalStatusReport = async (data, user) => {
     console.log("done");
 };
 
-export default generateApprovalStatusReport;
+
+export default generateMLstatsReport;
