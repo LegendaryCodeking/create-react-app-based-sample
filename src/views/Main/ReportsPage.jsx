@@ -166,15 +166,18 @@ class ReportsPage extends Component {
     return (
       <div className="bg-darkblue pt-4 pb-4" style={{ height: "100%" }}>
         <div className="mx-auto container mb-4">
-          <div className="p-4 mb-6 text-sm text-darkblue bg-cream" role="alert">
+          <div className="p-4 mb-6 text-xs text-darkblue bg-cream" role="alert">
             <div className="p-1">
               <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
-              <span className="ml-1 font-bold">Info</span>
+              <span className="ml-1 font-bold text-xs">Info</span>
             </div>
             <ul>
-              <li>
-                Note: While downloading, some files may take longer, kindly be
-                patient while they process.
+              <li className="flex">
+                <span className="text-xs font-bold mr-1 italic">Note :</span>
+                <p className="text-xs font-bold italic">
+                  While downloading, some files may take longer, kindly be
+                  patient while they process.
+                </p>
               </li>
             </ul>
           </div>
@@ -191,7 +194,7 @@ class ReportsPage extends Component {
                   </div>
                   <div className={!reportButton1 ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                    <span className="text-sm">SUMMARY REPORT</span>
+                    <span className="text-xs font-bold">SUMMARY REPORT</span>
                   </div>
                 </button>
               </div>
@@ -208,7 +211,9 @@ class ReportsPage extends Component {
                   </div>
                   <div className={!reportButton2 ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                    <span className="text-sm">APPROVAL STATUS REPORT</span>
+                    <span className="text-xs font-bold">
+                      APPROVAL STATUS REPORT
+                    </span>
                   </div>
                 </button>
               </div>
@@ -225,7 +230,9 @@ class ReportsPage extends Component {
                   </div>
                   <div className={!reportButton3 ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                    <span className="text-sm">ML STATISTICS REPORT</span>
+                    <span className="text-xs font-bold">
+                      ML STATISTICS REPORT
+                    </span>
                   </div>
                 </button>
               </div>
@@ -242,7 +249,7 @@ class ReportsPage extends Component {
                   </div>
                   <div className={!reportButton4 ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
-                    <span className="text-sm">FULL REPORT</span>
+                    <span className="text-xs font-bold">FULL REPORT</span>
                   </div>
                 </button>
               </div>
