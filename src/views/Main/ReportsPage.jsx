@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import plumber from "../../services/dataHelpers";
 import api from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import DescriptionSummaryTable from "../../components/Tables/DescriptionSummaryTable";
 import generatePDF from "../../services/summaryReportGenerator";
 import generateApprovalStatusReport from "../../services/approvalStatusReportGenerator";
@@ -107,7 +107,7 @@ class ReportsPage extends Component {
 
       setTimeout(() => {
         this.setState({ reportButton1: false });
-      }, 15000);
+      }, 5000);
     }
   };
 
@@ -166,6 +166,18 @@ class ReportsPage extends Component {
     return (
       <div className="bg-darkblue pt-4 pb-4" style={{ height: "100%" }}>
         <div className="mx-auto container mb-4">
+          <div className="p-4 mb-6 text-sm text-darkblue bg-cream" role="alert">
+            <div className="p-1">
+              <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
+              <span className="ml-1 font-bold">Info</span>
+            </div>
+            <ul>
+              <li>
+                Note: While downloading, some files may take longer, kindly be
+                patient while they process.
+              </li>
+            </ul>
+          </div>
           <div className="flex mb-4 mt-4">
             <div className="w-3/12">
               <div className="p-4 text-white text-xs flex justify-center">
