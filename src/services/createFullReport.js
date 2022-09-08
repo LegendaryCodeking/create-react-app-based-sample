@@ -110,7 +110,7 @@ const generatePDF = async (data, user) => {
             },
             didDrawPage: (data) => {
                 console.log('page data: ', data);
-                let pageNumber = data.pageNumber;
+                //let pageNumber = data.pageNumber;
                 doc.setFont("Courier", "Bold")
                 doc.setTextColor('#226bab')
                 pageActualNumber = pageActualNumber + 1;
@@ -208,7 +208,7 @@ const generatePDF = async (data, user) => {
             },
             didDrawPage: (data) => {
                 console.log('page data: ', data);
-                let pageNumber = data.pageNumber;
+                //let pageNumber = data.pageNumber;
                 doc.setFont("Courier", "Bold")
                 doc.setTextColor('#226bab')
                 pageActualNumber = pageActualNumber + 1;
@@ -313,7 +313,7 @@ const generatePDF = async (data, user) => {
             },
             didDrawPage: (data) => {
                 console.log('page data: ', data);
-                let pageNumber = data.pageNumber;
+                //let pageNumber = data.pageNumber;
                 doc.setFont("Courier", "Bold")
                 doc.setTextColor('#226bab')
                 pageActualNumber = pageActualNumber + 1;
@@ -358,7 +358,7 @@ const generatePDF = async (data, user) => {
         doc.text(String(i), 196, 285);
     } */
 
-    await doc.save(`report_${dateStr}.pdf`, { returnPromise: true });
+    await doc.save(`Caspre Full Report - ${dateStr}.pdf`, { returnPromise: true });
     console.log("done");
 };
 

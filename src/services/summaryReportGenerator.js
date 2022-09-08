@@ -132,7 +132,7 @@ const generatePDF = async (data, user) => {
         doc.text(String(i), 196, 285);
     } */
 
-    await doc.save(`report_${dateStr}.pdf`, { returnPromise: true });
+    await doc.save(`Caspre Summary Report - ${dateStr}.pdf`, { returnPromise: true });
     console.log("done");
 };
 
