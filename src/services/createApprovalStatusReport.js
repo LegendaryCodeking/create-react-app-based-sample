@@ -5,7 +5,7 @@ import "jspdf-autotable";
 //import { format } from "date-fns";
 
 // define a generatePDF function that accepts a tickets argument
-const generatePDF = async (data, user) => {
+const generateApprovalStatusReport = async (data, user) => {
     // initialize jsPDF
     const doc = new jsPDF("l", "mm", "letter");
     let headers = data.headers;
@@ -14,7 +14,7 @@ const generatePDF = async (data, user) => {
     //const pageHeight = 215.9;
     //headers[0] = 'Columns'
 
-    const fromIndex = headers.indexOf('Columns'); // 👉️ 0
+    const fromIndex = headers.indexOf('Number'); // 👉️ 0
     const toIndex = 0;
 
     const element = headers.splice(fromIndex, 1)[0];
@@ -43,19 +43,20 @@ const generatePDF = async (data, user) => {
     console.log(doc.getFontList())
     doc.setFont("Times", "bold")
     doc.setTextColor('#226bab')
-    doc.text("AICE - CREDIT SCORING TOOL [SUMMARY REPORT]", 130, 15, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text("AICE - CREDIT SCORING TOOL [APPROVAL STATUS REPORT]", 130, 15, { align: 'center' });
     doc.setFontSize(8);
     doc.setTextColor('#000b18')
     doc.setFont("Times", "Roman")
-    doc.text("This is a summary of your provided data uploaded as a file in step 1.", 130, 25, { align: 'center' });
-    doc.text("This representation does not include any analyzed data.", 130, 30, { align: 'center' });
+    doc.text("This reports includes analysis of status of approval from your provided data.", 130, 25, { align: 'center' });
+    doc.text("This representation includes analyzed data.", 130, 30, { align: 'center' });
 
     // startY is basically margin-top
     doc.autoTable({
         columns: tableColumns,
         body: tableRows,
         startY: 40,
-        styles: { cellWidth: 80, overflow: 'linebreak' },
+        styles: { cellWidth: 40, overflow: 'linebreak' },
         pageBreak: 'auto',
         horizontalPageBreak: true,
         columnStyles: { 1: { cellWidth: 40 } },
@@ -83,13 +84,21 @@ const generatePDF = async (data, user) => {
                 data.cell.styles.textColor = '#fff'
                 data.cell.styles.fontStyle = 'bold'
                 //data.cell.styles.halign = 'center'
-                data.cell.styles.cellWidth = 40
+                /* data.cell.styles.cellWidth = 40
                 data.cell.width = 40
-                data.cell.minWidth = 40
+                data.cell.minWidth = 40 */
                 //console.log('data.cell.styles: ', data.cell.styles);
             }
 
-            //console.log("column", data.column)
+            if (cellData === 'Rejected') {
+                data.cell.styles.textColor = '#ed0505'
+                data.cell.styles.fontStyle = 'bold'
+            }
+            if (cellData === 'Approved') {
+                data.cell.styles.textColor = '#28ed05'
+            }
+
+            console.log("column", data.column)
         },
         didDrawPage: (data) => {
             console.log('page data: ', data);
@@ -100,7 +109,6 @@ const generatePDF = async (data, user) => {
         }
     });
     const date = Date().split(" ");
-
 
     doc.addPage()
 
@@ -127,13 +135,8 @@ const generatePDF = async (data, user) => {
     // ticket title. and margin-top + margin-left
 
     // we define the name of our PDF file.
-    /* const pageCount = doc.internal.getNumberOfPages();
-    for (var i = 1; i <= pageCount; i++) {
-        doc.text(String(i), 196, 285);
-    } */
-
-    await doc.save(`Caspre Summary Report - ${dateStr}.pdf`, { returnPromise: true });
+    await doc.save(`Caspre Approval Status Report - ${dateStr}.pdf`, { returnPromise: true });
     console.log("done");
 };
 
-export default generatePDF;
+export default generateApprovalStatusReport;

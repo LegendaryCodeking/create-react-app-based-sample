@@ -198,10 +198,19 @@ const generatePDF = async (data, user) => {
                     data.cell.styles.textColor = '#fff'
                     data.cell.styles.fontStyle = 'bold'
                     //data.cell.styles.halign = 'center'
-                    data.cell.styles.cellWidth = 40
+                    /* data.cell.styles.cellWidth = 40
                     data.cell.width = 40
-                    data.cell.minWidth = 40
+                    data.cell.minWidth = 40 */
                     //console.log('data.cell.styles: ', data.cell.styles);
+                }
+
+                if (cellData === 'Rejected') {
+                    data.cell.styles.textColor = '#ed0505'
+                    data.cell.styles.fontStyle = 'bold'
+                }
+                if (cellData === 'Approved') {
+                    data.cell.styles.textColor = '#28ed05'
+                    data.cell.styles.fontStyle = 'bold'
                 }
 
                 console.log("column", data.column)

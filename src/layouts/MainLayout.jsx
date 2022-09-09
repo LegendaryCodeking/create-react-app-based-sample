@@ -9,6 +9,7 @@ import DataDescriptionPage from "../views/Main/DataDescriptionPage";
 import DataPrediction from "../views/Main/DataPredictionPage";
 import PredictedData from "../views/Main/PredictedDataPage";
 import Reports from "../views/Main/ReportsPage";
+import ProfilePage from "../views/Main/ProfilePage";
 //import LogOut from "../components/LogOut";
 
 class MainLayout extends Component {
@@ -24,7 +25,8 @@ class MainLayout extends Component {
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        history.push("/cst/dashboard");
+        console.log("pushing", history);
+        //history.push("/cst/dashboard");
       } else {
         history.push("/auth");
       }
@@ -98,6 +100,11 @@ class MainLayout extends Component {
                     TVSResult={this.props.TVSResult}
                   />
                 )}
+              />
+              <Route
+                path="/cst/profile"
+                exact
+                component={(props) => <ProfilePage {...props} user={user} />}
               />
               <Redirect from="/cst" to="/cst/dashboard" />
             </Switch>
