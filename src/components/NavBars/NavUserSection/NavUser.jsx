@@ -3,6 +3,12 @@ import React, { Component } from "react";
 
 import { Dropdown } from "flowbite-react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faHouse,
+  faPersonRunning,
+} from "@fortawesome/free-solid-svg-icons";
 //import profilePic from "../../../assets/images/avatar.webp";
 import { NavLink } from "react-router-dom";
 import Avatar from "react-avatar";
@@ -79,12 +85,25 @@ class NavUser extends Component {
               {user.personal_email ? user.personal_email : user.company_email}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Earnings</Dropdown.Item>
+          <Dropdown.Item>
+            <NavLink to="/cst/dasboard">
+              {" "}
+              <FontAwesomeIcon className="mr-2" icon={faHouse} /> Dashboard
+            </NavLink>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <NavLink to="/cst/profile">
+              {" "}
+              <FontAwesomeIcon className="mr-2" icon={faUser} /> Profile
+            </NavLink>
+          </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>
-            <NavLink to="/logout">Sign Out</NavLink>
+            <NavLink to="/logout">
+              {" "}
+              <FontAwesomeIcon className="mr-2" icon={faPersonRunning} /> Sign
+              Out
+            </NavLink>
           </Dropdown.Item>
         </Dropdown>
       </div>
