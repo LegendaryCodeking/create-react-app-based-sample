@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Avatar from "react-avatar";
 
-import profileImage from "../../assets/images/team-2-800x800.jpg";
+//import profileImage from "../../assets/images/team-2-800x800.jpg";
 
 class ProfileSummaryCard extends Component {
   state = {};
