@@ -1,18 +1,12 @@
 import React, { Component } from "react";
+import Avatar from "react-avatar";
 
 import profileImage from "../../assets/images/team-2-800x800.jpg";
 
 class ProfileSummaryCard extends Component {
   state = {};
   render() {
-    const {
-      username,
-      personal_email,
-      first_name,
-      last_name,
-      company_name,
-      company_email,
-    } = this.props.user;
+    const { first_name, last_name, company_name } = this.props.user;
     const designation = "Developer";
     return (
       <>
@@ -21,32 +15,45 @@ class ProfileSummaryCard extends Component {
             <div className="flex flex-wrap justify-center">
               <div className="w-full px-4 flex justify-center">
                 <div className="relative">
-                  <img
+                  {/* <img
                     alt="..."
                     src={profileImage}
-                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                    className="shadow-xl rounded-full h-auto align-middle border-none w-32"
+                  /> */}
+                  <Avatar
+                    color={Avatar.getRandomColor("sitebase", [
+                      "yellowgreen",
+                      "cornflowerblue",
+                      "teal",
+                      "steelblue",
+                      "slategray",
+                      "salmon",
+                    ])}
+                    name={first_name + " " + last_name}
+                    className="rounded-full ring-2 ring-eggyellow ring-offset-4 ring-offset-darkblue"
+                    size="128px"
                   />
                 </div>
               </div>
-              <div className="w-full px-4 text-center mt-20">
+              <div className="w-full px-4 text-center mt-10">
                 <div className="flex justify-center py-4 lg:pt-4 pt-8">
                   <div className="mr-4 p-3 text-center">
                     <span className="text-xl font-bold block uppercase tracking-wide text-eggyellow">
-                      22
+                      0
                     </span>
-                    <span className="text-sm text-eggyellow">Friends</span>
+                    <span className="text-sm text-eggyellow">Loans</span>
                   </div>
                   <div className="mr-4 p-3 text-center">
                     <span className="text-xl font-bold block uppercase tracking-wide text-eggyellow">
-                      10
+                      0
                     </span>
-                    <span className="text-sm text-eggyellow">Photos</span>
+                    <span className="text-sm text-eggyellow">Customers</span>
                   </div>
                   <div className="lg:mr-4 p-3 text-center">
                     <span className="text-xl font-bold block uppercase tracking-wide text-eggyellow">
-                      89
+                      0
                     </span>
-                    <span className="text-sm text-eggyellow">Comments</span>
+                    <span className="text-sm text-eggyellow">Models</span>
                   </div>
                 </div>
               </div>

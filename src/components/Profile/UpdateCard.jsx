@@ -19,7 +19,7 @@ class UpdateCard extends Component {
             <div className="text-center flex justify-between">
               <h6 className="text-eggyellow text-xl font-bold">My account</h6>
               <button
-                className="bg-lightBlue-500 text-eggyellow active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline outline-eggyellow focus:outline-none mr-1 ease-linear hover:bg-eggyellow hover:text-darkblue transition-all duration-150"
+                className="bg-mediumblue text-eggyellow active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline outline-eggyellow focus:outline-none mr-1 ease-linear hover:bg-eggyellow hover:text-darkblue transition-all duration-150"
                 type="button"
               >
                 Update
