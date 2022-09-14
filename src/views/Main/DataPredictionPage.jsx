@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 class DataPredictionPage extends Component {
   state = {
     statsData: {},
+    statusText: "This may take a while...",
     tableData: {},
     confusionMatrixData: {},
     ROCData: {},
@@ -21,50 +22,68 @@ class DataPredictionPage extends Component {
   };
 
   async componentDidMount() {
+    this.checkPredictStatus();
+  }
+
+  checkPredictStatus = async () => {
     let mlStatsResponse = await api.getPrediction();
     console.log("mlStatsResponse: ", mlStatsResponse);
 
-    if (mlStatsResponse.status === 200) {
+    if (
+      mlStatsResponse.status === 200 &&
+      mlStatsResponse.data.status === "successful"
+    ) {
       //Step 1
-      let predictionData = mlStatsResponse.data;
-
-      if (predictionData.status === "failed") {
-        toast.warn(predictionData.message);
-        return;
+      if (mlStatsResponse.data.modelling_status === "Done") {
+        this.setState({
+          statusText: "Training complete, loading statistics...",
+        });
+        setTimeout(() => {
+          this.startProcessingData(mlStatsResponse.data.model_data[0]);
+        }, 2000);
+      } else if (mlStatsResponse.data.modelling_status === "Training Ongoing") {
+        this.setState({ statusText: "Training still ongoing." });
+        setTimeout(() => {
+          this.checkPredictStatus();
+        }, 4000);
       }
-
-      console.log(
-        "DATA PREDICTION PAGE PASSED RETURN STATEMENT : DATA DID NOT FAIL"
-      );
-      this.setState({ overlayActive: false, chartsData: predictionData });
-      let statsObject = {
-        accuracy: predictionData.accuracy,
-        area_under_curve: predictionData.auc_score,
-        kolmogrov_smirnov: predictionData.kolmogrov_smirnov,
-        gini: predictionData.gini,
-      };
-
-      this.fillStatsCards(statsObject);
-      //Step 2
-
-      let tableData = plumber.formatPerformanceMetricTableData(predictionData);
-      console.log("tableData: ", tableData);
-
-      //Step 3
-
-      this.setState({ tableData });
-      this.props.onMLstats(tableData);
-
-      //Step 4
-      let matrixData = predictionData.confusion_matrix.matrix;
-
-      this.setState({ confusionMatrixData: matrixData });
     } else if (mlStatsResponse.status === 500) {
       this.setState({ overlayActive: false });
     } else {
       this.setState({ overlayActive: false });
     }
-  }
+  };
+
+  startProcessingData = (data) => {
+    let predictionData = data;
+
+    console.log(
+      "DATA PREDICTION PAGE PASSED RETURN STATEMENT : DATA DID NOT FAIL"
+    );
+    this.setState({ overlayActive: false, chartsData: predictionData });
+    let statsObject = {
+      accuracy: predictionData.accuracy,
+      area_under_curve: predictionData.auc_score,
+      kolmogrov_smirnov: predictionData.kolmogrov_smirnov,
+      gini: predictionData.gini,
+    };
+
+    this.fillStatsCards(statsObject);
+    //Step 2
+
+    let tableData = plumber.formatPerformanceMetricTableData(predictionData);
+    console.log("tableData: ", tableData);
+
+    //Step 3
+
+    this.setState({ tableData });
+    //this.props.onMLstats(tableData);
+
+    //Step 4
+    let matrixData = predictionData.confusion_matrix.matrix;
+
+    this.setState({ confusionMatrixData: matrixData });
+  };
 
   fillStatsCards(statsData) {
     this.setState({ statsData });
@@ -77,6 +96,7 @@ class DataPredictionPage extends Component {
       confusionMatrixData,
       overlayActive,
       chartsData,
+      statusText,
     } = this.state;
     return (
       <LoadingOverlay
@@ -85,9 +105,7 @@ class DataPredictionPage extends Component {
         text={
           <span className="font-bold text-eggyellow">
             Loading Model analytics...<br></br>
-            <span className="font-bold text-xs text-white">
-              This may take a while...
-            </span>
+            <span className="font-bold text-xs text-white">{statusText}</span>
           </span>
         }
         styles={{

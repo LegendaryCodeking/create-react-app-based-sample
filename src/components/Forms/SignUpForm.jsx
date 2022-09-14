@@ -124,6 +124,8 @@ class SignUpForm extends Component {
       total_customers: 0,
       password: newUser.password,
       company_name: newUser.companyName,
+      date_of_birth: "2020-01-01",
+      total_amount_disbursed: 0,
       first_name: newUser.firstName,
       last_name: newUser.lastName,
     };

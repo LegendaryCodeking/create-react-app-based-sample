@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 
 function getCurrentUser() {
-    console.log("extracting user");
+
     try {
         const token = localStorage.getItem("token");
         let user = jwtDecode(token)
@@ -15,7 +15,7 @@ function getCurrentUser() {
             personal_email: user.personal_email,
             username: user.username
         }
-        console.log('user: ', userObject);
+
         return userObject;
     } catch (error) {
         return null;

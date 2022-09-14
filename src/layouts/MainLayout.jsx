@@ -13,25 +13,28 @@ import ProfilePage from "../views/Main/ProfilePage";
 //import LogOut from "../components/LogOut";
 
 class MainLayout extends Component {
-  state = {};
+  state = {
+    mlStats: {},
+  };
   onLogOut = () => {
     this.props.onLogOut();
   };
 
+  setMLstats = (data) => {
+    this.setState({ mlStats: data });
+  };
+
   componentDidMount() {
-    console.log("main lay props", this.props);
     const { history } = this.props;
 
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        console.log("pushing", history);
         //history.push("/cst/dashboard");
       } else {
         history.push("/auth");
       }
     } catch (error) {
-      console.log("error: ", error);
       history.push("/auth");
     }
   }
@@ -43,7 +46,7 @@ class MainLayout extends Component {
           <NavBar onLogOut={this.onLogOut} user={user} {...this.props} />
           <div className="mx-auto p-2 bg-darkblue">
             <span className="text-white mt-2 ml-2 font-bold">
-              AICE Credit scoring tool
+              AICE Credit scoring tool.
             </span>
           </div>
           <TabNav />
@@ -74,7 +77,7 @@ class MainLayout extends Component {
                 path="/cst/data-prediction"
                 exact
                 component={(props) => (
-                  <DataPrediction onMLstats={this.props.onMLstats} {...props} />
+                  <DataPrediction onMLstats={this.setMLstats} {...props} />
                 )}
               />
               <Route
@@ -95,7 +98,7 @@ class MainLayout extends Component {
                   <Reports
                     {...props}
                     user={user}
-                    mlStats={this.props.mlStats}
+                    mlStats={this.state.mlStats}
                     approvalData={this.props.approvalData}
                     TVSResult={this.props.TVSResult}
                   />

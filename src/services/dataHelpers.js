@@ -86,7 +86,7 @@ function FormatDistroData(data, variable) {
         finalArray.push(pushObject);
     }
 
-    console.log('PLUMBER ==> FORMATDISTRIBUTION:  finalArray: ', finalArray);
+
 
     let headers = {};
     headers.y = 'Frequency';
@@ -297,17 +297,17 @@ const formatBarChartOne = (data, variable) => {
     let chartData = []
     let frequencyData = baseData['Frequency'];
     let variableData = baseData[variable];
-    console.log('PLUMBER ==> FORMATCHARTONE:  variable: ', variable);
-    console.log('PLUMBER ==> FORMATCHARTONE:  data: ', data);
-    console.log('PLUMBER ==> FORMATCHARTONE:  freqData: ', frequencyData);
-    console.log('PLUMBER ==> FORMATCHARTONE:  varData: ', variableData);
+
+
+
+
 
     for (let index = 0; index < Object.keys(frequencyData).length; index++) {
-        console.log('index: ', index);
+
         chartData.push({ x: variableData[index], y: frequencyData[index] })
     }
 
-    console.log('chartData: ', chartData);
+
     return chartData;
 }
 const formatBarChartTwo = (data, variable) => {
@@ -316,22 +316,22 @@ const formatBarChartTwo = (data, variable) => {
     let chartData = []
     let frequencyData = baseData['Frequency'];
     let variableData = baseData[variable];
-    console.log('PLUMBER ==> FORMATCHARTONE:  variable: ', variable);
-    console.log('PLUMBER ==> FORMATCHARTONE:  data: ', data);
-    console.log('PLUMBER ==> FORMATCHARTONE:  freqData: ', frequencyData);
-    console.log('PLUMBER ==> FORMATCHARTONE:  varData: ', variableData);
+
+
+
+
 
     for (let index = 0; index < Object.keys(frequencyData).length; index++) {
-        console.log('index: ', index);
+
         chartData.push({ x: variableData[index], y: frequencyData[index] })
     }
 
-    console.log('chartData: ', chartData);
+
     return chartData;
 }
 
 const rollUpPieArray = (arr) => {
-    console.log('PI DATA arr FUNCTION: ', arr);
+
 
     if (arr) {
         const map = new Map();
@@ -340,7 +340,7 @@ const rollUpPieArray = (arr) => {
             map.set(x, currSum + y);
         }
         const res = Array.from(map, ([x, y]) => ({ x, y }));
-        //console.log(res);
+        //
         return res;
     } else {
         return []

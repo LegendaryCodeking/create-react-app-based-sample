@@ -1,7 +1,67 @@
 import React, { Component } from "react";
+//import moment from "moment";
+import auth from "../../services/authService";
 
 class UpdateCard extends Component {
-  state = {};
+  state = {
+    user: {
+      username: "",
+      personal_email: "",
+      first_name: "",
+      last_name: "",
+      company_name: "",
+      company_email: "",
+    },
+    oldUser: {},
+    userHasEdited: false,
+  };
+
+  componentDidMount() {
+    //let date = Date.now();
+    //let formattedDate = moment(date).format("YYYY-MM-DD");
+    //console.log("formattedDate: ", formattedDate);
+    this.setCurrentUserDetails();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      //this.setCurrentUserDetails();
+    }
+  }
+
+  setCurrentUserDetails = () => {
+    const user = auth.getCurrentUser();
+    console.log("user set up: ", user);
+    //console.log("propUserDetails: ", propUserDetails);
+    //let { user: currentUserDetails } = this.state;
+
+    if (Object.keys(user).length > 0) {
+      this.setState({ user: user, oldUser: user });
+    }
+  };
+
+  checkInputsDifference = () => {
+    let { user, oldUser } = this.state;
+    if (JSON.stringify(oldUser) !== JSON.stringify(user)) {
+      console.log("user has changed new: ", user);
+      console.log("user has changed old: ", oldUser);
+      this.setState({ userHasEdited: true });
+    } else {
+      console.log("user hasnt changed new: ", user);
+      console.log("user hasnt changed old: ", oldUser);
+      this.setState({ userHasEdited: false });
+    }
+  };
+
+  handleChange = ({ currentTarget: input }) => {
+    console.log("input: ", input.value, input.name);
+    let { user } = this.state;
+    user[input.name] = input.value;
+    this.setState({ user });
+    setTimeout(() => {
+      this.checkInputsDifference();
+    }, 500);
+  };
   render() {
     const {
       username,
@@ -10,7 +70,8 @@ class UpdateCard extends Component {
       last_name,
       company_name,
       company_email,
-    } = this.props.user;
+    } = this.state.user;
+    const { userHasEdited } = this.state;
     const designation = "Developer";
     return (
       <>
@@ -19,8 +80,9 @@ class UpdateCard extends Component {
             <div className="text-center flex justify-between">
               <h6 className="text-eggyellow text-xl font-bold">My account</h6>
               <button
-                className="bg-mediumblue text-eggyellow active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline outline-eggyellow focus:outline-none mr-1 ease-linear hover:bg-eggyellow hover:text-darkblue transition-all duration-150"
+                className="bg-mediumblue text-eggyellow active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline outline-eggyellow focus:outline-none mr-1 ease-linear hover:bg-eggyellow hover:text-darkblue transition-all disabled:bg-gray-700 disabled:outline-gray-900 disabled:text-black duration-150"
                 type="button"
+                disabled={!userHasEdited}
               >
                 Update
               </button>
@@ -43,7 +105,9 @@ class UpdateCard extends Component {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={username}
+                      value={username}
+                      name="username"
+                      readOnly
                       disabled
                     />
                   </div>
@@ -59,7 +123,9 @@ class UpdateCard extends Component {
                     <input
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={personal_email}
+                      value={personal_email}
+                      name="personal_email"
+                      readOnly
                       disabled
                     />
                   </div>
@@ -75,7 +141,9 @@ class UpdateCard extends Component {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={first_name}
+                      value={first_name}
+                      name="first_name"
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
@@ -90,7 +158,9 @@ class UpdateCard extends Component {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={last_name}
+                      value={last_name}
+                      onChange={this.handleChange}
+                      name="last_name"
                     />
                   </div>
                 </div>
@@ -113,8 +183,10 @@ class UpdateCard extends Component {
                     <input
                       type="text"
                       disabled
+                      readOnly
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={company_name}
+                      value={company_name}
+                      name="company_name"
                     />
                   </div>
                 </div>
@@ -130,7 +202,9 @@ class UpdateCard extends Component {
                       type="email"
                       disabled
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={company_email}
+                      value={company_email}
+                      name="company_email"
+                      readOnly
                     />
                   </div>
                 </div>
@@ -145,7 +219,9 @@ class UpdateCard extends Component {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={designation}
+                      value={designation}
+                      name="designation"
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
@@ -160,8 +236,9 @@ class UpdateCard extends Component {
                     <input
                       type="date"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue="1990/01/01"
-                      value="1990/01/01"
+                      value="2022-01-01"
+                      name="date_of_birth"
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>

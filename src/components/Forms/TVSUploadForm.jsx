@@ -76,13 +76,22 @@ class TVSUploadForm extends Component {
 
     /* const { data } = await api.postDescription(); */
     //console.log("response: ", data);
-    this.props.onNext({
-      target_variable: selectedVariable,
-      approved_binary: approved,
-      rejected_binary: rejected,
-    });
-    this.setState({ nextLoading: false });
-    this.props.history.push("/cst/data-description");
+
+    const initiateModelling = await api.initiateModelling();
+    console.log("initiateModelling: ", initiateModelling);
+
+    if (initiateModelling.status === 200) {
+      this.props.onNext({
+        target_variable: selectedVariable,
+        approved_binary: approved,
+        rejected_binary: rejected,
+      });
+      this.setState({ nextLoading: false });
+      this.props.history.push("/cst/data-description");
+    } else {
+      this.setState({ nextLoading: false });
+      toast.error("There was a problem initiating your model");
+    }
   };
 
   render() {

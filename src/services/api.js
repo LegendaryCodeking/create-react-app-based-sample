@@ -37,12 +37,20 @@ const routes = {
         method: "POST"
     },
     predict: {
-        path: "/predict/",
+        path: "/predictdatachecker/",
         method: "GET"
     },
     mlpredict: {
         path: "/datapredict/",
         method: "POST"
+    },
+    updateProfile: {
+        path: "/profileupdate/",
+        method: "PUT"
+    },
+    initiateModelling: {
+        path: "/predictinitiate/",
+        method: "GET"
     }
 }
 
@@ -63,6 +71,11 @@ const postDistributionChanged = async (requestObject) => {
 
 const getPrediction = async () => {
     const response = await http.get(url + routes.predict.path);
+    return response;
+}
+
+const initiateModelling = async () => {
+    const response = await http.get(url + routes.initiateModelling.path);
     return response;
 }
 
@@ -87,6 +100,23 @@ const postUploadData = async (uploadData) => {
     return response;
 }
 
-let exports = { postDescription, postDistributionChanged, getPrediction, postForPrediction, postLogin, postRegister, postUploadData };
+const postProfileUpdate = async (userData) => {
+    console.log('updating profile data: ', userData);
+    const response = await http.put(url + routes.updateProfile.path, userData);
+    return response;
+}
+
+
+let exports = {
+    postDescription,
+    postDistributionChanged,
+    getPrediction,
+    postForPrediction,
+    postLogin,
+    postRegister,
+    postUploadData,
+    postProfileUpdate,
+    initiateModelling
+};
 
 export default exports;
