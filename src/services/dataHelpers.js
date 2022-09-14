@@ -252,7 +252,9 @@ function createDefaultAxisData() {
 function formatApprovalStatusTableData(data) {
     let predictedData = data.predicted_data;
     let headers = Object.keys(predictedData);
-    let variableLength = predictedData[headers[0]].length
+    let variableLength = Object.keys(predictedData[headers[0]]).length
+    //variableLength = variableLength > 100 ? 100 : variableLength;
+    console.log('variableLength: ', variableLength);
     let flattenedArray = [];
 
     for (let index = 0; index < variableLength; index++) {

@@ -7,14 +7,15 @@ import TabNav from "../components/NavBars/TabNav";
 import TargetVariableSettingPage from "../views/Main/TargetVariableSettingPage";
 import DataDescriptionPage from "../views/Main/DataDescriptionPage";
 import DataPrediction from "../views/Main/DataPredictionPage";
-import PredictedData from "../views/Main/PredictedDataPage";
 import Reports from "../views/Main/ReportsPage";
 import ProfilePage from "../views/Main/ProfilePage";
-//import LogOut from "../components/LogOut";
+import PredictedDataPage from "../views/Main/PredictedDataPage";
 
 class MainLayout extends Component {
   state = {
     mlStats: {},
+    approvalStatusData: {},
+    TVSResultData: {},
   };
   onLogOut = () => {
     this.props.onLogOut();
@@ -38,8 +39,18 @@ class MainLayout extends Component {
       history.push("/auth");
     }
   }
+
+  onNext = (data) => {
+    console.log("data: ", data);
+    this.setState({ TVSResultData: data });
+  };
+
+  setApprovalStatusData = (data) => {
+    this.setState({ approvalStatusData: data });
+  };
   render() {
     let { user } = this.props;
+    const { TVSResultData } = this.state;
     return (
       <>
         <div className="relative">
@@ -57,20 +68,14 @@ class MainLayout extends Component {
                 path="/cst/dashboard"
                 exact
                 component={(props) => (
-                  <TargetVariableSettingPage
-                    {...props}
-                    onNext={this.props.onNext}
-                  />
+                  <TargetVariableSettingPage {...props} onNext={this.onNext} />
                 )}
               />
               <Route
                 exact
                 path="/cst/data-description"
                 component={(props) => (
-                  <DataDescriptionPage
-                    {...props}
-                    TVSResult={this.props.TVSResult}
-                  />
+                  <DataDescriptionPage {...props} TVSResult={TVSResultData} />
                 )}
               />
               <Route
@@ -80,16 +85,18 @@ class MainLayout extends Component {
                   <DataPrediction onMLstats={this.setMLstats} {...props} />
                 )}
               />
+
               <Route
                 path="/cst/predicted-data"
                 exact
-                component={(props) => {
-                  <PredictedData
+                component={(props) => (
+                  <PredictedDataPage
+                    onApprovalStatusData={this.setApprovalStatusData}
                     {...props}
-                    onApprovalData={this.props.onApprovalData}
-                  />;
-                }}
+                  />
+                )}
               />
+
               {/* <Route path="/logout" exact component={LogOut} /> */}
               <Route
                 path="/cst/reports"
@@ -99,8 +106,8 @@ class MainLayout extends Component {
                     {...props}
                     user={user}
                     mlStats={this.state.mlStats}
-                    approvalData={this.props.approvalData}
-                    TVSResult={this.props.TVSResult}
+                    approvalData={this.state.approvalStatusData}
+                    TVSResult={TVSResultData}
                   />
                 )}
               />

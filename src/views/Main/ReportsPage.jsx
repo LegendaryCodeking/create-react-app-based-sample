@@ -11,6 +11,7 @@ import createFullReport from "../../services/createFullReport";
 import { Spinner } from "flowbite-react";
 import sample from "../../samples/sampleApprovalStatusData.json";
 import sampleMLdata from "../../samples/sampleMLstats.json";
+import sampleTableData from "../../assets/json/sampleTableData.json";
 //import SummaryPDF from "../../components/PDF/SummaryPDF";
 
 class ReportsPage extends Component {
@@ -28,7 +29,13 @@ class ReportsPage extends Component {
     let { TVSResult, approvalData, mlStats } = this.props;
     let reportData = {};
     if (TVSResult) {
-      let descriptionData = await this.getDescriptionData(TVSResult);
+      const sampleTVSObject = {
+        target_variable: "LOAN STATUS",
+        approved_binary: false,
+        rejected_binary: true,
+      };
+      let descriptionData = await this.getDescriptionData(sampleTVSObject);
+      //let descriptionData = await this.getDescriptionData(TVSResult);
       console.log("descriptionData: ", descriptionData);
       reportData.summaryReportData = descriptionData;
     }
@@ -82,6 +89,9 @@ class ReportsPage extends Component {
   async componentDidMount() {
     const describedData = this.props.TVSResult;
 
+    const tableData = sampleTableData;
+    this.setState({ summaryData: tableData });
+
     if (describedData) {
       //const data = await api.postDescription(describedData);
       const reportData = await this.getReportData();
@@ -95,6 +105,27 @@ class ReportsPage extends Component {
         summaryData: formattedData,
         data_overview: data_overview,
       }); */
+    }
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      const describedData = this.props.TVSResult;
+
+      if (describedData) {
+        //const data = await api.postDescription(describedData);
+        const reportData = await this.getReportData();
+        console.log("reportData: ", reportData);
+
+        this.setState({ reportData });
+        //
+        /* const data_overview = data.data_overview;
+      const formattedData = plumber.formatDataSummaryData(data.summary_table);
+      this.setState({
+        summaryData: formattedData,
+        data_overview: data_overview,
+      }); */
+      }
     }
   }
   generateSummaryReport = () => {
@@ -122,7 +153,7 @@ class ReportsPage extends Component {
 
       setTimeout(() => {
         this.setState({ reportButton2: false });
-      }, 15000);
+      }, 5000);
     }
   };
 

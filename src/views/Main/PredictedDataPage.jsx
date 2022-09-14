@@ -6,6 +6,7 @@ import PredictedFileUpload from "../../components/Forms/FormComponents/Predicted
 import plumber from "../../services/dataHelpers";
 import PredictionApprovalStatusTable from "../../components/Tables/PredictionApprovalStatus";
 import { toast } from "react-toastify";
+import sampleJSON from "../../assets/json/newUpload.json";
 
 class PredictedDataPage extends Component {
   state = {
@@ -20,8 +21,14 @@ class PredictedDataPage extends Component {
     console.log("fileData: ", fileData);
     this.setState({ loadingFileUpload: true, disableUploadButton: true });
 
-    const predictedResponse = await api.postForPrediction(fileData);
+    let reqObj = sampleJSON;
+    //let reqObj = fileData;
+    reqObj.threshold = 500;
+    console.log("reqObj: ", reqObj);
+
+    const predictedResponse = await api.postForPrediction(reqObj);
     console.log("predictedResponse: ", predictedResponse);
+
     this.setState({ loadingFileUpload: false });
     if (predictedResponse.status === 200) {
       const predictedData = predictedResponse.data;
@@ -32,11 +39,24 @@ class PredictedDataPage extends Component {
       const ApprovalStatusTableData =
         plumber.formatApprovalStatusTableData(predictedData);
       console.log("ApprovalStatusTableData: ", ApprovalStatusTableData);
-      this.props.onApprovalData(ApprovalStatusTableData);
       let tableData = ApprovalStatusTableData;
       this.setState({ tableData });
+      //this.props.onApprovalStatusData(tableData);
     }
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    Object.entries(this.props).forEach(
+      ([key, val]) =>
+        prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    );
+    if (this.state) {
+      Object.entries(this.state).forEach(
+        ([key, val]) =>
+          prevState[key] !== val && console.log(`State '${key}' changed`)
+      );
+    }
+  }
 
   onFileReadyForUpload = (value) => {
     this.setState({ disableUploadButton: value });
@@ -44,9 +64,12 @@ class PredictedDataPage extends Component {
   render() {
     const { loadingFileUpload, disableUploadButton, tableData } = this.state;
     return (
-      <div className="bg-darkblue pt-4" style={{ height: "100vh " }}>
+      <div
+        className="bg-darkblue predictedpage pt-4"
+        style={{ height: "100vh " }}
+      >
         <div className="mx-auto container">
-          <div className="p-4 mb-6 text-sm text-darkblue bg-cream" role="alert">
+          <div className="p-4 mb-6 text-sm text-darkblue bg-cream">
             <div className="p-1">
               <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
               <span className="ml-1 font-bold">Info</span>
