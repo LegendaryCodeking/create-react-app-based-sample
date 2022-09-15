@@ -35,7 +35,7 @@ let userObject = {
 }) */
 
 
-describe('USER REGISTRATION CHECK', () => {
+/* describe('USER REGISTRATION CHECK', () => {
     it('Performs a healthcheck of register API', () => {
         cy.request('POST', Cypress.env('register_url'), userObject).then(
             (response) => {
@@ -44,4 +44,4 @@ describe('USER REGISTRATION CHECK', () => {
             }
         )
     })
-})
+}) */
