@@ -3,12 +3,12 @@ import logger from "./logService"
 import { toast } from "react-toastify"
 axios.interceptors.response.use(null, error => {
     console.log('API error: ', error);
-    const expectedErrors = error.response && error.response.status >= 400 && error.response.status <= 500 && error.response.status !== 404;
+    const expectedErrors = error.response && error.response.status >= 400 && error.response.status < 500 && error.response.status !== 404;
     console.log('expectedErrors: ', expectedErrors);
 
     if (!expectedErrors) {
-        logger.log('unexpected error', error)
         toast.error("An unexpected error occured")
+        logger.log('unexpected error', error)
     }
     return Promise.reject(error);
 })
@@ -20,7 +20,7 @@ axios.interceptors.request.use((config) => {
     let registerURL = process.env.REACT_APP_SERVER_URL + '/register/';
 
     if (requestURL !== loginURL && requestURL !== registerURL) {
-        console.log("not login");
+        //console.log("unexpected error");
         config.headers['Authorization'] = 'Token ' + getTokenIfExists();
     }
     return config;

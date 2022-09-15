@@ -42,7 +42,7 @@ class CreditApprovalStatusPieChart extends Component {
       const pieData = plumber.rollUpPieArray(data);
       console.log("pieData: ", pieData);
 
-      options.data = data;
+      options.data = pieData;
       options.series = [
         {
           type: "pie",

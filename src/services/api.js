@@ -75,8 +75,12 @@ const getPrediction = async () => {
 }
 
 const initiateModelling = async () => {
-    const response = await http.get(url + routes.initiateModelling.path);
-    return response;
+    try {
+        const response = await http.get(url + routes.initiateModelling.path);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 const postForPrediction = async (uploadData) => {

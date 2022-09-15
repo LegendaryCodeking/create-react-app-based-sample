@@ -81,6 +81,7 @@ class TVSUploadForm extends Component {
     console.log("initiateModelling: ", initiateModelling);
 
     if (initiateModelling.status === 200) {
+      toast.success("Your model was successfully initiated");
       this.props.onNext({
         target_variable: selectedVariable,
         approved_binary: approved,

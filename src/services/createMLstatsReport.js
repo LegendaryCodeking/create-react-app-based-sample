@@ -132,7 +132,7 @@ const generateMLstatsReport = async (data, user) => {
     // ticket title. and margin-top + margin-left
 
     // we define the name of our PDF file.
-    await doc.save(`report_${dateStr}.pdf`, { returnPromise: true });
+    await doc.save(`Model Statistics ${dateStr}.pdf`, { returnPromise: true });
     console.log("done");
 };
 

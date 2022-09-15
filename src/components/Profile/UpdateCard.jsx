@@ -1,16 +1,25 @@
 import React, { Component } from "react";
 //import moment from "moment";
 import auth from "../../services/authService";
+import api from "../../services/api";
+import { toast } from "react-toastify";
 
 class UpdateCard extends Component {
   state = {
     user: {
+      id: "",
+      exp: "",
       username: "",
-      personal_email: "",
       first_name: "",
       last_name: "",
+      date_of_birth: "",
+      email: "",
       company_name: "",
       company_email: "",
+      company_designation: "",
+      company_location: "",
+      total_customers: "",
+      total_amount_disbursed: "",
     },
     oldUser: {},
     userHasEdited: false,
@@ -25,18 +34,18 @@ class UpdateCard extends Component {
 
   componentDidUpdate(previousProps, previousState) {
     if (previousProps !== this.props) {
-      //this.setCurrentUserDetails();
+      this.setCurrentUserDetails();
     }
   }
 
   setCurrentUserDetails = () => {
-    const user = auth.getCurrentUser();
+    const { user } = this.props;
     console.log("user set up: ", user);
     //console.log("propUserDetails: ", propUserDetails);
     //let { user: currentUserDetails } = this.state;
 
     if (Object.keys(user).length > 0) {
-      this.setState({ user: user, oldUser: user });
+      this.setState({ user: user, oldUser: this.props.user });
     }
   };
 
@@ -62,17 +71,30 @@ class UpdateCard extends Component {
       this.checkInputsDifference();
     }, 500);
   };
+
+  submitNewProfile = async () => {
+    const { user } = this.state;
+    const userResponse = await api.postProfileUpdate(user);
+    console.log("userResponse: ", userResponse);
+
+    if (userResponse.status === 200) {
+      toast.success("user updated successfully");
+      this.props.onUserChanged(user);
+    }
+  };
   render() {
     const {
       username,
-      personal_email,
+      email,
       first_name,
       last_name,
       company_name,
       company_email,
+      company_designation,
+      date_of_birth,
     } = this.state.user;
     const { userHasEdited } = this.state;
-    const designation = "Developer";
+    //const designation = "Developer";
     return (
       <>
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -80,9 +102,9 @@ class UpdateCard extends Component {
             <div className="text-center flex justify-between">
               <h6 className="text-eggyellow text-xl font-bold">My account</h6>
               <button
-                className="bg-mediumblue text-eggyellow active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline outline-eggyellow focus:outline-none mr-1 ease-linear hover:bg-eggyellow hover:text-darkblue transition-all disabled:bg-gray-700 disabled:outline-gray-900 disabled:text-black duration-150"
+                className="bg-mediumblue text-eggyellow font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline outline-eggyellow focus:outline-none mr-1 ease-linear hover:bg-eggyellow hover:text-darkblue transition-all disabled:bg-gray-700 disabled:outline-gray-900 disabled:text-black duration-150"
                 type="button"
-                disabled={!userHasEdited}
+                onClick={this.submitNewProfile}
               >
                 Update
               </button>
@@ -123,7 +145,7 @@ class UpdateCard extends Component {
                     <input
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      value={personal_email}
+                      value={email}
                       name="personal_email"
                       readOnly
                       disabled
@@ -219,8 +241,8 @@ class UpdateCard extends Component {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      value={designation}
-                      name="designation"
+                      value={company_designation}
+                      name="company_designation"
                       onChange={this.handleChange}
                     />
                   </div>
@@ -236,7 +258,7 @@ class UpdateCard extends Component {
                     <input
                       type="date"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-darkblue bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      value="2022-01-01"
+                      value={date_of_birth}
                       name="date_of_birth"
                       onChange={this.handleChange}
                     />

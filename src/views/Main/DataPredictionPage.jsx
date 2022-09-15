@@ -6,7 +6,7 @@ import LoadingOverlay from "react-loading-overlay";
 import PredictionStats from "../../components/Stats/DataPredictionStats";
 import ModelMetricsTable from "../../components/Tables/ModelMetricsTable";
 import PredictionSummaryCharts from "../../components/PredictionSummaryCharts";
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
 //import PredictionApprovalStatusTable from "../../components/Tables/PredictionApprovalStatus";
 
 class DataPredictionPage extends Component {
@@ -26,6 +26,7 @@ class DataPredictionPage extends Component {
   }
 
   checkPredictStatus = async () => {
+    this.setState({ statusText: "Checking model progress..." });
     let mlStatsResponse = await api.getPrediction();
     console.log("mlStatsResponse: ", mlStatsResponse);
 
