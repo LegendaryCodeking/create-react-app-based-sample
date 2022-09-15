@@ -124,10 +124,10 @@ class LogInForm extends Component {
         >
           <div className="mt-2 mb-2 p-2 text-eggyellow text-center">
             <div className="mb-2">
-              <span className="text-sm">WELCOME</span>
+              <span className="text-sm font-bold">WELCOME</span>
             </div>
             <div className="mb-2">
-              <span className="text-white text-sm">
+              <span className="text-white font-bold text-xs">
                 ARTIFICIAL INTELLIGENCE CENTER OF EXCELLENCE AFRICA
               </span>
             </div>

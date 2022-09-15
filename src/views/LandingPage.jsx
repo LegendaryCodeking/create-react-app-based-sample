@@ -32,7 +32,10 @@ class IndexPage extends Component {
                 A tool for efficient and fast credit scoring
               </h5>
               <div className="mt-8">
-                <button className="bg-eggyellow rounded-none p-2 px-4 hover:bg-eggyellow2">
+                <button
+                  onClick={() => this.props.history.push("/auth/register")}
+                  className="bg-eggyellow rounded-none p-2 px-4 hover:bg-eggyellow2"
+                >
                   Get Started
                 </button>
               </div>
@@ -51,7 +54,7 @@ class IndexPage extends Component {
                   <h2 className="text-lightblue ml-4 text-3xl mb-4 font-bold">
                     About Us
                   </h2>
-                  <p className="text-white text-left normal-case p-4 font-medium">
+                  <p className="text-slabtext whitespace-pre-line subpixel-antialiased text-left normal-case p-4 font-medium leading-loose tracking-wide">
                     The credit tool is an Al powered platform created by the Al
                     Centre of Excellence. There has been an increase in fintech
                     industries, there's need to increase efficiency in scoring
@@ -73,7 +76,7 @@ class IndexPage extends Component {
                   <h2 className="text-lightblue ml-4 text-3xl mb-4 font-bold">
                     How it works
                   </h2>
-                  <p className="text-white text-left normal-case p-4 font-medium">
+                  <p className="text-slabtext whitespace-pre-line subpixel-antialiased text-left normal-case p-4 font-medium leading-loose tracking-wide">
                     The tool allows uploading of historical data and predict new
                     data to know client credit scoring status and scores. If you
                     do not have an account you sign up via the button accessible

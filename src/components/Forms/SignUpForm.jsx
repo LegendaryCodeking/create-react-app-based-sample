@@ -169,12 +169,21 @@ class SignUpForm extends Component {
               <span className="text-sm">WELCOME</span>
             </div> */}
             <div className="mb-2">
-              <span className="text-white font-bold text-sm">
+              <span className="text-eggyellow font-bold text-sm">
                 ARTIFICIAL INTELLIGENCE CENTER OF EXCELLENCE AFRICA
               </span>
             </div>
-            <div className="mb-2">
-              <span className="text-darkblue text-sm">Create an account</span>
+            <div className=" mt-4">
+              <span className="text-white text-xs font-bold">
+                Input your details to create your account... or{" "}
+                <p
+                  className="text-lightblue hover:text-eggyellow cursor-pointer"
+                  onClick={() => this.props.history.push("/auth/login")}
+                >
+                  Sign in ?
+                </p>{" "}
+                if you already have an account.
+              </span>
             </div>
           </div>
           <div className="mb-4">
@@ -340,7 +349,7 @@ class SignUpForm extends Component {
               </span>
             </div>
           </div> */}
-          <div className="flex items-center justify-between content-center">
+          <div className="flex items-center justify-between content-center mt-8">
             <button
               className="bg-white m-auto hover:bg-eggyellow2 place-self-center text-darkblue py-2 px-4 focus:outline-none focus:shadow-outline w-6/12"
               type="button"

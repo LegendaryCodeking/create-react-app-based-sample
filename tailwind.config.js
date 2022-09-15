@@ -10,6 +10,7 @@ module.exports = {
       lightblue: '#ade6e6',
       eggyellow: '#f0da14',
       eggyellow2: '#dcc814',
+      slabtext: "#f7f5f5",
       transparent: 'transparent',
       gradient: {
         start: '#dcdc1f',
