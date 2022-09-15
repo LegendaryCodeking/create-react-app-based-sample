@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //import moment from "moment";
-import auth from "../../services/authService";
+//import auth from "../../services/authService";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
@@ -93,7 +93,7 @@ class UpdateCard extends Component {
       company_designation,
       date_of_birth,
     } = this.state.user;
-    const { userHasEdited } = this.state;
+    //const { userHasEdited } = this.state;
     //const designation = "Developer";
     return (
       <>
