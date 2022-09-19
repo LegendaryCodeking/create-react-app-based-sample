@@ -48,13 +48,7 @@ class App extends Component {
           <Route
             path="/cst"
             render={(props) => (
-              <MainLayout
-                TVSResult={TVSResultData}
-                onNext={this.onNext}
-                onMLstats={this.setMLstats}
-                user={user}
-                {...props}
-              />
+              <MainLayout TVSResult={TVSResultData} user={user} {...props} />
             )}
           ></Route>
           <Route path="/logout">

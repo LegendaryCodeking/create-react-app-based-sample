@@ -78,7 +78,7 @@ class DataPredictionPage extends Component {
     //Step 3
 
     this.setState({ tableData });
-    //this.props.onMLstats(tableData);
+    this.props.onMLstats(tableData);
 
     //Step 4
     let matrixData = predictionData.confusion_matrix.matrix;
@@ -93,12 +93,13 @@ class DataPredictionPage extends Component {
   render() {
     const {
       statsData,
-      tableData,
       confusionMatrixData,
       overlayActive,
       chartsData,
       statusText,
     } = this.state;
+
+    const { mlStats } = this.props;
     return (
       <LoadingOverlay
         active={overlayActive}
@@ -119,7 +120,7 @@ class DataPredictionPage extends Component {
         <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
           <div className="mx-auto container pb-4">
             <PredictionStats data={statsData} />
-            <ModelMetricsTable data={tableData} />
+            <ModelMetricsTable data={mlStats} />
             <PredictionSummaryCharts
               chartsData={chartsData}
               data={confusionMatrixData}

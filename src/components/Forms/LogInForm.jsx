@@ -68,6 +68,21 @@ class LogInForm extends Component {
     //
   };
 
+  componentDidUpdate(previousProps, previousState, snapshot) {
+    console.log("previousProps: ", previousProps);
+    console.log("previousState: ", previousState);
+    console.log("snapshot: ", snapshot);
+
+    let stateKeys = Object.keys(previousState);
+
+    if (this.props !== previousProps) {
+      stateKeys.forEach((key) => {
+        if (previousState[key] !== this.state[key]) {
+          this.setState({ [key]: previousState[key] });
+        }
+      });
+    }
+  }
   onLogin = async (username, password) => {
     let userObject = {
       username: username,

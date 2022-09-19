@@ -90,7 +90,7 @@ class TVSUploadForm extends Component {
       this.setState({ nextLoading: false });
       this.props.history.push("/cst/data-description");
     } else {
-      this.setState({ nextLoading: false });
+      this.setState({ nextLoading: false, nextButtonDisabled: false });
       toast.error("There was a problem initiating your model");
     }
   };

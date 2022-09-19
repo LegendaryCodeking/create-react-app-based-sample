@@ -50,7 +50,7 @@ class MainLayout extends Component {
   };
   render() {
     let { user } = this.props;
-    const { TVSResultData } = this.state;
+    const { TVSResultData, approvalStatusData, mlStats } = this.state;
     return (
       <>
         <div className="relative">
@@ -82,7 +82,11 @@ class MainLayout extends Component {
                 path="/cst/data-prediction"
                 exact
                 component={(props) => (
-                  <DataPrediction onMLstats={this.setMLstats} {...props} />
+                  <DataPrediction
+                    mlStats={mlStats}
+                    onMLstats={this.setMLstats}
+                    {...props}
+                  />
                 )}
               />
 
@@ -92,6 +96,7 @@ class MainLayout extends Component {
                 component={(props) => (
                   <PredictedDataPage
                     onApprovalStatusData={this.setApprovalStatusData}
+                    approvalData={approvalStatusData}
                     {...props}
                   />
                 )}
@@ -105,8 +110,8 @@ class MainLayout extends Component {
                   <Reports
                     {...props}
                     user={user}
-                    mlStats={this.state.mlStats}
-                    approvalData={this.state.approvalStatusData}
+                    mlStats={mlStats}
+                    approvalData={approvalStatusData}
                     TVSResult={TVSResultData}
                   />
                 )}

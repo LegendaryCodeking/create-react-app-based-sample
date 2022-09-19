@@ -44,12 +44,14 @@ class ReportsPage extends Component {
     console.log("sample", sData);
     let mlDataSample = plumber.formatPerformanceMetricTableData(sampleMLdata);
 
-    if (Object.keys(approvalData).length > 0 || true) {
+    if (Object.keys(approvalData).length > 0) {
       //remove second condition after sample data removal
       //reportData.approvalData = approvalData;
-      let approvalData = sData;
+      //let approvalData = approvalData;
       let formattedApprovalData = this.formatTableDataToPDF(approvalData);
       reportData.approvalData = formattedApprovalData;
+    } else {
+      //disable approval button
     }
 
     if (Object.keys(mlStats).length > 0 || true) {

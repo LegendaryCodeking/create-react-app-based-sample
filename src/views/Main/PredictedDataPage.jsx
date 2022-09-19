@@ -41,7 +41,7 @@ class PredictedDataPage extends Component {
       console.log("ApprovalStatusTableData: ", ApprovalStatusTableData);
       let tableData = ApprovalStatusTableData;
       this.setState({ tableData });
-      //this.props.onApprovalStatusData(tableData);
+      this.props.onApprovalStatusData(tableData);
     }
   };
 
@@ -62,7 +62,8 @@ class PredictedDataPage extends Component {
     this.setState({ disableUploadButton: value });
   };
   render() {
-    const { loadingFileUpload, disableUploadButton, tableData } = this.state;
+    const { loadingFileUpload, disableUploadButton } = this.state;
+    const { approvalData } = this.props;
     return (
       <div
         className="bg-darkblue predictedpage pt-4"
@@ -92,7 +93,7 @@ class PredictedDataPage extends Component {
             onUpload={this.onUpload}
             loading={loadingFileUpload}
           />
-          <PredictionApprovalStatusTable data={tableData} />
+          <PredictionApprovalStatusTable data={approvalData} />
         </div>
       </div>
     );
