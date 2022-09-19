@@ -19,16 +19,21 @@ class ReportsPage extends Component {
     summaryData: {},
     data_overview: {},
     reportData: {},
-    reportButton1: false,
-    reportButton2: false,
-    reportButton3: false,
-    reportButton4: false,
+    summaryReportButton: true,
+    summaryReportButtonLoading: false,
+    approvalReportButton: true,
+    approvalReportButtonLoading: false,
+    mlReportButton: true,
+    mlReportButtonLoading: false,
+    fullReportButton: false,
+    fullReportButtonLoading: false,
   };
 
   getReportData = async () => {
     let { TVSResult, approvalData, mlStats } = this.props;
     let reportData = {};
-    if (TVSResult) {
+    if (Object.keys(TVSResult).length > 0) {
+      this.setState({ summaryReportButton: false });
       const sampleTVSObject = {
         target_variable: "LOAN STATUS",
         approved_binary: false,
@@ -38,13 +43,17 @@ class ReportsPage extends Component {
       //let descriptionData = await this.getDescriptionData(TVSResult);
       console.log("descriptionData: ", descriptionData);
       reportData.summaryReportData = descriptionData;
+    } else {
+      this.setState({ summaryReportButton: true });
     }
 
     let sData = plumber.formatApprovalStatusTableData(sample);
     console.log("sample", sData);
     let mlDataSample = plumber.formatPerformanceMetricTableData(sampleMLdata);
+    console.log("mlDataSample: ", mlDataSample);
 
     if (Object.keys(approvalData).length > 0) {
+      this.setState({ approvalReportButton: false });
       //remove second condition after sample data removal
       //reportData.approvalData = approvalData;
       //let approvalData = approvalData;
@@ -52,12 +61,16 @@ class ReportsPage extends Component {
       reportData.approvalData = formattedApprovalData;
     } else {
       //disable approval button
+      this.setState({ approvalReportButton: true });
     }
 
-    if (Object.keys(mlStats).length > 0 || true) {
-      let MLstatsData = this.formatTableDataToPDF(mlDataSample);
+    if (Object.keys(mlStats).length > 0) {
+      this.setState({ mlReportButton: false });
+      let MLstatsData = this.formatTableDataToPDF(mlStats);
       console.log("MLstatsData: ", MLstatsData);
       reportData.mlStats = MLstatsData;
+    } else {
+      this.setState({ mlReportButton: true });
     }
 
     return reportData;
@@ -135,11 +148,11 @@ class ReportsPage extends Component {
     const summaryData = this.state.reportData.summaryReportData;
     if (summaryData) {
       //create pdf
-      this.setState({ reportButton1: true });
+      this.setState({ summaryReportButtonLoading: true });
       generatePDF(summaryData, user);
 
       setTimeout(() => {
-        this.setState({ reportButton1: false });
+        this.setState({ summaryReportButtonLoading: false });
       }, 5000);
     }
   };
@@ -150,11 +163,11 @@ class ReportsPage extends Component {
     const approvalData = this.state.reportData.approvalData;
     if (approvalData) {
       //create pdf
-      this.setState({ reportButton2: true });
+      this.setState({ approvalReportButtonLoading: true });
       generateApprovalStatusReport(approvalData, user);
 
       setTimeout(() => {
-        this.setState({ reportButton2: false });
+        this.setState({ approvalReportButtonLoading: false });
       }, 5000);
     }
   };
@@ -165,11 +178,11 @@ class ReportsPage extends Component {
     const MLstatsData = this.state.reportData.mlStats;
     if (MLstatsData) {
       //create pdf
-      this.setState({ reportButton3: true });
+      this.setState({ mlReportButtonLoading: true });
       createMLstatsReport(MLstatsData, user);
 
       setTimeout(() => {
-        this.setState({ reportButton3: false });
+        this.setState({ mlReportButtonLoading: false });
       }, 5000);
     }
   };
@@ -180,21 +193,25 @@ class ReportsPage extends Component {
     const { reportData } = this.state;
     if (reportData) {
       //create pdf
-      this.setState({ reportButton4: true });
+      this.setState({ fullReportButtonLoading: true });
       createFullReport(reportData, user);
 
       setTimeout(() => {
-        this.setState({ reportButton4: false });
+        this.setState({ fullReportButtonLoading: false });
       }, 5000);
     }
   };
   render() {
     const {
       summaryData,
-      reportButton1,
-      reportButton2,
-      reportButton3,
-      reportButton4,
+      summaryReportButton,
+      summaryReportButtonLoading,
+      approvalReportButton,
+      approvalReportButtonLoading,
+      mlReportButton,
+      mlReportButtonLoading,
+      fullReportButton,
+      fullReportButtonLoading,
     } = this.state;
     return (
       <div className="bg-darkblue pt-4 pb-4" style={{ height: "100%" }}>
@@ -212,6 +229,13 @@ class ReportsPage extends Component {
                   patient while they process.
                 </p>
               </li>
+              <li className="flex">
+                <span className="text-xs font-bold mr-1 italic">Note :</span>
+                <p className="text-xs font-bold italic">
+                  If a button is disabled, the corresponding data is not loaded
+                  .
+                </p>
+              </li>
             </ul>
           </div>
           <div className="flex mb-4 mt-4">
@@ -219,13 +243,13 @@ class ReportsPage extends Component {
               <div className="p-4 text-white text-xs flex justify-center">
                 <button
                   onClick={this.generateSummaryReport}
-                  disabled={reportButton1}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                  disabled={summaryReportButton}
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
-                  <div className={reportButton1 ? "" : "hidden"}>
+                  <div className={summaryReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
                   </div>
-                  <div className={!reportButton1 ? "" : "hidden"}>
+                  <div className={!summaryReportButtonLoading ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
                     <span className="text-xs font-bold">SUMMARY REPORT</span>
                   </div>
@@ -235,14 +259,14 @@ class ReportsPage extends Component {
             <div className="w-3/12">
               <div className="p-4 text-white text-xs flex justify-center">
                 <button
-                  disabled={reportButton2}
+                  disabled={approvalReportButton}
                   onClick={this.generateApprovalStatusReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
-                  <div className={reportButton2 ? "" : "hidden"}>
+                  <div className={approvalReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
                   </div>
-                  <div className={!reportButton2 ? "" : "hidden"}>
+                  <div className={!approvalReportButtonLoading ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
                     <span className="text-xs font-bold">
                       APPROVAL STATUS REPORT
@@ -254,14 +278,14 @@ class ReportsPage extends Component {
             <div className="w-3/12">
               <div className="p-4 text-white text-xs flex justify-center">
                 <button
-                  disabled={reportButton3}
+                  disabled={mlReportButton}
                   onClick={this.generateMLstatsReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
-                  <div className={reportButton3 ? "" : "hidden"}>
+                  <div className={mlReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
                   </div>
-                  <div className={!reportButton3 ? "" : "hidden"}>
+                  <div className={!mlReportButtonLoading ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
                     <span className="text-xs font-bold">
                       ML STATISTICS REPORT
@@ -273,14 +297,14 @@ class ReportsPage extends Component {
             <div className="w-3/12">
               <div className="p-4 text-white text-xs flex justify-center">
                 <button
-                  disabled={reportButton4}
+                  disabled={fullReportButton}
                   onClick={this.createFullReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-none"
+                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
-                  <div className={reportButton4 ? "" : "hidden"}>
+                  <div className={fullReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
                   </div>
-                  <div className={!reportButton4 ? "" : "hidden"}>
+                  <div className={!fullReportButtonLoading ? "" : "hidden"}>
                     <FontAwesomeIcon icon={faFilePdf} className="mx-2" />
                     <span className="text-xs font-bold">FULL REPORT</span>
                   </div>
