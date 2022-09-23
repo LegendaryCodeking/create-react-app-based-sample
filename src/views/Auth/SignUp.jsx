@@ -24,7 +24,7 @@ class SignUpPage extends Component {
       <section className="h-screen">
         <div className="h-full text-gray-800">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full">
-            <div className="row-0 flex items-center mx-auto shrink-1 place-content-center md:shrink-0 basis-auto mb-12 md:mb-0 bg-blue-800 h-full xl:w-6/12 lg:w-6/12 md:w-9/12 loginBackground">
+            <div className="row-0 flex items-center mx-auto shrink-1 place-content-center md:shrink-0 basis-auto mb-12 md:mb-0 bg-blue-800 h-full xl:w-6/12 lg:w-6/12 md:w-9/12 signUpBackground bg-cover">
               {/* <div className="h-full" style={backgroundImage}></div>
               <img
                 className="items-center justify-center content-center"
@@ -32,7 +32,9 @@ class SignUpPage extends Component {
                 alt="logo"
                 style={content}
               /> */}
-              <img src={logo} className="loginLogo" alt="Sample" />
+              <div className="h-full w-full flex items-center place-content-center backdrop-blur-sm backdrop-brightness-50">
+                <img src={logo} className="loginLogo" alt="Sample" />
+              </div>
             </div>
             <div className="flex  bg-darkblue xl:justify-center lg:justify-between justify-center items-center bg-slate-800 xl:w-6/12 lg:w-6/12 md:w-6/12 h-full">
               <SignUpForm
