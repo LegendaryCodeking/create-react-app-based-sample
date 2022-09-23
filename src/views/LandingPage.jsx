@@ -4,9 +4,9 @@ import LandingNavBar from "../components/NavBars/LandingNavbar";
 import Footer from "../components/Footers/SecondaryFooter";
 
 import "../assets/stylesheets/landing.css";
-import backgroundImage from "../assets/images/markus-spiske-iar-afB0QQw-unsplash.png";
-import aboutUsBg from "../assets/images/aboutusbg.png";
-import maskGroup1 from "../assets/images/maskgroup1.png";
+import backgroundImage from "../assets/images/version2Designs/pietro-jeng-n6B49lTx7NM-unsplash.jpg";
+import aboutUsBg from "../assets/images/version2Designs/m-ZzOa5G8hSPI-unsplash.jpg";
+import maskGroup1 from "../assets/images/version2Designs/charlesdeluvio-Lks7vei-eAg-unsplash.jpg";
 
 class IndexPage extends Component {
   state = {};
@@ -47,7 +47,11 @@ class IndexPage extends Component {
           </div>
           <div className="flex mt-20" style={{ height: "50vh" }}>
             <div className="w-1/2">
-              <img className="w-full landingGrid1" alt="bg" src={maskGroup1} />
+              <img
+                className="w-full rounded-sm p-4 landingGrid1"
+                alt="bg"
+                src={maskGroup1}
+              />
             </div>
             <div className="w-1/2">
               <div
@@ -58,19 +62,22 @@ class IndexPage extends Component {
                   <h2 className="text-lightblue ml-4 text-3xl mb-4 font-bold">
                     About Us
                   </h2>
-                  <p className="text-slabtext whitespace-pre-line subpixel-antialiased text-left normal-case p-4 font-medium leading-loose tracking-wide">
-                    The credit tool is an Al powered platform created by the Al
-                    Centre of Excellence. There has been an increase in fintech
-                    industries, there's need to increase efficiency in scoring
-                    the organization's clients. This tool creates the solution
-                    as a plug and play plugin by artificial intelligence. Upload
-                    your data for experience.
+                  <p className="text-slabtext whitespace-pre-line subpixel-antialiased text-left normal-case p-8 font-light leading-loose tracking-wide">
+                    The credit tool is an AI powered platform created by the{" "}
+                    <span className="text-eggyellow uppercase text-sm font-bold">
+                      AI Centre of Excellence [ AICE™ ]
+                    </span>
+                    . There has been an increase in fintech industries, there's
+                    need to increase efficiency in scoring the organization's
+                    clients. This tool creates the solution as a plug and play
+                    plugin by artificial intelligence. Upload your data for
+                    experience.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex mb-12" style={{ height: "50vh" }}>
+          <div className="flex mb-12 pb-12" style={{ height: "50vh" }}>
             <div className="w-1/2">
               <div
                 className="container w-full h-full bg-darkblue p-2"
@@ -80,7 +87,7 @@ class IndexPage extends Component {
                   <h2 className="text-lightblue ml-4 text-3xl mb-4 font-bold">
                     How it works
                   </h2>
-                  <p className="text-slabtext whitespace-pre-line subpixel-antialiased text-left normal-case p-4 font-medium leading-loose tracking-wide">
+                  <p className="text-slabtext whitespace-pre-line subpixel-antialiased text-left normal-case p-8 font-medium leading-loose tracking-wide">
                     The tool allows uploading of historical data and predict new
                     data to know client credit scoring status and scores. If you
                     do not have an account you sign up via the button accessible
@@ -93,7 +100,7 @@ class IndexPage extends Component {
             </div>
             <div className="w-1/2">
               <img
-                className="w-full h-3/4 landingGrid1"
+                className="w-full p-4 h-full rounded-sm landingGrid1"
                 alt="bg"
                 src={aboutUsBg}
               />
