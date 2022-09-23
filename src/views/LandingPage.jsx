@@ -17,14 +17,18 @@ class IndexPage extends Component {
     return (
       <div className="relative landingContainer">
         <LandingNavBar {...this.props} />
-        <div className="h-full w-full bg-darkblue">
-          <div className="relative landingMainSection bg-darkblue">
+        <div className="h-full w-full bg-darkblue mb-12">
+          <div
+            className="relative landingMainSection bg-darkblue"
+            style={{ height: "100vh" }}
+          >
             <img
               className="w-full backgroundLandingImage"
               alt="bg"
               src={backgroundImage}
+              style={{ height: "100vh" }}
             />
-            <div className="absolute top-1/2 mt-8 tracking-wide left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-1/2 tracking-wide left-1/2 -translate-x-1/2 -translate-y-1/2">
               <h1 className="text-5xl text-white font-bold">
                 AICE <span className="text-eggyellow">Credit Scoring</span> Tool
               </h1>
