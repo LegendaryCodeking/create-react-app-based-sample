@@ -12,7 +12,6 @@ class ProfileSummaryCard extends Component {
       company_name,
       company_email,
       email,
-      username,
       total_amount_disbursed,
       total_customers,
       company_designation,
