@@ -17,7 +17,7 @@ class AdminLayout extends Component {
           <div className="relative ml-64">
             <div className="container">
               <NavBar />
-              <div className="p-8 bg-darkblue">
+              <div className="p-4 bg-darkblue">
                 <Switch>
                   <Route
                     path="/admin/dashboard"
