@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import auth from "./services/authService";
 import LogOut from "./components/LogOut";
+import AdminLayout from "./layouts/AdminLayout";
 
 class App extends Component {
   state = {
@@ -66,6 +67,7 @@ class App extends Component {
               />
             )}
           />
+          <Route path="/admin" component={() => <AdminLayout />} />
           <Redirect from="*" to="/" />
         </Switch>
       </React.Fragment>
