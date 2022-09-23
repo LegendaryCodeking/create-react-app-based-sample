@@ -39,20 +39,18 @@ class ProfileSummaryCard extends Component {
                       "salmon",
                     ])}
                     name={first_name + " " + last_name}
-                    className="rounded-full ring-2 ring-eggyellow ring-offset-4 ring-offset-darkblue"
+                    className="rounded-full ring-2 ring-eggyellow  ring-offset-4 ring-offset-darkblue"
                     size="128px"
                   />
                 </div>
               </div>
-              <div className="w-full px-4 text-center mt-10">
+              <div className="w-full px-4 text-center mt-10 ml-6">
                 <div className="flex justify-center py-4 lg:pt-4 pt-8">
                   <div className="mr-4 p-3 text-center">
                     <span className="text-xl font-bold block uppercase tracking-wide text-eggyellow">
                       {total_amount_disbursed}
                     </span>
-                    <span className="text-sm text-eggyellow">
-                      Loans disbursed
-                    </span>
+                    <span className="text-sm text-eggyellow">Loans</span>
                   </div>
                   <div className="mr-4 p-3 text-center">
                     <span className="text-xl font-bold block uppercase tracking-wide text-eggyellow">
@@ -69,21 +67,21 @@ class ProfileSummaryCard extends Component {
                 </div>
               </div>
             </div>
-            <div className="text-center mt-12">
+            <div className="text-center mt-4">
               <h3 className="text-xl font-semibold leading-normal text-eggyellow mb-2">
                 {first_name + " " + last_name}
               </h3>
-              <div className="text-sm leading-normal mt-0 mb-2 text-eggyellow font-bold lowercase">
+              <div className="text-sm leading-normal mt-0 mb-2 text-eggyellow font-normal lowercase">
                 <i className="fas fa-map-marker-alt mr-2 text-lg text-eggyellow"></i>{" "}
                 {email}
               </div>
-              <div className="text-sm leading-normal mt-0 mb-2 text-eggyellow font-bold lowercase">
+              <div className="text-normal leading-normal mt-0 mb-2 text-eggyellow font-bold uppercase">
                 <i className="fas fa-map-marker-alt mr-2 text-lg text-eggyellow"></i>{" "}
-                {username}
+                {company_designation}
               </div>
-              <div className="mb-2 text-eggyellow mt-10">
+              <div className="mb-2 text-eggyellow mt-10 font-bold">
                 <i className="fas fa-briefcase mr-2 text-lg text-eggyellow"></i>
-                {company_designation} - {company_name}
+                {company_name}
               </div>
               <div className="mb-2 text-eggyellow">
                 <i className="fas fa-university mr-2 text-lg text-eggyellow"></i>
