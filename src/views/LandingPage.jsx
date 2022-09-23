@@ -17,35 +17,35 @@ class IndexPage extends Component {
     return (
       <div className="relative landingContainer">
         <LandingNavBar {...this.props} />
-        <div className="h-full w-full bg-darkblue mb-12">
+        <div className="h-full w-full bg-darkblue" style={{ height: "100%" }}>
           <div
-            className="relative landingMainSection bg-darkblue"
+            className="relative landingMainSection bg-darkblue -mt-24"
             style={{ height: "100vh" }}
           >
             <img
-              className="w-full backgroundLandingImage"
+              className="w-full blur-sm opacity-30 backgroundLandingImage"
               alt="bg"
               src={backgroundImage}
               style={{ height: "100vh" }}
             />
-            <div className="absolute top-1/2 tracking-wide left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute mix-blend-normal top-1/2 tracking-wide left-1/2 -translate-x-1/2 -translate-y-1/2">
               <h1 className="text-5xl text-white font-bold">
                 AICE <span className="text-eggyellow">Credit Scoring</span> Tool
               </h1>
-              <h5 className="text-white font-bold">
+              <h5 className="text-white font-bold mt-2">
                 A tool for efficient and fast credit scoring
               </h5>
               <div className="mt-8">
                 <button
                   onClick={() => this.props.history.push("/auth/register")}
-                  className="bg-eggyellow rounded-none p-2 px-4 hover:bg-eggyellow2"
+                  className="bg-eggyellow rounded-none p-2 px-4 hover:bg-eggyellow2 animate-pulse transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110"
                 >
                   Get Started
                 </button>
               </div>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex mt-20" style={{ height: "50vh" }}>
             <div className="w-1/2">
               <img className="w-full landingGrid1" alt="bg" src={maskGroup1} />
             </div>
@@ -70,7 +70,7 @@ class IndexPage extends Component {
               </div>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex mb-12" style={{ height: "50vh" }}>
             <div className="w-1/2">
               <div
                 className="container w-full h-full bg-darkblue p-2"
@@ -92,7 +92,11 @@ class IndexPage extends Component {
               </div>
             </div>
             <div className="w-1/2">
-              <img className="w-full landingGrid1" alt="bg" src={aboutUsBg} />
+              <img
+                className="w-full h-3/4 landingGrid1"
+                alt="bg"
+                src={aboutUsBg}
+              />
             </div>
           </div>
         </div>
