@@ -8,70 +8,8 @@ import UserTableModal from "../Modals/UserTableModal";
 
 class UserTable extends Component {
   state = {
-    rowData: [
-      {
-        username: "collinsnyamao",
-        company: "AICE",
-        firstName: "collins",
-        lastName: "nyamao",
-        dateOfBirth: "2020-01-01",
-        userID: "1234",
-        companyEmail: "collins@aice.com",
-        email: "nyamaocollins@gmail.com",
-        active: false,
-      },
-      {
-        username: "loise",
-        company: "AICE",
-        firstName: "collins",
-        lastName: "nyamao",
-        dateOfBirth: "2020-01-01",
-        userID: "1234",
-        companyEmail: "collins@aice.com",
-        email: "nyamaocollins@gmail.com",
-        active: true,
-      },
-      {
-        username: "joel",
-        company: "AICE",
-        firstName: "collins",
-        lastName: "nyamao",
-        dateOfBirth: "2020-01-01",
-        userID: "1234",
-        companyEmail: "collins@aice.com",
-        email: "nyamaocollins@gmail.com",
-        active: true,
-      },
-      {
-        username: "fancy",
-        company: "AICE",
-        firstName: "collins",
-        lastName: "nyamao",
-        dateOfBirth: "2020-01-01",
-        userID: "1234",
-        companyEmail: "collins@aice.com",
-        email: "nyamaocollins@gmail.com",
-        active: true,
-      },
-    ],
-    columnDefs: [
-      {
-        field: "username",
-        sortable: true,
-        filter: true,
-        pinned: "left",
-      },
-      {
-        field: "userID",
-        sortable: true,
-        filter: true,
-      },
-      { field: "firstName", sortable: true, filter: true },
-      { field: "lastName", sortable: true, filter: true },
-      { field: "company", sortable: true, filter: true },
-      { field: "email", sortable: true, filter: true },
-      { field: "companyEmail", sortable: true, filter: true },
-    ],
+    rowData: [],
+    columnDefs: [],
     showModal: false,
     modalData: {
       username: "collinsnyamao",
@@ -95,7 +33,19 @@ class UserTable extends Component {
   onModalClose = () => {
     this.setState({ showModal: false });
   };
-  componentDidMount() {}
+  componentDidMount() {
+    const { columns, rows } = this.props;
+
+    this.setState({ rowData: rows, columnDefs: columns });
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps !== this.props) {
+      const { columns, rows } = this.props;
+
+      this.setState({ rowData: rows, columnDefs: columns });
+    }
+  }
 
   rowSelected = (event) => {
     console.log("event: ", event.data);
@@ -113,11 +63,12 @@ class UserTable extends Component {
   };
   render() {
     const { rowData, columnDefs, showModal, modalData } = this.state;
+    const { title } = this.props;
     return (
       <React.Fragment>
-        <div className="w-full">
+        <div className="w-full my-4">
           <div className="flex w-full px-4 py-2 border border-gray-300">
-            <span className="font-bold text-white">Users</span>
+            <span className="font-bold text-white">{title}</span>
           </div>
           <div
             className="ag-theme-alpine"

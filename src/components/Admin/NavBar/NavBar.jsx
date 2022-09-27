@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Avatar from "react-avatar";
 import { Link } from "react-router-dom";
+import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 
 class NavBar extends Component {
   state = {
@@ -47,8 +48,8 @@ class NavBar extends Component {
         <nav className="bg-darkblue p-4 border-white px-2 sm:px-4 py-2.5 rounded">
           <div className="container flex flex-wrap justify-between items-center mx-auto">
             <Link to="/" className="flex items-center">
-              <span className="self-center text-sm uppercase text-eggyellow font-semibold whitespace-nowrap">
-                {active}
+              <span className=" text-sm whitespace-nowrap">
+                <BreadCrumbs link1="admin" link2={active} />
               </span>
             </Link>
             <div className="flex items-center md:order-2">
