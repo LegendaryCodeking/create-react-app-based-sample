@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import BreadCrumbs from "../components/Admin/BreadCrumbs/BreadCrumbs";
 import NavBar from "../components/Admin/NavBar/NavBar";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
 import Dashboard from "../views/Admin/Dashboard";
