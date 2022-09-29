@@ -17,9 +17,12 @@ class IndexPage extends Component {
     return (
       <div className="relative landingContainer">
         <LandingNavBar {...this.props} />
-        <div className="h-full w-full bg-darkblue" style={{ height: "100%" }}>
+        <div
+          className="h-full w-full bg-darkblue snap-y snap-mandatory"
+          style={{ height: "100%" }}
+        >
           <div
-            className="relative landingMainSection bg-darkblue -mt-24"
+            className="relative landingMainSection bg-darkblue -mt-24 snap-center"
             style={{ height: "100vh" }}
           >
             <img
