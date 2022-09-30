@@ -137,7 +137,43 @@ class Sidebar extends Component {
                   icon={faMicrochip}
                 />
                 <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
-                  Models
+                  Model
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/models"
+                className={
+                  active === "description"
+                    ? "flex group items-center p-2 text-base font-normal text-white rounded-lg bg-eggyellow hover:bg-eggyellow2"
+                    : "flex group items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-eggyellow"
+                }
+              >
+                <FontAwesomeIcon
+                  className="flex-shrink-0 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                  icon={faMicrochip}
+                />
+                <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
+                  Description
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/models"
+                className={
+                  active === "models-stats"
+                    ? "flex group items-center p-2 text-base font-normal text-white rounded-lg bg-eggyellow hover:bg-eggyellow2"
+                    : "flex group items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-eggyellow"
+                }
+              >
+                <FontAwesomeIcon
+                  className="flex-shrink-0 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                  icon={faMicrochip}
+                />
+                <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
+                  Model statistics
                 </span>
               </Link>
             </li>
