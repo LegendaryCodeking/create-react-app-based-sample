@@ -8,6 +8,7 @@ import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 class PredictionApprovalStatusTable extends Component {
   state = {
@@ -16,10 +17,15 @@ class PredictionApprovalStatusTable extends Component {
   };
 
   componentDidMount() {
-    let { columnData, rowData } = this.props.data;
-    if (columnData) {
-      columnData = this.createColumnIcon(columnData);
-      this.setState({ columnData, rowData });
+    let { data } = this.props;
+    console.log("table mount data: ", data);
+    const { api } = this.gridRef.current;
+    if (data && data.columnData && data.rowData) {
+      const columnData = this.createColumnIcon(data.columnData);
+      this.setState({ columnData: columnData, rowData: data.rowData });
+      setTimeout(() => {
+        api.sizeColumnsToFit();
+      }, 1000);
     }
   }
 
@@ -48,17 +54,29 @@ class PredictionApprovalStatusTable extends Component {
     return columnsData;
   };
 
-  componentDidUpdate(previousProps, previousState) {
+  passDataToTable = (data) => {
+    console.log("pass data to table: ", data);
     const { api } = this.gridRef.current;
+    if (data && Object.keys(data).length > 0) {
+      console.log("passed data from update");
+      let columnData = data.columnData;
+      let rowData = data.rowData;
+      columnData = this.createColumnIcon(columnData);
+      this.setState({ columnData: columnData, rowData: rowData });
+      setTimeout(() => {
+        api.sizeColumnsToFit();
+      }, 1000);
+    } else {
+      console.log("table data error");
+    }
+  };
+
+  componentDidUpdate(previousProps, previousState) {
     if (previousProps !== this.props) {
-      let { columnData, rowData } = this.props.data;
-      if (columnData) {
-        columnData = this.createColumnIcon(columnData);
-        this.setState({ columnData, rowData });
-        setTimeout(() => {
-          api.sizeColumnsToFit();
-        }, 100);
-      }
+      let { data } = this.props;
+      console.log("update table data : ", data);
+
+      this.passDataToTable(data);
     }
   }
 

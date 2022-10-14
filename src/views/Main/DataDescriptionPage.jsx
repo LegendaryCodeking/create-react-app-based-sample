@@ -47,6 +47,7 @@ class DataDescriptionPage extends Component {
           overlayActive: false,
           targetVariable: describedData["target_variable"],
         });
+        //this.props.setOverviewData(data_overview);
       } else if (status === 500) {
         this.setState({
           overlayText: "Data fetching failed, please check your connection.",

@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileUpload, faCancel } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { Spinner } from "flowbite-react";
+import api from "../../../services/api";
+import plumber from "../../../services/dataHelpers";
 
 import * as XLSX from "xlsx";
 class PredictedFileUpload extends Component {
@@ -13,6 +15,38 @@ class PredictedFileUpload extends Component {
     uploadData: [],
     disableUploadButton: true,
     disableCancelButton: true,
+  };
+
+  submitObject = async (data) => {
+    let reqObject = {};
+    reqObject.threshold = 300;
+    reqObject.newdata = data;
+    console.log("reqObject: ", reqObject);
+    const predictedResponse = await api.postForPrediction(reqObject);
+    console.log("predictedResponse: ", predictedResponse);
+
+    if (predictedResponse.status === 200) {
+      if (
+        !predictedResponse.data.status ||
+        predictedResponse.data.status !== "failed"
+      ) {
+        this.setPredictedData(predictedResponse.data);
+      } else if (
+        predictedResponse.data.status &&
+        predictedResponse.data.status === "failed"
+      ) {
+        toast.error(predictedResponse.data.message);
+      } else {
+        toast.error("An unexpected error with your data occurred");
+      }
+    } else {
+      toast.error("an unexpected error occurred");
+    }
+  };
+
+  setPredictedData = (data) => {
+    const formattedPredictedData = plumber.formatApprovalStatusTableData(data);
+    this.props.onDataPredicted(formattedPredictedData);
   };
 
   onChange = (event) => {
@@ -36,10 +70,8 @@ class PredictedFileUpload extends Component {
             disableCancelButton: false,
           });
           this.props.onFileReadyForUpload(false);
-
-          /* this.props.onUpload({
-            upload_data: json,
-          }); */
+          console.log("upload json: ", json);
+          //this.submitObject(json);
         };
         reader.readAsArrayBuffer(event.target.files[0]);
       }
@@ -60,9 +92,10 @@ class PredictedFileUpload extends Component {
     e.preventDefault();
     const { uploadData } = this.state;
     console.log("uploadData: ", uploadData);
-    this.props.onUpload({
+    /* this.props.onUpload({
       newdata: uploadData,
-    });
+    }); */
+    this.submitObject(uploadData);
   };
 
   render() {
@@ -70,7 +103,7 @@ class PredictedFileUpload extends Component {
     const { disableCancelButton, selectedFile } = this.state;
     console.log("loading: ", loading);
     return (
-      <div className={this.state.show ? "flex mb-4" : "hidden"}>
+      <div className={this.state.show ? "flex mb-80" : "hidden"}>
         <div className="w-2/12">
           <div className="h-full flex justify-start">
             <span className="py-4 text-sm text-white">Upload files</span>

@@ -64,17 +64,65 @@ class ReportsPage extends Component {
       this.setState({ approvalReportButton: true });
     }
 
-    if (Object.keys(mlStats).length > 0) {
+    let mlStatsResponse = await api.getPrediction();
+    console.log("mlStatsResponse: ", mlStatsResponse);
+
+    if (
+      mlStatsResponse.status === 200 &&
+      mlStatsResponse.data.status === "successful"
+    ) {
+      //Step 1
+      if (mlStatsResponse.data.modelling_status === "Done") {
+        let tableData = plumber.formatPerformanceMetricTableData(
+          mlStatsResponse.data.model_data
+        );
+        this.setState({ mlStats: tableData });
+        console.log("tableData: ", tableData);
+
+        this.setState({ mlReportButton: false });
+        let MLstatsData = this.formatTableDataToPDF(mlStats);
+        console.log("MLstatsData: ", MLstatsData);
+        reportData.mlStats = MLstatsData;
+      } else if (mlStatsResponse.data.modelling_status === "Training Ongoing") {
+        console.log("training not complete");
+        this.setState({ mlReportButton: true });
+      } else {
+        this.setState({ mlReportButton: true });
+      }
+    }
+
+    /* if (Object.keys(mlStats).length > 0) {
       this.setState({ mlReportButton: false });
       let MLstatsData = this.formatTableDataToPDF(mlStats);
       console.log("MLstatsData: ", MLstatsData);
       reportData.mlStats = MLstatsData;
     } else {
       this.setState({ mlReportButton: true });
-    }
+    } */
 
     return reportData;
   };
+
+  /* checkMLstats = async () => {
+    let mlStatsResponse = await api.getPrediction();
+    console.log("mlStatsResponse: ", mlStatsResponse);
+
+    if (
+      mlStatsResponse.status === 200 &&
+      mlStatsResponse.data.status === "successful"
+    ) {
+      //Step 1
+      if (mlStatsResponse.data.modelling_status === "Done") {
+        let tableData = plumber.formatPerformanceMetricTableData(
+          mlStatsResponse.data.model_data
+        );
+        this.setState({ mlStats: tableData });
+        console.log("tableData: ", tableData);
+      } else if (mlStatsResponse.data.modelling_status === "Training Ongoing") {
+        console.log("training not complete");
+      }
+    }
+  }; */
 
   formatTableDataToPDF = (data) => {
     let columns = [];

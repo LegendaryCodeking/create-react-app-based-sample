@@ -97,6 +97,7 @@ class MainLayout extends Component {
                   <PredictedDataPage
                     onApprovalStatusData={this.setApprovalStatusData}
                     approvalData={approvalStatusData}
+                    TVSResult={TVSResultData}
                     {...props}
                   />
                 )}

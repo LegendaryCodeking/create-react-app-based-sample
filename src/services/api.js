@@ -51,6 +51,10 @@ const routes = {
     initiateModelling: {
         path: "/predictinitiate/",
         method: "GET"
+    },
+    createHeaderEntry: {
+        path: "/userHeaders",
+        method: "POST"
     }
 }
 
@@ -110,6 +114,18 @@ const postProfileUpdate = async (userData) => {
     return response;
 }
 
+const postCreateHeaderEntry = async (headerData) => {
+    console.log('updating header data: ', headerData);
+    const response = await http.put('http://127.0.0.1:3000' + routes.createHeaderEntry.path, headerData);
+    return response;
+}
+
+const getUserHeaders = async () => {
+    console.log('getting header data: ');
+    const response = await http.get('http://127.0.0.1:3004' + routes.createHeaderEntry.path);
+    return response;
+}
+
 
 let exports = {
     postDescription,
@@ -120,7 +136,9 @@ let exports = {
     postRegister,
     postUploadData,
     postProfileUpdate,
-    initiateModelling
+    initiateModelling,
+    postCreateHeaderEntry,
+    getUserHeaders
 };
 
 export default exports;

@@ -1,6 +1,25 @@
 {
-  "users": [
-    { "userID": 1, "username": "collinsnyamao", "password": "123456789" },
-    { "userID": 2, "username": "oldnickel20", "password": "123456789" }
+  "userHeaders": [
+    {
+      "username": "collinsnyamao",
+      "headers": [
+        "ORIGINAL LOAN AMOUNT",
+        "ORIGINAL TERM",
+        "INTEREST RATE",
+        "PAYMENT_PERIOD"
+      ]
+    },
+    {
+      "username": "123qweqw112r",
+      "headers": [
+        "ORIGINAL LOAN AMOUNT",
+        "ORIGINAL TERM",
+        "INTEREST RATE",
+        "DEBT TO INCOME",
+        "LAST PAYMENT AMOUNT",
+        "PAYMENT AMOUNT",
+        "CURRENT BALANCE"
+      ]
+    }
   ]
 }

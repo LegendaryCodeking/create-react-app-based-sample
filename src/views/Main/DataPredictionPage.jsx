@@ -40,7 +40,7 @@ class DataPredictionPage extends Component {
           statusText: "Training complete, loading statistics...",
         });
         setTimeout(() => {
-          this.startProcessingData(mlStatsResponse.data.model_data[0]);
+          this.startProcessingData(mlStatsResponse.data.model_data);
         }, 2000);
       } else if (mlStatsResponse.data.modelling_status === "Training Ongoing") {
         this.setState({ statusText: "Training still ongoing." });

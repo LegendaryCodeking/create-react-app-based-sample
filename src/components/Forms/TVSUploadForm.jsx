@@ -7,6 +7,7 @@ import BinaryRejectedInput from "./FormComponents/binaryRejectedInput";
 
 //import config from "../../config.json";
 import api from "../../services/api";
+import auth from "../../services/authService";
 import plumber from "../../services/dataHelpers";
 import { toast } from "react-toastify";
 
@@ -35,11 +36,14 @@ class TVSUploadForm extends Component {
     console.log("response: ", response);
     this.setState({ loadingFileUpload: false });
 
-    if (response.status === 200) {
+    if (response.status === 200 && response.data.status !== "failed") {
       this.setState({ formReadyForSecondaryInput: true });
       let dataHeaders = plumber.getDataHeaders(fileData.upload_data);
+      console.log("dataHeaders: ", dataHeaders);
       this.setState({ dataHeaders });
       this.setState({ nextButtonDisabled: false });
+    } else if (response.data.status === "failed") {
+      toast.error(response.data.message);
     }
   };
 
@@ -88,11 +92,25 @@ class TVSUploadForm extends Component {
         rejected_binary: rejected,
       });
       this.setState({ nextLoading: false });
+      //this.writeHeadersToDb(selectedVariable);
       this.props.history.push("/cst/data-description");
     } else {
       this.setState({ nextLoading: false, nextButtonDisabled: false });
       toast.error("There was a problem initiating your model");
     }
+  };
+
+  writeHeadersToDb = async (selectedVariable) => {
+    const { dataHeaders } = this.state;
+    const newHeaders = dataHeaders.filter(
+      (header) => header !== selectedVariable
+    );
+    console.log("newHeaders: ", newHeaders);
+    const { username } = auth.getCurrentUser();
+    console.log("username: ", username);
+
+    const createHeaderResponse = await api.postCreateHeaderEntry(newHeaders);
+    console.log("createHeaderResponse: ", createHeaderResponse);
   };
 
   render() {
