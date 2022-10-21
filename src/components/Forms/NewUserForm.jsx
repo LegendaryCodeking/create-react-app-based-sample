@@ -89,7 +89,7 @@ class ScoreSingleUserForm extends Component {
   render() {
     const { headers } = this.state;
     return (
-      <>
+      <div className="p-8 border border-1 border-eggyellow rounded mx-4 mt-4">
         <form autoComplete="off" onSubmit={this.submitForm}>
           <div className="grid md:grid-cols-2 md:gap-6">
             {headers.map((header, key) => (
@@ -118,7 +118,7 @@ class ScoreSingleUserForm extends Component {
             Submit
           </button>
         </form>
-      </>
+      </div>
     );
   }
 }
