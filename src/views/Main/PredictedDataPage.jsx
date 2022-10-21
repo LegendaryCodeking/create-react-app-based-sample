@@ -140,8 +140,8 @@ class PredictedDataPage extends Component {
     return (
       <React.Fragment>
         <div
-          className="bg-darkblue predictedpage pt-4"
-          style={{ height: "100% " }}
+          className="bg-darkblue predictedpage pt-4 overflow-auto"
+          style={{ height: "100vh " }}
         >
           <div className="mx-auto container pb-4">
             <div className="p-4 mb-6 text-sm text-darkblue bg-cream">

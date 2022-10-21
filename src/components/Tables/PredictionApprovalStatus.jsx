@@ -8,7 +8,6 @@ import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
 
 class PredictionApprovalStatusTable extends Component {
   state = {
