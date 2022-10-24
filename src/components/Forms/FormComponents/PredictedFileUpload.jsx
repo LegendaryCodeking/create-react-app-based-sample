@@ -117,7 +117,7 @@ class PredictedFileUpload extends Component {
   };
 
   render() {
-    const { loading, disableUploadButton } = this.props;
+    const { loading } = this.props;
     const { disableCancelButton, selectedFile, thresholdValid, loadingUpload } =
       this.state;
     console.log("loading: ", loading);
