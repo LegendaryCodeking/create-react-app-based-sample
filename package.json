@@ -56,6 +56,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "serve": "react-scripts build && pm2 serve build 3000 --spa --name Caspre",
     "secure-start": "HTTPS=true npm start",
     "build": "react-scripts build",
     "test-react": "react-scripts test",

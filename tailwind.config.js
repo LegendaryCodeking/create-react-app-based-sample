@@ -22,6 +22,7 @@ module.exports = {
       cream: '#fafad0',
       lightblue: '#22ffff',
       mediumblue: "#131823",
+      modalblue: 'rgb(21 27 41)',
       gray: {
         100: '#f7fafc',
         disabled: "rgb(107 114 128)",

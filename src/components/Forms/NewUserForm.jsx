@@ -7,6 +7,20 @@ import plumber from "../../services/dataHelpers";
 class ScoreSingleUserForm extends Component {
   state = {
     headers: [],
+    threshold: 500,
+    thresholdValid: true,
+  };
+
+  setThreshold = (e) => {
+    console.log("e: ", e);
+    let threshold = e.target.value;
+    threshold = threshold ? +threshold : threshold;
+    console.log("thresholdInput: ", threshold);
+    if (threshold >= 300 && threshold <= 800) {
+      this.setState({ threshold, thresholdValid: true });
+    } else {
+      this.setState({ threshold: 500, thresholdValid: false });
+    }
   };
 
   submitForm = (e) => {
@@ -28,7 +42,9 @@ class ScoreSingleUserForm extends Component {
 
   submitObject = async (data) => {
     let reqObject = {};
-    reqObject.threshold = 300;
+    let { threshold } = this.state;
+
+    threshold ? (reqObject.threshold = threshold) : (reqObject.threshold = 500);
     reqObject.newdata = [data];
     console.log("reqObject: ", reqObject);
     const predictedResponse = await api.postForPrediction(reqObject);
@@ -87,7 +103,7 @@ class ScoreSingleUserForm extends Component {
     }
   }
   render() {
-    const { headers } = this.state;
+    const { headers, thresholdValid } = this.state;
     return (
       <div className="p-8 border border-1 border-eggyellow rounded mx-4 mt-4">
         <form autoComplete="off" onSubmit={this.submitForm}>
@@ -109,6 +125,30 @@ class ScoreSingleUserForm extends Component {
                 </label>
               </div>
             ))}
+            <div className="relative z-0 mb-4 w-full group">
+              <input
+                type="number"
+                name="threshold"
+                id="threshold"
+                className={
+                  thresholdValid
+                    ? "block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-eggyellow peer"
+                    : "block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-red-300 appearance-none focus:outline-none focus:ring-0 focus:border-red-500 peer"
+                }
+                placeholder=" "
+                onChange={this.setThreshold}
+              />
+              <label
+                htmlFor="floating_first_name"
+                className={
+                  thresholdValid
+                    ? "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-eggyellow peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    : "peer-focus:font-medium absolute text-sm text-red-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-red-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                }
+              >
+                Threshold
+              </label>
+            </div>
           </div>
 
           <button
