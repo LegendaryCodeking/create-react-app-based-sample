@@ -53,8 +53,12 @@ const routes = {
         method: "GET"
     },
     createHeaderEntry: {
-        path: "/userHeaders",
+        path: "/postattributes/",
         method: "POST"
+    },
+    getHeaders: {
+        path: "/getattributes/",
+        method: "GET"
     }
 }
 
@@ -114,15 +118,15 @@ const postProfileUpdate = async (userData) => {
     return response;
 }
 
-const postCreateHeaderEntry = async (headerData) => {
+const postNewHeaders = async (headerData) => {
     console.log('updating header data: ', headerData);
-    const response = await http.put('http://127.0.0.1:3000' + routes.createHeaderEntry.path, headerData);
+    const response = await http.post(url + routes.createHeaderEntry.path, headerData);
     return response;
 }
 
 const getUserHeaders = async () => {
     console.log('getting header data: ');
-    const response = await http.get('http://127.0.0.1:3004' + routes.createHeaderEntry.path);
+    const response = await http.get(url + routes.getHeaders.path);
     return response;
 }
 
@@ -137,7 +141,7 @@ let exports = {
     postUploadData,
     postProfileUpdate,
     initiateModelling,
-    postCreateHeaderEntry,
+    postNewHeaders,
     getUserHeaders
 };
 

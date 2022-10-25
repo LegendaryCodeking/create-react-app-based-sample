@@ -80,8 +80,11 @@ class ScoreSingleUserForm extends Component {
     const dbHeadersResponse = await api.getUserHeaders();
 
     this.setState({ headers: propHeaders });
-    if (dbHeadersResponse.status === 200) {
-      const headerData = dbHeadersResponse.data;
+    if (
+      dbHeadersResponse.status === 200 &&
+      dbHeadersResponse.data.status === "successfull"
+    ) {
+      const headerData = dbHeadersResponse.data.headers;
       console.log("dbHeadersResponse: ", headerData);
       if (headerData.length > 0) {
         headerData.forEach((header) => {

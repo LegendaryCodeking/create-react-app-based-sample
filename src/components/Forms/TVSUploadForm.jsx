@@ -92,8 +92,7 @@ class TVSUploadForm extends Component {
         rejected_binary: rejected,
       });
       this.setState({ nextLoading: false });
-      //this.writeHeadersToDb(selectedVariable);
-      this.props.history.push("/cst/data-description");
+      this.writeHeadersToDb(selectedVariable);
     } else {
       this.setState({ nextLoading: false, nextButtonDisabled: false });
       toast.error("There was a problem initiating your model");
@@ -102,15 +101,32 @@ class TVSUploadForm extends Component {
 
   writeHeadersToDb = async (selectedVariable) => {
     const { dataHeaders } = this.state;
-    const newHeaders = dataHeaders.filter(
-      (header) => header !== selectedVariable
-    );
-    console.log("newHeaders: ", newHeaders);
-    const { username } = auth.getCurrentUser();
-    console.log("username: ", username);
+    if (dataHeaders.length > 0) {
+      const newHeaders = dataHeaders.filter(
+        (header) => header !== selectedVariable
+      );
+      console.log("newHeaders: ", newHeaders);
+      const { username } = auth.getCurrentUser();
+      console.log("username: ", username);
 
-    const createHeaderResponse = await api.postCreateHeaderEntry(newHeaders);
-    console.log("createHeaderResponse: ", createHeaderResponse);
+      let headerObject = {};
+      headerObject.username = username;
+      headerObject.headers = newHeaders;
+
+      const saveHeadersResponse = await api.postNewHeaders(headerObject);
+      console.log("createHeaderResponse: ", saveHeadersResponse);
+
+      if (
+        saveHeadersResponse.status === 200 &&
+        saveHeadersResponse.data.status === "successfull"
+      ) {
+        console.log("headers saved");
+        this.props.history.push("/cst/data-description");
+      } else {
+        console.log("headers not saved");
+        toast.error("Upload error");
+      }
+    }
   };
 
   render() {

@@ -34,7 +34,10 @@ class PredictedDataPage extends Component {
     const descriptionsResponse = await api.postDescription(TVSResult);
     console.log("descriptionsResponse: ", descriptionsResponse);
 
-    if (descriptionsResponse.status === 200) {
+    if (
+      descriptionsResponse.status === 200 &&
+      descriptionsResponse.data.status !== "failed"
+    ) {
       let column_names = descriptionsResponse.data.data_overview.column_names;
       if (column_names && column_names.length > 0) {
         column_names = column_names.filter(

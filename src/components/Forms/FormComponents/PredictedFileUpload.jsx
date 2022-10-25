@@ -122,16 +122,16 @@ class PredictedFileUpload extends Component {
       this.state;
     console.log("loading: ", loading);
     return (
-      <React.Fragment className="mb-80">
+      <div className="mb-80">
         <div className={this.state.show ? "flex mb-8" : "hidden"}>
           <div className="w-2/12">
             <div className="h-full flex justify-start">
               <span className="py-4 text-sm text-white">Upload files</span>
             </div>
           </div>
-          <div className="w-6/12" style={{ paddingBottom: ".5rem" }}>
+          <div className="w-4/12" style={{ paddingBottom: ".5rem" }}>
             <input
-              className="form-control block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
+              className="form-control rounded-lg block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
               aria-describedby="user_avatar_help"
               value={selectedFile}
               type="file"
@@ -142,10 +142,28 @@ class PredictedFileUpload extends Component {
           </div>
           <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
             <div className="flex h-full justify-end">
+              <input
+                type="number"
+                placeholder="threshold"
+                name="threshold"
+                id="threshold"
+                min={300}
+                max={800}
+                onChange={this.setThreshold}
+                className={
+                  thresholdValid
+                    ? "border border-1 border-eggyellow w-1/2 text-eggyellow bg-darkblue rounded-lg"
+                    : "border border-1 border-red-500 w-1/2 text-red-500 bg-darkblue rounded-lg focus:border-red-500 focus:ring-red-500"
+                }
+              />
+            </div>
+          </div>
+          <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
+            <div className="flex h-full justify-end">
               <button
                 disabled={loadingUpload}
                 onClick={this.uploadFileData}
-                className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled p-2"
+                className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled p-2 rounded-lg"
               >
                 <div className={loadingUpload ? "" : "hidden"}>
                   <Spinner size="sm" light={true} />
@@ -165,7 +183,7 @@ class PredictedFileUpload extends Component {
               <button
                 disabled={disableCancelButton}
                 onClick={this.onCancel}
-                className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled"
+                className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled rounded-lg"
               >
                 <FontAwesomeIcon
                   className="text-xs font-bold"
@@ -176,7 +194,7 @@ class PredictedFileUpload extends Component {
             </div>
           </div>
         </div>
-        <div className="flex">
+        {/* <div className="flex">
           <div className="relative z-0 mb-4 w-full group">
             <input
               type="number"
@@ -201,8 +219,8 @@ class PredictedFileUpload extends Component {
               Threshold
             </label>
           </div>
-        </div>
-      </React.Fragment>
+        </div> */}
+      </div>
     );
   }
 }
