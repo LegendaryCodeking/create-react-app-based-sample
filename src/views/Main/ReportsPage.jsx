@@ -9,9 +9,9 @@ import generateApprovalStatusReport from "../../services/createApprovalStatusRep
 import createMLstatsReport from "../../services/createMLstatsReport";
 import createFullReport from "../../services/createFullReport";
 import { Spinner } from "flowbite-react";
-import sample from "../../samples/sampleApprovalStatusData.json";
+/* import sample from "../../samples/sampleApprovalStatusData.json";
 import sampleMLdata from "../../samples/sampleMLstats.json";
-import sampleTableData from "../../assets/json/sampleTableData.json";
+import sampleTableData from "../../assets/json/sampleTableData.json"; */
 //import SummaryPDF from "../../components/PDF/SummaryPDF";
 
 class ReportsPage extends Component {
@@ -34,23 +34,15 @@ class ReportsPage extends Component {
     let reportData = {};
     if (Object.keys(TVSResult).length > 0) {
       this.setState({ summaryReportButton: false });
-      const sampleTVSObject = {
-        target_variable: "LOAN STATUS",
-        approved_binary: false,
-        rejected_binary: true,
-      };
-      let descriptionData = await this.getDescriptionData(sampleTVSObject);
-      //let descriptionData = await this.getDescriptionData(TVSResult);
+      let descriptionData = await this.getDescriptionData(TVSResult);
+
       console.log("descriptionData: ", descriptionData);
       reportData.summaryReportData = descriptionData;
     } else {
       this.setState({ summaryReportButton: true });
     }
 
-    let sData = plumber.formatApprovalStatusTableData(sample);
-    console.log("sample", sData);
-    let mlDataSample = plumber.formatPerformanceMetricTableData(sampleMLdata);
-    console.log("mlDataSample: ", mlDataSample);
+    //CHECK APPROVAL DATA
 
     if (Object.keys(approvalData).length > 0) {
       this.setState({ approvalReportButton: false });
@@ -64,6 +56,7 @@ class ReportsPage extends Component {
       this.setState({ approvalReportButton: true });
     }
 
+    //CHECK ML STATUS DATA
     let mlStatsResponse = await api.getPrediction();
     console.log("mlStatsResponse: ", mlStatsResponse);
 
@@ -125,6 +118,7 @@ class ReportsPage extends Component {
   }; */
 
   formatTableDataToPDF = (data) => {
+    console.log("data: ", data);
     let columns = [];
     data.columnData.forEach((column) => {
       columns.push(column.field);
@@ -150,45 +144,21 @@ class ReportsPage extends Component {
     }
   };
   async componentDidMount() {
-    const describedData = this.props.TVSResult;
+    //const dataDescription = this.props.TVSResult;
 
-    const tableData = sampleTableData;
-    this.setState({ summaryData: tableData });
+    const reportData = await this.getReportData();
+    console.log("reportData: ", reportData);
 
-    if (describedData) {
-      //const data = await api.postDescription(describedData);
-      const reportData = await this.getReportData();
-      console.log("reportData: ", reportData);
-
-      this.setState({ reportData });
-      //
-      /* const data_overview = data.data_overview;
-      const formattedData = plumber.formatDataSummaryData(data.summary_table);
-      this.setState({
-        summaryData: formattedData,
-        data_overview: data_overview,
-      }); */
-    }
+    this.setState({ reportData });
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps !== this.props) {
-      const describedData = this.props.TVSResult;
+      //const describedData = this.props.TVSResult;
+      const reportData = await this.getReportData();
+      console.log("reportData: ", reportData);
 
-      if (describedData) {
-        //const data = await api.postDescription(describedData);
-        const reportData = await this.getReportData();
-        console.log("reportData: ", reportData);
-
-        this.setState({ reportData });
-        //
-        /* const data_overview = data.data_overview;
-      const formattedData = plumber.formatDataSummaryData(data.summary_table);
-      this.setState({
-        summaryData: formattedData,
-        data_overview: data_overview,
-      }); */
-      }
+      this.setState({ reportData });
     }
   }
   generateSummaryReport = () => {
@@ -223,11 +193,11 @@ class ReportsPage extends Component {
   generateMLstatsReport = () => {
     console.log("generating MLstats report");
     const { user } = this.props;
-    const MLstatsData = this.state.reportData.mlStats;
-    if (MLstatsData) {
+    const { mlStats } = this.state.reportData;
+    if (mlStats) {
       //create pdf
       this.setState({ mlReportButtonLoading: true });
-      createMLstatsReport(MLstatsData, user);
+      createMLstatsReport(mlStats, user);
 
       setTimeout(() => {
         this.setState({ mlReportButtonLoading: false });

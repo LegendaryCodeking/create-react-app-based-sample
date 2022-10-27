@@ -34,7 +34,11 @@ class DataDescriptionPage extends Component {
 
     if (describedData) {
       const response = await api.postDescription(describedData);
+      const response2 = await api.getDescribedData();
       const { data, status } = response;
+      const { data: data2, status: status2 } = response2;
+      console.log("response2: ", response2);
+      //console.log('data2: ', data2);
       //
       if (data && status === 200) {
         const data_overview = data.data_overview;

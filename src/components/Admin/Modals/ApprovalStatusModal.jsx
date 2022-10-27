@@ -27,7 +27,7 @@ class ApprovalStatusModal extends Component {
               </div>
             </div> */}
             {Object.keys(data).map((header, index) => (
-              <div className="flex items-center px-4 py-2">
+              <div key={index} className="flex items-center px-4 py-2">
                 <div className="w-1/2 flex justify-around">
                   <span className="font-bold">{header}</span>
                 </div>

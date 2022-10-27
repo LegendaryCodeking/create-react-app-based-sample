@@ -68,7 +68,7 @@ class FileUploadInput extends Component {
         </div>
         <div className="w-6/12" style={{ paddingBottom: ".5rem" }}>
           <input
-            className="form-control block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
+            className="form-control block w-full h-full text-sm rounded-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
             aria-describedby="user_avatar_help"
             type="file"
             accept=".xlsx,.xls,.csv"
@@ -81,16 +81,13 @@ class FileUploadInput extends Component {
             <button
               disabled={disableUploadButton}
               onClick={this.uploadFileData}
-              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled p-2"
+              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled py-2 rounded-sm"
             >
               <div className={loading ? "" : "hidden"}>
                 <Spinner size="sm" light={true} />
               </div>
               <div className={!loading ? "" : "hidden"}>
-                <FontAwesomeIcon
-                  className="text-xs font-bold"
-                  icon={faFileUpload}
-                />
+                <FontAwesomeIcon className="text-sm" icon={faFileUpload} />
                 <span className="ml-2 font-bold text-sm">Upload</span>
               </div>
             </button>
@@ -100,9 +97,9 @@ class FileUploadInput extends Component {
           <div className="flex h-full justify-end">
             <button
               disabled={true}
-              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled"
+              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled py-2 rounded-sm"
             >
-              <FontAwesomeIcon className="text-xs font-bold" icon={faCancel} />
+              <FontAwesomeIcon className="text-sm" icon={faCancel} />
               <span className="ml-2 font-bold text-sm">Cancel</span>
             </button>
           </div>

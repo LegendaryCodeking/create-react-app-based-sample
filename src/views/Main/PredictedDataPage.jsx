@@ -27,7 +27,7 @@ class PredictedDataPage extends Component {
   };
 
   componentDidMount() {
-    this.getHeaders();
+    //this.getHeaders();
   }
   getHeaders = async () => {
     const { TVSResult } = this.props;
@@ -80,7 +80,7 @@ class PredictedDataPage extends Component {
     }
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  /* componentDidUpdate(prevProps, prevState) {
     Object.entries(this.props).forEach(
       ([key, val]) =>
         prevProps[key] !== val && console.log(`Prop '${key}' changed`)
@@ -91,7 +91,7 @@ class PredictedDataPage extends Component {
           prevState[key] !== val && console.log(`State '${key}' changed`)
       );
     }
-  }
+  } */
 
   onFileReadyForUpload = (value) => {
     this.setState({ disableUploadButton: value });
@@ -129,6 +129,7 @@ class PredictedDataPage extends Component {
       overviewActive: true,
       approvalData: data,
     });
+    this.props.onApprovalStatusData(data);
   };
   render() {
     const {
@@ -137,7 +138,6 @@ class PredictedDataPage extends Component {
       multipleActive,
       singleActive,
       overviewActive,
-      column_names,
     } = this.state;
     const { approvalData } = this.state;
     return (
@@ -234,10 +234,7 @@ class PredictedDataPage extends Component {
             </div>
 
             <div className={singleActive ? "" : "hidden"}>
-              <ScoreSingleUserForm
-                headers={column_names}
-                onDataPredicted={this.setOverView}
-              />
+              <ScoreSingleUserForm onDataPredicted={this.setOverView} />
             </div>
           </div>
         </div>

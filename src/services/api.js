@@ -59,6 +59,10 @@ const routes = {
     getHeaders: {
         path: "/getattributes/",
         method: "GET"
+    },
+    getDescData: {
+        path: "/describedata/",
+        method: "GET"
     }
 }
 
@@ -83,12 +87,8 @@ const getPrediction = async () => {
 }
 
 const initiateModelling = async () => {
-    try {
-        const response = await http.get(url + routes.initiateModelling.path);
-        return response;
-    } catch (error) {
-        return error;
-    }
+    const response = await http.get(url + routes.initiateModelling.path);
+    return response;
 }
 
 const postForPrediction = async (uploadData) => {
@@ -130,6 +130,12 @@ const getUserHeaders = async () => {
     return response;
 }
 
+const getDescribedData = async () => {
+    console.log('getting described data: ');
+    const response = await http.get(url + routes.getDescData.path);
+    return response;
+}
+
 
 let exports = {
     postDescription,
@@ -142,7 +148,8 @@ let exports = {
     postProfileUpdate,
     initiateModelling,
     postNewHeaders,
-    getUserHeaders
+    getUserHeaders,
+    getDescribedData
 };
 
 export default exports;

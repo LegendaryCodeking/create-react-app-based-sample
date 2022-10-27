@@ -26,7 +26,7 @@ class LoadingButton extends Component {
       <button
         disabled={disabled}
         onClick={this.onButtonClicked}
-        className={`bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline disabled:bg-gray-disabled p-2 ${
+        className={`bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline disabled:bg-gray-disabled rounded-sm px-4 py-2 ${
           float !== "none" ? "float-" + float : ""
         }`}
       >

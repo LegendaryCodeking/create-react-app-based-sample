@@ -274,16 +274,21 @@ function formatApprovalStatusTableData(data) {
             headerArray.push({
                 field: object,
                 resizable: true,
+                sortable: true,
+                filter: true
             })
         } else if (object === 'Number') {
             headerArray.push({
                 field: object,
                 pinned: 'left',
-                lockPinned: true
+                lockPinned: true,
+                sortable: true
             })
         } else {
             headerArray.push({
-                field: object
+                field: object,
+                sortable: true,
+                filter: true
             })
         }
     })

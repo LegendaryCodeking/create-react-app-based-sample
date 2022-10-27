@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
 import api from "../../services/api";
-import auth from "../../services/authService";
 import plumber from "../../services/dataHelpers";
 
 class ScoreSingleUserForm extends Component {
@@ -31,7 +30,8 @@ class ScoreSingleUserForm extends Component {
     const data = new FormData(targets);
     const targetObject = {};
     headers.forEach((header) => {
-      targetObject[header] = data.get(header);
+      console.log("*****", +data.get(header));
+      targetObject[header] = +data.get(header);
     });
 
     //console.log(targetObject);
@@ -74,26 +74,24 @@ class ScoreSingleUserForm extends Component {
     this.props.onDataPredicted(formattedPredictedData);
   };
 
+  getHeaders = async () => {
+    const headerResponse = await api.getUserHeaders();
+
+    if (
+      headerResponse.status === 200 &&
+      headerResponse.data.status === "successfull"
+    ) {
+      return headerResponse.data.headers;
+    } else {
+      toast.error("data headers have not been set");
+      return [];
+    }
+  };
+
   setHeaders = async () => {
-    const { headers: propHeaders } = this.props;
-    const user = auth.getCurrentUser();
-    const dbHeadersResponse = await api.getUserHeaders();
+    const propHeaders = await this.getHeaders();
 
     this.setState({ headers: propHeaders });
-    if (
-      dbHeadersResponse.status === 200 &&
-      dbHeadersResponse.data.status === "successfull"
-    ) {
-      const headerData = dbHeadersResponse.data.headers;
-      console.log("dbHeadersResponse: ", headerData);
-      if (headerData.length > 0) {
-        headerData.forEach((header) => {
-          if (header.username === user.username) {
-            this.setState({ headers: header.headers });
-          }
-        });
-      }
-    }
   };
 
   componentDidMount() {
@@ -114,7 +112,8 @@ class ScoreSingleUserForm extends Component {
             {headers.map((header, key) => (
               <div className="relative z-0 mb-4 w-full group" key={key}>
                 <input
-                  type="text"
+                  type="number"
+                  step=".01"
                   name={header}
                   id={header}
                   className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-eggyellow peer"

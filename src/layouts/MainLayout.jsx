@@ -90,18 +90,11 @@ class MainLayout extends Component {
                 )}
               />
 
-              <Route
-                path="/cst/predicted-data"
-                exact
-                component={(props) => (
-                  <PredictedDataPage
-                    onApprovalStatusData={this.setApprovalStatusData}
-                    approvalData={approvalStatusData}
-                    TVSResult={TVSResultData}
-                    {...props}
-                  />
-                )}
-              />
+              <Route path="/cst/predicted-data" exact>
+                <PredictedDataPage
+                  onApprovalStatusData={this.setApprovalStatusData}
+                />
+              </Route>
 
               {/* <Route path="/logout" exact component={LogOut} /> */}
               <Route
