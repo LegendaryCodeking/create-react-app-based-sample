@@ -78,24 +78,33 @@ class TVSUploadForm extends Component {
 
     this.setState({ nextLoading: true, nextButtonDisabled: true });
 
-    /* const { data } = await api.postDescription(); */
-    //console.log("response: ", data);
+    let descriptionRequestObject = {
+      target_variable: selectedVariable,
+      approved_binary: approved,
+      rejected_binary: rejected,
+    };
+    const descriptionResponse = await api.postDescription(
+      descriptionRequestObject
+    );
+    console.log("descriptionResponse: ", descriptionResponse);
 
-    const initiateModelling = await api.initiateModelling();
-    console.log("initiateModelling: ", initiateModelling);
+    if (descriptionResponse.status === 200) {
+      const initiateModelling = await api.initiateModelling();
+      console.log("initiateModelling: ", initiateModelling);
 
-    if (initiateModelling.status === 200) {
-      toast.success("Your model was successfully initiated");
-      this.props.onNext({
-        target_variable: selectedVariable,
-        approved_binary: approved,
-        rejected_binary: rejected,
-      });
-      this.setState({ nextLoading: false });
-      this.writeHeadersToDb(selectedVariable);
-    } else {
-      this.setState({ nextLoading: false, nextButtonDisabled: false });
-      toast.error("There was a problem initiating your model");
+      if (initiateModelling.status === 200) {
+        toast.success("Your model was successfully initiated");
+        this.props.onNext({
+          target_variable: selectedVariable,
+          approved_binary: approved,
+          rejected_binary: rejected,
+        });
+        this.setState({ nextLoading: false });
+        this.writeHeadersToDb(selectedVariable);
+      } else {
+        this.setState({ nextLoading: false, nextButtonDisabled: false });
+        toast.error("There was a problem initiating your model");
+      }
     }
   };
 

@@ -33,11 +33,12 @@ class DataDescriptionPage extends Component {
     console.log("describedData: ", describedData);
 
     if (describedData) {
-      const response = await api.postDescription(describedData);
-      const response2 = await api.getDescribedData();
+      //const response = await api.postDescription(describedData);
+      const response = await api.getDescribedData();
+      console.log("response: ", response);
       const { data, status } = response;
-      const { data: data2, status: status2 } = response2;
-      console.log("response2: ", response2);
+      //const { data: data2, status: status2 } = response2;
+      //console.log("response2: ", response2);
       //console.log('data2: ', data2);
       //
       if (data && status === 200) {
@@ -49,7 +50,7 @@ class DataDescriptionPage extends Component {
           summaryData: formattedData,
           data_overview: data_overview,
           overlayActive: false,
-          targetVariable: describedData["target_variable"],
+          targetVariable: data["target_variable"],
         });
         //this.props.setOverviewData(data_overview);
       } else if (status === 500) {
@@ -103,7 +104,7 @@ class DataDescriptionPage extends Component {
         <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
           <div className="mx-auto container pb-4">
             <div
-              className="p-4 mb-6 text-sm text-darkblue bg-lightblue"
+              className="p-4 mb-6 text-sm text-darkblue bg-slabtext"
               role="alert"
             >
               <div className="p-1">
@@ -112,12 +113,16 @@ class DataDescriptionPage extends Component {
               </div>
               <ul>
                 <li>
-                  <span className="font-bold">Categorical Variables:</span> The
-                  number of variables in categorical or textual format ie
+                  <span className="font-bold text-right">
+                    Categorical Variables :
+                  </span>{" "}
+                  The number of variables in categorical or textual format ie
                   strings.
                 </li>
                 <li>
-                  <span className="font-bold">Numerical Variables:</span>
+                  <span className="font-bold text-right">
+                    Numerical Variables:
+                  </span>
                   The number of variables that are in whole number or decimal
                   format ie numbers.
                 </li>

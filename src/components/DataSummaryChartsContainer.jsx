@@ -16,10 +16,15 @@ class DataSummaryChartsSection extends Component {
   };
 
   humanizeText = (str) => {
-    str = str.toLowerCase();
-    let fChar = str.charAt(0).toUpperCase();
-    str = fChar + str.slice(1);
-    return str;
+    console.log("string to humanize: ", str);
+    if (str) {
+      str = str.toLowerCase();
+      let fChar = str.charAt(0).toUpperCase();
+      str = fChar + str.slice(1);
+      return str;
+    } else {
+      return "Not set";
+    }
   };
 
   componentDidMount() {

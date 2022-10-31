@@ -299,6 +299,8 @@ function formatApprovalStatusTableData(data) {
     };
 }
 const formatBarChartOne = (data, variable) => {
+    console.log('variable data helpers: ', variable);
+    console.log('data data helpers: ', data);
     let baseData = data["result_variable_distribution"];
     //let title = data.title;
     let chartData = []
