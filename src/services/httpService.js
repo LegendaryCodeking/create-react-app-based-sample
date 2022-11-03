@@ -18,6 +18,10 @@ axios.interceptors.request.use((config) => {
     let requestURL = config.url;
     let loginURL = process.env.REACT_APP_SERVER_URL + '/login/';
     let registerURL = process.env.REACT_APP_SERVER_URL + '/register/';
+    config.rejectUnauthorized = false
+    config.strictSSL = false
+    config.agent = false
+    config.requestCert = true
 
     if (requestURL !== loginURL && requestURL !== registerURL) {
         //console.log("unexpected error");
