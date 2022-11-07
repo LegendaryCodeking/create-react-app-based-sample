@@ -22,16 +22,22 @@ class TVSUploadForm extends Component {
     selectedFile: null,
     nextButtonDisabled: true,
     dataHeaders: [],
-    rejected: true,
-    approved: false,
+    rejected: "",
+    approved: "",
     selectedVariable: "",
     disableUploadButton: true,
     nextLoading: false,
+    fileDataArray: [],
+    uniqueBinaries: [],
   };
 
   onUpload = async (fileData) => {
     console.log("fileData: ", fileData);
-    this.setState({ loadingFileUpload: true, disableUploadButton: true });
+    this.setState({
+      loadingFileUpload: true,
+      disableUploadButton: true,
+      fileDataArray: fileData["upload_data"],
+    });
     const response = await api.postUploadData(fileData);
     console.log("response: ", response);
     this.setState({ loadingFileUpload: false });
@@ -52,24 +58,39 @@ class TVSUploadForm extends Component {
   };
 
   onBinaryChange = (value, field) => {
-    //console.log("value: ", value, field);
+    console.log("value: ", value, field);
 
     if (field === "rejected") {
-      this.setState({ rejected: value, approved: !value });
-    } else {
-      this.setState({ approved: value, rejected: !value });
+      this.setState({ rejected: value });
+    } else if (field === "approved") {
+      this.setState({ approved: value });
     }
   };
   onVariableChanged = (selectedVariable) => {
     console.log("variable: ", selectedVariable);
     this.setState({ selectedVariable });
+    this.setBinaries(selectedVariable);
+  };
+
+  setBinaries = (variable) => {
+    const { fileDataArray } = this.state;
+    let variableData = [];
+
+    if (fileDataArray.length > 0) {
+      fileDataArray.forEach((element) => {
+        variableData.push(element[variable]);
+      });
+      variableData = [...new Set(variableData)];
+      console.log("variableData: ", variableData);
+      this.setState({ uniqueBinaries: variableData });
+    }
   };
 
   submitDescription = async () => {
     const { rejected, approved, selectedVariable } = this.state;
     console.log("approved: ", approved);
     console.log("rejected: ", rejected);
-    if (selectedVariable === "") {
+    if (selectedVariable === "" || approved === "" || rejected === "") {
       toast.error("Please select a variable and try again");
       return;
     }
@@ -148,6 +169,7 @@ class TVSUploadForm extends Component {
       loadingFileUpload,
       disableUploadButton,
       nextLoading,
+      uniqueBinaries,
     } = this.state;
     return (
       <form className="text-eggyellow shadow-md px-4 pt-4 pb-4 mb-2">
@@ -172,6 +194,7 @@ class TVSUploadForm extends Component {
             onChange={this.onBinaryChange}
             value={approved}
             name="approved"
+            binaries={uniqueBinaries}
           />
         </div>
         <div className="mb-4">
@@ -180,6 +203,7 @@ class TVSUploadForm extends Component {
             onChange={this.onBinaryChange}
             value={rejected}
             name="rejected"
+            binaries={uniqueBinaries}
           />
         </div>
         <div

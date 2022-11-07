@@ -9,14 +9,26 @@ class BinaryApprovedInput extends Component {
     value: 0,
   };
 
+  componentDidMount() {
+    const { binaries, value } = this.props;
+
+    if (value) {
+      this.setState({ value });
+    } else {
+      if (binaries.length > 0) {
+        this.setState({ value: binaries[0] });
+      }
+    }
+  }
+
   onChange = (e) => {
     const { value } = e.target;
-    const tranferValue = value === "0" ? false : true;
-    this.props.onChange(tranferValue, "approved");
+    //const transferValue = value === "0" ? false : true;
+    this.props.onChange(value, "approved");
   };
   render() {
-    const { formReadyForSecondaryInput, value } = this.props;
-    let setValue = value ? 1 : 0;
+    const { formReadyForSecondaryInput, binaries } = this.props;
+    //let { value } = this.state;
     return (
       <div className={formReadyForSecondaryInput ? "flex" : "hidden"}>
         <div className="w-2/12">
@@ -24,7 +36,7 @@ class BinaryApprovedInput extends Component {
             <span className="py-4 text-sm text-white">
               <span className="mr-1">Set binary for approved</span>
               <FontAwesomeIcon
-                data-tip="The represantation of approved/positive unit"
+                data-tip="The representation of approved/positive unit"
                 className="text-blue-200"
                 icon={faCircleInfo}
               />
@@ -35,11 +47,14 @@ class BinaryApprovedInput extends Component {
         <div className="w-10/12">
           <select
             onChange={this.onChange}
-            value={setValue}
             className="bg-darkblue form-select appearance-none border border-white text-white text-sm focus:ring-eggyellow focus:border-eggyellow block w-full p-2.5"
           >
-            <option value={0}>0</option>
-            <option value={1}>1</option>
+            <option>...</option>
+            {binaries.map((binary, index) => (
+              <option key={index} value={binary}>
+                {binary}
+              </option>
+            ))}
           </select>
         </div>
       </div>
