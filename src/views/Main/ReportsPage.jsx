@@ -30,7 +30,7 @@ class ReportsPage extends Component {
   };
 
   getReportData = async () => {
-    let { approvalData, mlStats } = this.props;
+    let { approvalData } = this.props;
     let reportData = {};
 
     //set describe data
