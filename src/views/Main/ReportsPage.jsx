@@ -30,29 +30,23 @@ class ReportsPage extends Component {
   };
 
   getReportData = async () => {
-    let { TVSResult, approvalData, mlStats } = this.props;
+    let { approvalData, mlStats } = this.props;
     let reportData = {};
-    if (Object.keys(TVSResult).length > 0) {
-      this.setState({ summaryReportButton: false });
-      let descriptionData = await this.getDescriptionData(TVSResult);
 
-      console.log("descriptionData: ", descriptionData);
-      reportData.summaryReportData = descriptionData;
-    } else {
-      this.setState({ summaryReportButton: true });
-    }
+    //set describe data
+    this.setState({ summaryReportButton: false });
+    let descriptionData = await this.getDescriptionData();
+    console.log("descriptionData: ", descriptionData);
+    reportData.summaryReportData = descriptionData;
+    this.setState({ summaryData: descriptionData });
 
     //CHECK APPROVAL DATA
 
     if (Object.keys(approvalData).length > 0) {
       this.setState({ approvalReportButton: false });
-      //remove second condition after sample data removal
-      //reportData.approvalData = approvalData;
-      //let approvalData = approvalData;
       let formattedApprovalData = this.formatTableDataToPDF(approvalData);
       reportData.approvalData = formattedApprovalData;
     } else {
-      //disable approval button
       this.setState({ approvalReportButton: true });
     }
 
@@ -73,8 +67,8 @@ class ReportsPage extends Component {
         console.log("tableData: ", tableData);
 
         this.setState({ mlReportButton: false });
-        let MLstatsData = this.formatTableDataToPDF(mlStats);
-        console.log("MLstatsData: ", MLstatsData);
+        let MLstatsData = this.formatTableDataToPDF(tableData);
+        console.log("MLstatsData from getdata: ", MLstatsData);
         reportData.mlStats = MLstatsData;
       } else if (mlStatsResponse.data.modelling_status === "Training Ongoing") {
         console.log("training not complete");
@@ -134,7 +128,7 @@ class ReportsPage extends Component {
 
   getDescriptionData = async (tvs) => {
     console.log("report page tvs: ", tvs);
-    const response = await api.postDescription(tvs);
+    const response = await api.getDescribedData();
     if (response.status === 200 && response.data.status !== "failed") {
       const data_summary = response.data["summary_table"];
       const formattedData = plumber.formatDataSummaryData(data_summary);
@@ -191,9 +185,9 @@ class ReportsPage extends Component {
   };
 
   generateMLstatsReport = () => {
-    console.log("generating MLstats report");
     const { user } = this.props;
     const { mlStats } = this.state.reportData;
+    console.log("generating MLstats report", mlStats);
     if (mlStats) {
       //create pdf
       this.setState({ mlReportButtonLoading: true });
