@@ -131,7 +131,7 @@ class PredictedFileUpload extends Component {
           </div>
           <div className="w-4/12" style={{ paddingBottom: ".5rem" }}>
             <input
-              className="form-control rounded-lg block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
+              className="form-control rounded-lg block w-full h-full text-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full file:rounded-sm"
               aria-describedby="user_avatar_help"
               value={selectedFile}
               type="file"
@@ -152,7 +152,7 @@ class PredictedFileUpload extends Component {
                 onChange={this.setThreshold}
                 className={
                   thresholdValid
-                    ? "border border-1 border-eggyellow w-1/2 text-eggyellow bg-darkblue rounded-lg"
+                    ? "border border-1 border-white w-1/2 text-eggyellow bg-darkblue rounded-lg"
                     : "border border-1 border-red-500 w-1/2 text-red-500 bg-darkblue rounded-lg focus:border-red-500 focus:ring-red-500"
                 }
               />

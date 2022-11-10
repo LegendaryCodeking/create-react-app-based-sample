@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 
-import AICELogo from "../../assets/images/aicelogo1.png";
+import AICELogo from "../../assets/images/caspre-logo.png";
 import "../../assets/stylesheets/main-nav.css";
 
 import NavNoUser from "./NavUserSection/NavNoUser";
@@ -18,7 +18,7 @@ class LandingNavBar extends Component {
             <Link to="/" className="flex items-center">
               <img
                 src={AICELogo}
-                className="mr-3 h-11 sm:h-9 aice-nav"
+                className="sm:h-9 aice-nav"
                 alt="Flowbite Logo"
               ></img>
             </Link>
