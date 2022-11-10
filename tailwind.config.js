@@ -11,6 +11,7 @@ module.exports = {
       eggyellow: '#f0da14',
       eggyellow2: '#dcc814',
       slabtext: "#f7f5f5",
+      subwhite: "#737373",
       transparent: 'transparent',
       gradient: {
         start: '#dcdc1f',
