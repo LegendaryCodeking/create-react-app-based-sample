@@ -140,7 +140,7 @@ class IndexPage extends Component {
             <div className="w-1/2">
               <div
                 className="container w-full h-full bg-darkblue p-2"
-                id="howItWorks"
+                id="vision"
               >
                 <div className="p-6 mt-5">
                   <span className="text-base text-lightblue uppercase ml-4 font-bold mb-4">
