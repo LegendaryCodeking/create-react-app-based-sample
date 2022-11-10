@@ -41,7 +41,7 @@ class IndexPage extends Component {
               <div className="mt-8">
                 <button
                   onClick={() => this.props.history.push("/auth/register")}
-                  className="bg-eggyellow rounded-none p-2 px-4 hover:bg-eggyellow2 animate-pulse transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110"
+                  className="bg-eggyellow rounded p-2 px-4 hover:bg-eggyellow2 animate-pulse transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110"
                 >
                   Get Started
                 </button>
