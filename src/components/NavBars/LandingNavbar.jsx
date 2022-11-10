@@ -41,7 +41,7 @@ class LandingNavBar extends Component {
                 </li>
                 <li>
                   <NavHashLink
-                    to="/#aboutUs"
+                    to="/#howItWorks"
                     className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
                     About
@@ -49,10 +49,10 @@ class LandingNavBar extends Component {
                 </li>
                 <li>
                   <NavHashLink
-                    to="/#howItWorks"
+                    to="/#vision"
                     className="block py-2 pr-4 pl-3 text-white hover:text-eggyellow text-bold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                   >
-                    How it works
+                    Vision
                   </NavHashLink>
                 </li>
                 <li>
