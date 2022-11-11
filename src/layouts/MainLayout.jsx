@@ -50,11 +50,12 @@ class MainLayout extends Component {
         target: ".caspre-tutor-step-6",
         title: "File input",
         content:
-          "This is your starting point. Upload historical data here: accepted data types are csv and excel.",
+          "This is your starting point. Upload historical data here: accepted data types are csv and excel. We have prepared some test data which can be accessed at the header section of this page.",
       },
     ],
     run: false,
     stepIndex: 0,
+    scrollToFirstStep: false,
   };
   onLogOut = () => {
     this.props.onLogOut();
@@ -115,6 +116,7 @@ class MainLayout extends Component {
       run,
       steps,
       stepIndex,
+      scrollToFirstStep,
     } = this.state;
     return (
       <>
@@ -126,7 +128,11 @@ class MainLayout extends Component {
           showSkipButton={true}
           disableScrolling={true}
           stepIndex={stepIndex}
+          locale={{
+            last: "Finish",
+          }}
           callback={this.handleJoyrideCallback}
+          scrollToFirstStep={scrollToFirstStep}
           styles={{
             options: {
               zIndex: 1000,
@@ -140,12 +146,24 @@ class MainLayout extends Component {
             <span className="text-white mt-2 ml-2 font-bold w-1/2">
               AICE Credit scoring tool.
             </span>
-            <span
-              onClick={this.startTour}
-              className="text-lightblue text-xs mt-2 w-1/2 text-right mr-3 font-bold animate-pulse cursor-pointer"
-            >
-              Take a tour
-            </span>
+
+            <div className="w-1/2 text-right">
+              {/* eslint-disable-next-line */}
+              <a
+                href="https://drive.google.com/file/d/1rQY_aj0W7WraL6abIRn1GVav4zwJB34y/view?usp=sharing"
+                target="_blank"
+                className="text-red-400 text-xs mt-2 text-right mr-3 font-bold cursor-pointer"
+              >
+                Test Data
+              </a>
+
+              <span
+                onClick={this.startTour}
+                className="text-lightblue text-xs mt-2 text-right mr-3 font-bold animate-pulse cursor-pointer"
+              >
+                Take a tour
+              </span>
+            </div>
           </div>
           <TabNav />
 
