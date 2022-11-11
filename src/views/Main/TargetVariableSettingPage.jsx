@@ -4,6 +4,7 @@ import TVSUploadForm from "../../components/Forms/TVSUploadForm";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+//import steps from "../services/steps";
 
 class TargetVariableSettingPage extends Component {
   state = {};
@@ -17,7 +18,9 @@ class TargetVariableSettingPage extends Component {
           >
             <div className="p-1">
               <FontAwesomeIcon className="" icon={faCircleInfo} />{" "}
-              <span className="ml-1 font-bold">Info</span>
+              <span className="ml-1 font-bold my-first-step" data-tour="step-1">
+                Info
+              </span>
             </div>
             <ul className="text-xs ml-2">
               <li className="pb-1">

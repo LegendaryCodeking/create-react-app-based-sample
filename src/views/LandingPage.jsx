@@ -18,7 +18,7 @@ class IndexPage extends Component {
       <div className="relative landingContainer">
         <LandingNavBar {...this.props} />
         <div
-          className="h-full w-full bg-darkblue snap-y snap-mandatory"
+          className="h-full w-full bg-darkblue snap-y"
           style={{ height: "100%" }}
         >
           <div
@@ -48,7 +48,7 @@ class IndexPage extends Component {
               </div>
             </div>
           </div>
-          <div className="flex my-20 p-10">
+          <div className="flex my-20 p-10 snap-center">
             <div className="w-1/2">
               <div
                 className="container w-full h-full bg-darkblue p-2"
@@ -90,7 +90,7 @@ class IndexPage extends Component {
             </div>
           </div>
           {/* <hr className="divide-y-2 divide-subwhite mx-8 my-10" /> */}
-          <div className="flex p-6 mx-10 mb-20">
+          <div className="flex p-6 mx-10 mb-20 snap-center">
             <div className="w-1/3 p-8">
               <h3 className="mt-2 text-lightblue font-bold">Step 1</h3>
               <p className="text-subwhite mt-4 leading-7">
@@ -126,7 +126,7 @@ class IndexPage extends Component {
               </p>
             </div>
           </div>
-          <div className="flex mb-12 pb-40">
+          <div className="flex mb-12 pb-40 snap-center">
             <div className="w-1/2 flex justify-center">
               <img
                 className="w-full p-4 h-full rounded-sm"

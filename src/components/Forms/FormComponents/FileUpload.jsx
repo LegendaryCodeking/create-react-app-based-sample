@@ -68,7 +68,7 @@ class FileUploadInput extends Component {
         </div>
         <div className="w-6/12" style={{ paddingBottom: ".5rem" }}>
           <input
-            className="form-control block w-full h-full text-sm rounded-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full"
+            className="form-control block w-full h-full text-sm rounded-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full caspre-tutor-step-6"
             aria-describedby="user_avatar_help"
             type="file"
             accept=".xlsx,.xls,.csv"

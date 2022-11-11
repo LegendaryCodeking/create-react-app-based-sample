@@ -16,7 +16,7 @@ class TabNav extends Component {
           <li className="w-full">
             <Link
               to="/cst/dashboard"
-              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 active focus:outline-none"
+              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 active focus:outline-none caspre-tutor-step-1"
               aria-current="page"
             >
               Target Variable Setting
@@ -25,7 +25,7 @@ class TabNav extends Component {
           <li className="w-full">
             <Link
               to="/cst/data-description"
-              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 focus:outline-none"
+              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 focus:outline-none caspre-tutor-step-2"
             >
               Data description
             </Link>
@@ -33,7 +33,7 @@ class TabNav extends Component {
           <li className="w-full">
             <Link
               to="/cst/data-prediction"
-              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 focus:outline-none"
+              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:ring-blue-300 focus:outline-none caspre-tutor-step-3"
             >
               ML Statistics
             </Link>
@@ -41,7 +41,7 @@ class TabNav extends Component {
           <li className="w-full">
             <Link
               to="/cst/predicted-data"
-              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:outline-none focus:ring-blue-300 caspre-tutor-step-4"
             >
               Data prediction
             </Link>
@@ -49,7 +49,7 @@ class TabNav extends Component {
           <li className="w-full">
             <Link
               to="/cst/reports"
-              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              className="inline-block p-4 w-full text-darkblue bg-eggyellow hover:text-gray-700 hover:bg-eggyellow2 focus:ring-4 focus:outline-none focus:ring-blue-300 caspre-tutor-step-5"
             >
               Reports
             </Link>

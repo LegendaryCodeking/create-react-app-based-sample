@@ -5,8 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import logger from "./services/logService"
 
-
-
 import "flowbite";
 import App from './App';
 

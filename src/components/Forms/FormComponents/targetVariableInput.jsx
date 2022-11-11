@@ -38,7 +38,7 @@ class TargetVariableInput extends Component {
           <select
             onChange={this.onChange}
             value={selectedValue}
-            className="bg-darkblue form-select appearance-none border border-white text-white text-sm focus:ring-eggyellow focus:border-eggyellow block w-full p-2.5"
+            className="bg-darkblue form-select appearance-none border border-white text-white text-sm focus:ring-eggyellow focus:border-eggyellow block w-full p-2.5 caspre-tutor-step-7"
           >
             <option disabled={true} value={""}>
               Select one...
