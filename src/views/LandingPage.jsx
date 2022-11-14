@@ -48,10 +48,10 @@ class IndexPage extends Component {
               </div>
             </div>
           </div>
-          <div className="flex my-20 p-10 snap-center">
-            <div className="w-1/2">
+          <div className="md:flex my-20 p-10 snap-center">
+            <div className="md:w-1/2 sm:w-full">
               <div
-                className="container w-full h-full bg-darkblue p-2"
+                className="container w-full h-full bg-darkblue md:max-xl:p-2"
                 id="howItWorks"
               >
                 <div className="p-6 mt-5">
@@ -61,7 +61,7 @@ class IndexPage extends Component {
                   <h1 className="text-eggyellow ml-4 text-5xl mb-2 mt-2 font-bold">
                     How it works
                   </h1>
-                  <p className="text-subwhite text-sm leading-7 whitespace-pre-line subpixel-antialiased text-left normal-case p-4 font-medium leading-loose tracking-wide">
+                  <p className="text-subwhite text-sm leading-7 whitespace-pre-line subpixel-antialiased text-left normal-case p-4 font-medium tracking-wide">
                     The tool allows uploading of historical data and predict new
                     data to know client credit scoring status and scores. If you
                     do not have an account you sign up via the button accessible
@@ -78,7 +78,7 @@ class IndexPage extends Component {
                 </div>
               </div>
             </div>
-            <div className="w-1/2 justify-center">
+            <div className="w-1/2 hidden md:flex justify-center">
               <img
                 className="w-full p-4 h-full rounded-sm"
                 alt="bg"
@@ -90,8 +90,8 @@ class IndexPage extends Component {
             </div>
           </div>
           {/* <hr className="divide-y-2 divide-subwhite mx-8 my-10" /> */}
-          <div className="flex p-6 mx-10 mb-20 snap-center">
-            <div className="w-1/3 p-8">
+          <div className="md:flex p-6 mx-10 mb-20 snap-center">
+            <div className="md:w-1/3 sm:w-full md:p-8 sm:mb-4">
               <h3 className="mt-2 text-lightblue font-bold">Step 1</h3>
               <p className="text-subwhite mt-4 leading-7">
                 Upload your historical data that includes your target variables
@@ -104,7 +104,7 @@ class IndexPage extends Component {
                 </span>
               </p>
             </div>
-            <div className="w-1/3 p-8">
+            <div className="md:w-1/3 md:p-8 sm:w-full sm:mb-4">
               <h3 className="mt-2 text-lightblue font-bold">Step 2</h3>
               <p className="text-subwhite mt-4 leading-7">
                 After your model has completed training, review the metrics
@@ -116,7 +116,7 @@ class IndexPage extends Component {
                 </span>
               </p>
             </div>
-            <div className="w-1/3 p-8">
+            <div className="md:w-1/3 md:p-8 sm:w-full sm:mb-4">
               <h3 className="mt-2 text-lightblue font-bold">Step 3</h3>
               <p className="text-subwhite mt-4 leading-7">
                 Analyze your data and use it to get insights. Reports can be
@@ -126,8 +126,8 @@ class IndexPage extends Component {
               </p>
             </div>
           </div>
-          <div className="flex mb-12 pb-40 snap-center">
-            <div className="w-1/2 flex justify-center">
+          <div className="md:flex mb-12 pb-40 snap-center">
+            <div className="md:w-1/2 flex justify-center">
               <img
                 className="w-full p-4 h-full rounded-sm"
                 alt="bg"
@@ -137,7 +137,7 @@ class IndexPage extends Component {
                 src={roseSpiral}
               />
             </div>
-            <div className="w-1/2">
+            <div className="md:w-1/2">
               <div
                 className="container w-full h-full bg-darkblue p-2"
                 id="vision"

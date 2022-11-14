@@ -250,13 +250,13 @@ class ReportsPage extends Component {
               </li>
             </ul>
           </div>
-          <div className="flex mb-4 mt-4">
-            <div className="w-3/12">
-              <div className="p-4 text-white text-xs flex justify-center">
+          <div className="md:flex mb-4 mt-4">
+            <div className="md:w-3/12">
+              <div className="p-4 text-white text-xs flex md:justify-center">
                 <button
                   onClick={this.generateSummaryReport}
                   disabled={summaryReportButton}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
+                  className="outline outline-lightblue py-2 px-4 w-full hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
                   <div className={summaryReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
@@ -268,12 +268,12 @@ class ReportsPage extends Component {
                 </button>
               </div>
             </div>
-            <div className="w-3/12">
-              <div className="p-4 text-white text-xs flex justify-center">
+            <div className="md:w-3/12">
+              <div className="p-4 text-white text-xs flex md:justify-center">
                 <button
                   disabled={approvalReportButton}
                   onClick={this.generateApprovalStatusReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
+                  className="outline outline-lightblue py-2 px-4 w-full hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
                   <div className={approvalReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
@@ -287,12 +287,12 @@ class ReportsPage extends Component {
                 </button>
               </div>
             </div>
-            <div className="w-3/12">
-              <div className="p-4 text-white text-xs flex justify-center">
+            <div className="md:w-3/12">
+              <div className="p-4 text-white text-xs flex md:justify-center">
                 <button
                   disabled={mlReportButton}
                   onClick={this.generateMLstatsReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
+                  className="outline outline-lightblue py-2 px-4 w-full hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
                   <div className={mlReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />
@@ -306,12 +306,12 @@ class ReportsPage extends Component {
                 </button>
               </div>
             </div>
-            <div className="w-3/12">
-              <div className="p-4 text-white text-xs flex justify-center">
+            <div className="md:w-3/12">
+              <div className="p-4 text-white text-xs flex md:justify-center">
                 <button
                   disabled={fullReportButton}
                   onClick={this.createFullReport}
-                  className="outline outline-lightblue py-2 px-4 hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
+                  className="outline outline-lightblue py-2 px-4 w-full hover:text-black hover:bg-eggyellow hover:outline-eggyellow disabled:bg-gray-600 disabled:outline-gray-900 disabled:cursor-not-allowed"
                 >
                   <div className={fullReportButtonLoading ? "" : "hidden"}>
                     <Spinner size="sm" light={true} />

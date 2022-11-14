@@ -21,7 +21,7 @@ class TargetVariableInput extends Component {
     const { selectedValue } = this.state;
     return (
       <div className={formReadyForSecondaryInput ? "flex" : "hidden"}>
-        <div className="w-2/12">
+        <div className="md:w-2/12 w-1/2">
           <div className="h-full flex justify-start">
             <span className="py-4 text-sm text-white">
               <span className="mr-1">Set target variable</span>
@@ -34,7 +34,7 @@ class TargetVariableInput extends Component {
             </span>
           </div>
         </div>
-        <div className="w-10/12">
+        <div className="md:w-10/12 w-1/2">
           <select
             onChange={this.onChange}
             value={selectedValue}

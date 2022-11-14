@@ -5,8 +5,8 @@ class DescriptionStatsCards extends Component {
   render() {
     const { data } = this.props;
     return (
-      <div className="w-full text-white flex p-4 mt-4 mb-4">
-        <div className="w-1/4 p-2 text-center justify-center items-center">
+      <div className="w-full text-white md:flex p-4 mt-4 mb-4">
+        <div className="md:w-1/4 p-2 text-center justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Number of columns</span>
             <span className="text-eggyellow font-bold">
@@ -14,7 +14,7 @@ class DescriptionStatsCards extends Component {
             </span>
           </div>
         </div>
-        <div className="w-1/4 p-2 text-center  justify-center items-center">
+        <div className="md:w-1/4 p-2 text-center  justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Number of rows</span>
             <span className="text-eggyellow font-bold">
@@ -22,7 +22,7 @@ class DescriptionStatsCards extends Component {
             </span>
           </div>
         </div>
-        <div className="w-1/4 p-2 text-center  justify-center items-center">
+        <div className="md:w-1/4 p-2 text-center  justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Categorical variables</span>
             <span className="text-eggyellow font-bold">
@@ -30,7 +30,7 @@ class DescriptionStatsCards extends Component {
             </span>
           </div>
         </div>
-        <div className="w-1/4 p-2 text-center  justify-center items-center">
+        <div className="md:w-1/4 p-2 text-center  justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Numerical variables</span>
             <span className="text-eggyellow font-bold">

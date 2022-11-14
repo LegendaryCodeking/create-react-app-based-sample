@@ -53,10 +53,12 @@ class ROCChart extends Component {
           strokeWidth: 1,
           strokeOpacity: 0.5,
           lineDash: [3, 3],
-
           data: [],
         },
       ],
+      legend: {
+        position: "bottom",
+      },
     },
   };
 

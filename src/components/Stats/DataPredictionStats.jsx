@@ -45,14 +45,14 @@ class PredictionStats extends Component {
   render() {
     const { stats } = this.state;
     return (
-      <div className="w-full text-white flex p-4 mt-4 mb-4">
-        <div className="w-1/4 p-2 text-center justify-center items-center">
+      <div className="w-full text-white md:flex p-4 mt-4 mb-4">
+        <div className="md:w-1/4 p-2 text-center justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Accuracy</span>
             <span className="text-eggyellow font-bold">{stats.accuracy}</span>
           </div>
         </div>
-        <div className="w-1/4 p-2 text-center  justify-center items-center">
+        <div className="md:w-1/4 p-2 text-center  justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Area under Curve</span>
             <span className="text-eggyellow font-bold">
@@ -60,7 +60,7 @@ class PredictionStats extends Component {
             </span>
           </div>
         </div>
-        <div className="w-1/4 p-2 text-center  justify-center items-center">
+        <div className="md:w-1/4 p-2 text-center  justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Kolmorogov Smirnov</span>
             <span className="text-eggyellow font-bold">
@@ -68,7 +68,7 @@ class PredictionStats extends Component {
             </span>
           </div>
         </div>
-        <div className="w-1/4 p-2 text-center  justify-center items-center">
+        <div className="md:w-1/4 p-2 text-center  justify-center items-center">
           <div className="w-full border flex flex-col border-eggyellow border-l-8 hover:border-l-4 p-2">
             <span className="stats-title">Gini Coefficient</span>
             <span className="text-eggyellow font-bold">{stats.gini}</span>

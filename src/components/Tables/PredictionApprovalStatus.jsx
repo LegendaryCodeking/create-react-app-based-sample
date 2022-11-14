@@ -109,7 +109,7 @@ class PredictionApprovalStatusTable extends Component {
     const { rowData, columnData, modalData, modalShow } = this.state;
     return (
       <React.Fragment>
-        <div className="w-full bg-darkblue text-white mb-2 mt-8">
+        <div className="w-full bg-darkblue text-white mb-2 mt-8 px-4">
           <div className=" bg-darkblue border border-b-1 py-2 px-2 w-full flex">
             <div className="w-1/2">
               <span className="font-bold text-white text-xs float-left mt-2 ml-2">

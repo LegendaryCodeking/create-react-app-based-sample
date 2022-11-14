@@ -106,8 +106,8 @@ class DataSummaryChartsSection extends Component {
     let t_variable = this.humanizeText(targetVariable);
     let i_variable = this.humanizeText(independentVariable);
     return (
-      <div className={showStatus ? "flex mb-4 text-white p-4" : "hidden"}>
-        <div className="w-1/2 p-2">
+      <div className={showStatus ? "md:flex mb-4 text-white p-4" : "hidden"}>
+        <div className="md:w-1/2 p-2">
           <div className="container bg-mediumblue">
             <div className="border-b border-gray-300 p-2 py-4">
               <span className="text-sm ml-2">
@@ -117,7 +117,7 @@ class DataSummaryChartsSection extends Component {
             <TargetVariableCorrelationBarChart data={chartOneData} />
           </div>
         </div>
-        <div className="w-1/2 p-2">
+        <div className="md:w-1/2 p-2">
           <div className="container bg-mediumblue">
             <div className="border-b border-gray-300 p-2 py-4">
               <span className="text-sm ml-2">

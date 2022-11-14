@@ -57,7 +57,7 @@ class DataDescriptionSearchInput extends Component {
     const { selectedValue, loading } = this.state;
     return (
       <div className={`flex px-4 pt-4 ${show ? "" : "hidden"}`}>
-        <div className="w-2/12">
+        <div className="md:w-2/12 w-1/2">
           <div className="h-full flex justify-start">
             <span className="py-4 text-sm text-white">
               <span className="mr-1">Set independent variable</span>
@@ -70,7 +70,7 @@ class DataDescriptionSearchInput extends Component {
             </span>
           </div>
         </div>
-        <div className="w-10/12">
+        <div className="md:w-10/12 w-1/2">
           <select
             onChange={this.onChange}
             value={selectedValue}

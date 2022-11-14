@@ -60,13 +60,13 @@ class FileUploadInput extends Component {
     const { loading, disableUploadButton } = this.props;
     console.log("loading: ", loading);
     return (
-      <div className={this.state.show ? "flex" : "hidden"}>
-        <div className="w-2/12">
+      <div className={this.state.show ? "md:flex" : "hidden"}>
+        <div className="md:w-2/12 sm:w-1/2">
           <div className="h-full flex justify-start">
             <span className="py-4 text-sm text-white">Upload files</span>
           </div>
         </div>
-        <div className="w-6/12" style={{ paddingBottom: ".5rem" }}>
+        <div className="md:w-6/12 sm:w-1/2" style={{ paddingBottom: ".5rem" }}>
           <input
             className="form-control block w-full h-full text-sm rounded-sm text-eggyellow bg-darkblue border border-white cursor-pointer focus:outline-none file:bg-eggyellow file:border-0 file:h-full caspre-tutor-step-6"
             aria-describedby="user_avatar_help"
@@ -76,12 +76,12 @@ class FileUploadInput extends Component {
             placeholder="Allowed file formats are Csv and xlsx"
           ></input>
         </div>
-        <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
-          <div className="flex h-full justify-end">
+        <div className="md:w-2/12 sm:w-full" style={{ paddingBottom: ".5rem" }}>
+          <div className="flex h-full md:justify-end">
             <button
               disabled={disableUploadButton}
               onClick={this.uploadFileData}
-              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled py-2 rounded-sm"
+              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline md:w-1/2 w-full h-full disabled:bg-gray-disabled py-2 rounded-sm"
             >
               <div className={loading ? "" : "hidden"}>
                 <Spinner size="sm" light={true} />
@@ -93,11 +93,11 @@ class FileUploadInput extends Component {
             </button>
           </div>
         </div>
-        <div className="w-2/12" style={{ paddingBottom: ".5rem" }}>
-          <div className="flex h-full justify-end">
+        <div className="md:w-2/12 sm:w-full" style={{ paddingBottom: ".5rem" }}>
+          <div className="flex h-full md:justify-end">
             <button
               disabled={true}
-              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline w-1/2 h-full disabled:bg-gray-disabled py-2 rounded-sm"
+              className="bg-eggyellow hover:bg-eggyellow2 text-darkblue focus:outline-none focus:shadow-outline md:w-1/2 w-full h-full disabled:bg-gray-disabled py-2 rounded-sm"
             >
               <FontAwesomeIcon className="text-sm" icon={faCancel} />
               <span className="ml-2 font-bold text-sm">Cancel</span>

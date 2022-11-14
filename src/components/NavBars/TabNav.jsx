@@ -12,7 +12,7 @@ class TabNav extends Component {
   render() {
     return (
       <div className="relative">
-        <ul className="hidden text-sm font-medium text-center text-gray-500 divide-x divide-darkblue shadow sm:flex">
+        <ul className="text-sm font-medium text-center text-gray-500 divide-x divide-darkblue shadow md:flex">
           <li className="w-full">
             <Link
               to="/cst/dashboard"

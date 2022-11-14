@@ -143,7 +143,7 @@ class MainLayout extends Component {
         <div className="relative">
           <NavBar onLogOut={this.onLogOut} user={user} {...this.props} />
           <div className="mx-auto p-2 bg-darkblue flex">
-            <span className="text-white mt-2 ml-2 font-bold w-1/2">
+            <span className="text-white mt-1 ml-2 text-sm font-bold w-1/2">
               AICE Credit scoring tool.
             </span>
 

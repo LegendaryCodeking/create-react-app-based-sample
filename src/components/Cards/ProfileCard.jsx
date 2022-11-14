@@ -20,7 +20,7 @@ class ProfileCard extends Component {
     const { user } = this.state;
     return (
       <>
-        <div className="flex flex-wrap mb-8 mt-16">
+        <div className="flex flex-wrap mt-16">
           <div className="w-full lg:w-8/12 px-4">
             <UpdateCard onUserChanged={this.setNewUser} user={user} />
           </div>

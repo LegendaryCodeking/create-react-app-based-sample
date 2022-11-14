@@ -26,8 +26,8 @@ class PredictionSummaryCharts extends Component {
   render() {
     const { chartsData } = this.props;
     return (
-      <div className="flex mb-4 text-white p-4">
-        <div className="w-1/2 p-2">
+      <div className="md:flex mb-4 text-white p-4">
+        <div className="md:w-1/2 p-2">
           <div className="container bg-mediumblue">
             <div className="border-b border-gray-300 p-2 py-4">
               <span className="text-sm ml-2 font-bold">Confusion Matrix</span>
@@ -38,7 +38,7 @@ class PredictionSummaryCharts extends Component {
             />
           </div>
         </div>
-        <div className="w-1/2 p-2">
+        <div className="md:w-1/2 p-2">
           <div className="container bg-mediumblue">
             <div className="border-b border-gray-300 p-2 py-4">
               <span className="text-sm ml-2 font-bold">

@@ -7,7 +7,7 @@ class ProfilePage extends Component {
   state = {};
   render() {
     return (
-      <div className="bg-darkblue pt-4" style={{ height: "100vh " }}>
+      <div className="bg-darkblue pt-4" style={{ height: "100% " }}>
         <div className="mx-auto container">
           <ProfileCard user={this.props.user} />
         </div>
