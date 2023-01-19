@@ -1,12 +1,14 @@
 import axios from "axios";
 import logger from "./logService"
 import { toast } from "react-toastify"
+
+let log_url = process.env.REACT_APP_LOG_URL;
 axios.interceptors.response.use(null, error => {
     console.log('API error: ', error);
     const expectedErrors = error.response && error.response.status >= 400 && error.response.status < 500 && error.response.status !== 404;
     console.log('expectedErrors: ', expectedErrors);
 
-    if (!expectedErrors) {
+    if (!expectedErrors && error.config.url !== log_url + '/v1/products/newlogin/') {
         toast.error("An unexpected error occured")
         logger.log('unexpected error', error)
     }

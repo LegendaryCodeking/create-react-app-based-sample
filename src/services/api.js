@@ -2,6 +2,7 @@ import http from "./httpService"
 //import config from "../config.json"
 
 let server_url = process.env.REACT_APP_SERVER_URL;
+let log_url = process.env.REACT_APP_LOG_URL;
 let url = server_url
 const routes = {
     description: {
@@ -63,7 +64,11 @@ const routes = {
     getDescData: {
         path: "/describedata/",
         method: "GET"
-    }
+    },
+    logNewLogin: {
+        path: "/v1/products/newlogin/",
+        method: "POST"
+    },
 }
 
 /* let config = {
@@ -136,6 +141,15 @@ const getDescribedData = async () => {
     return response;
 }
 
+const postNewLogin = async (user) => {
+    console.log('logging new login: ');
+    const response = await http.post(log_url + routes.logNewLogin.path, {
+        productName: 'caspre',
+        login: user
+    });
+    return response;
+}
+
 
 let exports = {
     postDescription,
@@ -149,7 +163,8 @@ let exports = {
     initiateModelling,
     postNewHeaders,
     getUserHeaders,
-    getDescribedData
+    getDescribedData,
+    postNewLogin
 };
 
 export default exports;

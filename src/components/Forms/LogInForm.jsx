@@ -120,6 +120,14 @@ class LogInForm extends Component {
       setTimeout(() => {
         this.props.history.push("/cst");
       }, 1000);
+
+      const authenticatedUser = auth.getCurrentUser();
+      console.log("authenticatedUser: ", authenticatedUser);
+      const logLoginResponse = await api.postNewLogin(authenticatedUser);
+
+      if (logLoginResponse.status === 200) {
+        console.log("log successful! Redirecting");
+      }
     } else if (response.status === 400 && response.data.status === "failed") {
       toast.error(response.data.reason);
     }
