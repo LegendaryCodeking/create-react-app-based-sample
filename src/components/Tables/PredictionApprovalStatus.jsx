@@ -209,7 +209,7 @@ class PredictionApprovalStatusTable extends Component {
           </div>
         </div>
         <ApprovalStatusModal
-          onModalClose={this.modalClosed}
+          onCloseModal={this.modalClosed}
           data={modalData}
           show={modalShow}
         />

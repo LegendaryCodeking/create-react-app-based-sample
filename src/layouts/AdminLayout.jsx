@@ -12,9 +12,9 @@ class AdminLayout extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="relative bg-darkblue" style={{ height: "100%" }}>
+        <div className="flex h-screen bg-darkblue" style={{ height: "100vh" }}>
           <Sidebar />
-          <div className="relative ml-64">
+          <div className="flex-1 h-screen overflow-y-auto">
             <div className="container">
               <NavBar />
               <div className="p-4 bg-darkblue">

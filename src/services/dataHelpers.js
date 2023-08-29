@@ -365,6 +365,64 @@ const prioritizeHeaders = (headers, priorities) => {
 
     return newheaders;
 }
+
+
+function generateCreditScoreDetails(score) {
+    let category = "";
+    let contributingFactors = [];
+    let explanation = "";
+    let textColorClass = "";
+
+    if (score >= 750 && score <= 850) {
+        category = "Excellent";
+        contributingFactors = [
+            "Long and consistent credit history.",
+            "Low credit utilization ratio.",
+            "Few or no delinquencies or missed payments.",
+            "Multiple types of credit accounts managed responsibly."
+        ];
+        explanation = "Your excellent credit score reflects your responsible financial behavior. Your long and consistent credit history, coupled with low credit utilization and a strong payment record, have contributed to this high score. Your ability to manage multiple types of credit demonstrates your financial discipline.";
+        textColorClass = "text-green-600"; // Tailwind CSS class for green text color
+    } else if (score >= 700 && score <= 749) {
+        category = "Good";
+        contributingFactors = [
+            "Solid credit history.",
+            "Reasonable credit utilization.",
+            "Minimal missed payments.",
+            "Demonstrated ability to manage different types of credit."
+        ];
+        explanation = "Your good credit score is a result of your solid financial management. Your credit history shows responsible credit usage, and you've maintained a reasonable credit utilization ratio. Your minimal missed payments indicate your commitment to timely payments, and your diverse credit management highlights your ability to handle various financial obligations.";
+        textColorClass = "text-blue-600"; // Tailwind CSS class for blue text color
+    } else if (score >= 650 && score <= 699) {
+        category = "Fair";
+        contributingFactors = [
+            "Average credit history.",
+            "Moderate credit utilization.",
+            "Some missed payments or delinquencies.",
+            "Steady progress in credit behavior."
+        ];
+        explanation = "Your fair credit score represents your ongoing efforts to manage your finances. While your credit history is average, you've maintained a moderate credit utilization ratio. Although there have been some missed payments or delinquencies, your consistent efforts to improve your credit behavior are reflected in this score.";
+        textColorClass = "text-yellow-600"; // Tailwind CSS class for yellow text color
+    } else {
+        category = "Poor";
+        contributingFactors = [
+            "Short or inconsistent credit history.",
+            "High credit utilization.",
+            "Frequent missed payments or delinquencies.",
+            "Significant negative marks on the credit report."
+        ];
+        explanation = "Your poor credit score reflects challenges in managing your financial responsibilities. Your credit history might be short or inconsistent, and your credit utilization ratio is high. Frequent missed payments or delinquencies have contributed to this score, along with significant negative marks on your credit report. It's important to address these issues to improve your financial situation.";
+        textColorClass = "text-red-600"; // Tailwind CSS class for red text color
+    }
+
+    return {
+        category: category,
+        contributingFactors: contributingFactors,
+        explanation: explanation,
+        textColorClass: textColorClass
+    };
+}
+
 const exportvariables = {
     getDataHeaders,
     formatDataSummaryData,
@@ -379,7 +437,8 @@ const exportvariables = {
     formatBarChartTwo,
     rollUpPieArray,
     humanizeText,
-    prioritizeHeaders
+    prioritizeHeaders,
+    generateCreditScoreDetails
 }
 
 

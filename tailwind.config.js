@@ -5,6 +5,9 @@ module.exports = {
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
+    height: {
+      '128': '64rem',
+    },
     colors: {
       darkblue: '#000b18',
       lightblue: '#ade6e6',

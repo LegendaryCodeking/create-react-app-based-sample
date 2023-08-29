@@ -52,8 +52,12 @@ class Sidebar extends Component {
   render() {
     const { active } = this.state;
     return (
-      <aside className="absolute w-64 h-full" aria-label="Sidebar">
-        <div className="overflow-y-auto py-4 px-3 bg-darkblue h-full border-r border-r-gray-500">
+      <aside
+        className="flex w-64 h-full border-r border-r-gray-500"
+        aria-label="Sidebar"
+        style={{ height: "100%" }}
+      >
+        <div className="overflow-y-auto py-4 px-3 bg-darkblue h-full">
           <Link
             to="/"
             className="flex items-center justify-center pl-8 pt-6 mb-8"

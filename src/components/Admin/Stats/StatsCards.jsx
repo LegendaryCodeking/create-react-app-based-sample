@@ -5,28 +5,33 @@ import {
   faUserAlt,
   faUserGroup,
   faMicrochip,
+  faDatabase,
   faArrowsTurnToDots,
 } from "@fortawesome/free-solid-svg-icons";
 
 class StatsCards extends Component {
-  state = {};
+  state = {
+    statistics: [
+      { title: "Total Users", value: 5, icon: faUserAlt },
+      { title: "Datasets", value: 1, icon: faDatabase },
+      { title: "Models", value: 1, icon: faMicrochip },
+      { title: "API Calls", value: 500, icon: faArrowsTurnToDots },
+    ],
+  };
   render() {
+    const { statistics } = this.state;
     return (
       <div className="w-full mt-4 mb-4">
         <div className="container">
           <div className="flex items-center">
-            <div className="w-1/4 items-center justify-center flex p-4">
-              <Stat icon={faUserAlt} title="Total users" value="1" />
-            </div>
-            <div className="w-1/4 items-center justify-center flex p-4">
-              <Stat icon={faUserGroup} title="organisations" value="1" />
-            </div>
-            <div className="w-1/4 items-center justify-center flex p-4">
-              <Stat icon={faMicrochip} title="models" value="1" />
-            </div>
-            <div className="w-1/4 items-center justify-center flex p-4">
-              <Stat icon={faArrowsTurnToDots} title="Requests" value="5" />
-            </div>
+            {statistics.map((stat, index) => (
+              <div
+                key={index}
+                className="w-1/4 items-center justify-center flex p-4"
+              >
+                <Stat icon={stat.icon} title={stat.title} value={stat.value} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
