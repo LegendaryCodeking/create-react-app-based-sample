@@ -3,7 +3,6 @@ import Stat from "./Stat";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserAlt,
-  faUserGroup,
   faMicrochip,
   faDatabase,
   faArrowsTurnToDots,
