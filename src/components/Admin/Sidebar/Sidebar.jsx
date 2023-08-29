@@ -7,6 +7,7 @@ import {
   faUser,
   faUserGroup,
   faMicrochip,
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "../../../assets/images/aicelogo1.png";
@@ -29,6 +30,7 @@ class Sidebar extends Component {
       { path: "/admin/users", component: "users" },
       { path: "/admin/organisations", component: "organisations" },
       { path: "/admin/models", component: "models" },
+      { path: "/admin/upload", component: "upload" },
     ];
 
     paths.forEach((path) => {
@@ -57,7 +59,7 @@ class Sidebar extends Component {
         aria-label="Sidebar"
         style={{ height: "100%" }}
       >
-        <div className="overflow-y-auto py-4 px-3 bg-darkblue h-full">
+        <div className="overflow-y-auto py-4 px-3 bg-darkblue h-full w-full">
           <Link
             to="/"
             className="flex items-center justify-center pl-8 pt-6 mb-8"
@@ -72,7 +74,7 @@ class Sidebar extends Component {
             </span> */}
           </Link>
           {/* <hr className="mb-8"></hr> */}
-          <ul className="space-y-4">
+          <ul className="space-y-4 w-full">
             <li>
               <Link
                 to="/admin/dashboard"
@@ -147,6 +149,24 @@ class Sidebar extends Component {
             </li>
             <li>
               <Link
+                to="/admin/upload"
+                className={
+                  active === "upload"
+                    ? "flex group items-center p-2 text-base font-normal text-white rounded-lg bg-eggyellow hover:bg-eggyellow2"
+                    : "flex group items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-eggyellow"
+                }
+              >
+                <FontAwesomeIcon
+                  className="flex-shrink-0 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                  icon={faUpload}
+                />
+                <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
+                  Upload
+                </span>
+              </Link>
+            </li>
+            {/* <li>
+              <Link
                 to="/admin/models"
                 className={
                   active === "description"
@@ -180,7 +200,7 @@ class Sidebar extends Component {
                   Model statistics
                 </span>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </aside>

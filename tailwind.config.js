@@ -39,7 +39,11 @@ module.exports = {
       display: ['Montserrat'],
       body: ['Montserrat']
     },
-    extend: {},
+    extend: {
+      height: {
+        128: "64rem"
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin')

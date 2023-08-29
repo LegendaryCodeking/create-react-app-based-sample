@@ -6,6 +6,7 @@ import Dashboard from "../views/Admin/Dashboard";
 import Models from "../views/Admin/Models";
 import Organisations from "../views/Admin/Organisations";
 import Users from "../views/Admin/Users";
+import Upload from "../views/Admin/Upload";
 
 class AdminLayout extends Component {
   state = {};
@@ -28,6 +29,7 @@ class AdminLayout extends Component {
                     path="/admin/organisations"
                     component={() => <Organisations />}
                   />
+                  <Route path="/admin/upload" component={() => <Upload />} />
                   <Route path="/admin/models" component={() => <Models />} />
                   <Redirect from="/admin" to="/admin/dashboard" />
                 </Switch>

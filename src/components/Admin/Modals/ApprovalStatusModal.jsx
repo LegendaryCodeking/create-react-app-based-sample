@@ -62,7 +62,7 @@ class ApprovalStatusModal extends Component {
             : "fixed top-1/2 left-1/2 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  max-h-full"
         }
       >
-        <div className="relative w-full max-w-6xl h-96">
+        <div className="relative w-full max-w-6xl">
           <div className="relative bg-white rounded-lg shadow">
             <div className="flex items-center justify-between px-4 py-2 border-b rounded-t">
               <h3 className="font-semibold text-gray-500">Credit profile</h3>
@@ -89,7 +89,7 @@ class ApprovalStatusModal extends Component {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div className="flex px-4 py-4 h-96">
+            <div className="flex px-4 py-4">
               <div className="w-1/3 p-4 flex flex-col border-r h-full">
                 {/* <div className="flex justify-between px-4">
                   <span className=" text-sm text-gray-400 mt-6 font-semibold">
