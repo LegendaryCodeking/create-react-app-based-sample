@@ -383,7 +383,7 @@ function generateCreditScoreDetails(score) {
         ];
         explanation = "Your excellent credit score reflects your responsible financial behavior. Your long and consistent credit history, coupled with low credit utilization and a strong payment record, have contributed to this high score. Your ability to manage multiple types of credit demonstrates your financial discipline.";
         textColorClass = "text-green-600"; // Tailwind CSS class for green text color
-    } else if (score >= 700 && score <= 749) {
+    } else if (score >= 650 && score <= 749) {
         category = "Good";
         contributingFactors = [
             "Solid credit history.",
@@ -393,7 +393,7 @@ function generateCreditScoreDetails(score) {
         ];
         explanation = "Your good credit score is a result of your solid financial management. Your credit history shows responsible credit usage, and you've maintained a reasonable credit utilization ratio. Your minimal missed payments indicate your commitment to timely payments, and your diverse credit management highlights your ability to handle various financial obligations.";
         textColorClass = "text-blue-600"; // Tailwind CSS class for blue text color
-    } else if (score >= 650 && score <= 699) {
+    } else if (score >= 501 && score <= 649) {
         category = "Fair";
         contributingFactors = [
             "Average credit history.",

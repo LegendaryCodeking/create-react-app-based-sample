@@ -15,7 +15,6 @@ class MatrixConfusionChart extends Component {
       console.log("Matrix Data: ", matrixdata);
 
       if (matrixdata.length > 0) {
-        //
         this.createChart(matrixdata);
       }
     }
@@ -181,32 +180,32 @@ class MatrixConfusionChart extends Component {
     // https://www.amcharts.com/docs/v5/charts/xy-chart/#Setting_data
     let data = [
       {
-        y: "1",
-        x: "1",
-        columnSettings: {
-          fill: colors[1],
-        },
-        value: matrixData[1][1],
-      },
-      {
-        y: "0",
-        x: "0",
-        columnSettings: {
-          fill: colors[1],
-        },
-        value: matrixData[0][0],
-      },
-      {
-        y: "0",
-        x: "1",
+        y: "False",
+        x: "Negative",
         columnSettings: {
           fill: colors[0],
         },
         value: matrixData[0][1],
       },
       {
-        y: "1",
-        x: "0",
+        y: "True",
+        x: "Positive",
+        columnSettings: {
+          fill: colors[1],
+        },
+        value: matrixData[0][0],
+      },
+      {
+        y: "True",
+        x: "Negative",
+        columnSettings: {
+          fill: colors[1],
+        },
+        value: matrixData[1][1],
+      },
+      {
+        y: "False",
+        x: "Positive",
         columnSettings: {
           fill: colors[0],
         },
@@ -216,9 +215,9 @@ class MatrixConfusionChart extends Component {
 
     series.data.setAll(data);
 
-    yAxis.data.setAll([{ category: "1" }, { category: "0" }]);
+    yAxis.data.setAll([{ category: "False" }, { category: "True" }]);
 
-    xAxis.data.setAll([{ category: "1" }, { category: "0" }]);
+    xAxis.data.setAll([{ category: "Negative" }, { category: "Positive" }]);
 
     // Make stuff animate on load
     // https://www.amcharts.com/docs/v5/concepts/animations/#Initial_animation
