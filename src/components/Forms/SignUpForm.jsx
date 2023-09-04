@@ -143,7 +143,7 @@ class SignUpForm extends Component {
       //this.props.onLogin();
       this.props.history.push("/auth/login");
     } else if (response.status === 200 && response.data.status === "failed") {
-      toast.error(response.data.response);
+      toast.error(response.data.reason);
     } else {
       console.log("error", response.data.status);
       this.setState({
