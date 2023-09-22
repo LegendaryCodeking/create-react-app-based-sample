@@ -7,6 +7,8 @@ import Models from "../views/Admin/Models";
 import Organisations from "../views/Admin/Organisations";
 import Users from "../views/Admin/Users";
 import Upload from "../views/Admin/Upload";
+import ModelMetricsPage from "../views/Admin/ModelMetrics";
+import AdminDataDescriptionPage from "../views/Admin/AdminDataDescriptionPage";
 
 class AdminLayout extends Component {
   state = {};
@@ -31,6 +33,14 @@ class AdminLayout extends Component {
                   />
                   <Route path="/admin/upload" component={() => <Upload />} />
                   <Route path="/admin/models" component={() => <Models />} />
+                  <Route
+                    path="/admin/model-metrics"
+                    component={() => <ModelMetricsPage />}
+                  />
+                  <Route
+                    path="/admin/data-description"
+                    component={() => <AdminDataDescriptionPage />}
+                  />
                   <Redirect from="/admin" to="/admin/dashboard" />
                 </Switch>
               </div>
