@@ -62,11 +62,11 @@ class Users extends Component {
         sortable: true,
         filter: true,
       },
-      { field: "firstName", sortable: true, filter: true },
-      { field: "lastName", sortable: true, filter: true },
-      { field: "company", sortable: true, filter: true },
-      { field: "email", sortable: true, filter: true },
-      { field: "companyEmail", sortable: true, filter: true },
+      { field: "firstName", sortable: true, filter: true, editable: true },
+      { field: "lastName", sortable: true, filter: true, editable: true },
+      { field: "company", sortable: true, filter: true, editable: true },
+      { field: "email", sortable: true, filter: true, editable: true },
+      { field: "companyEmail", sortable: true, filter: true, editable: true },
     ],
   };
 

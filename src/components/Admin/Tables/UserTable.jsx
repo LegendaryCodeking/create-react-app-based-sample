@@ -49,7 +49,7 @@ class UserTable extends Component {
 
   rowSelected = (event) => {
     console.log("event: ", event.data);
-    this.setState({ showModal: true, modalData: event.data });
+    //this.setState({ showModal: true, modalData: event.data });
   };
 
   gridReady = (params) => {
@@ -60,6 +60,10 @@ class UserTable extends Component {
       //gridApi.sizeColumnsToFit();
       gridApi.redrawRows();
     }, 2000);
+  };
+
+  onRowEditingStopped = (row) => {
+    console.log("row: ", row);
   };
   render() {
     const { rowData, columnDefs, showModal, modalData } = this.state;
@@ -83,6 +87,8 @@ class UserTable extends Component {
               columnDefs={columnDefs}
               onRowClicked={this.rowSelected}
               rowMultiSelectWithClick={true}
+              onRowEditingStopped={this.onRowEditingStopped}
+              editType={"fullRow"}
             ></AgGridReact>
           </div>
         </div>

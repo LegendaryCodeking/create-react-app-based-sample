@@ -63,11 +63,21 @@ class Models extends Component {
         sortable: true,
         filter: true,
       },
-      { field: "modelRows", sortable: true, filter: true },
-      { field: "modelAccuracy", sortable: true, filter: true },
-      { field: "modelFalsePositives", sortable: true, filter: true },
-      { field: "modelTruePositives", sortable: true, filter: true },
-      { field: "dateOfCreation", sortable: true, filter: true },
+      { field: "modelRows", sortable: true, filter: true, editable: true },
+      { field: "modelAccuracy", sortable: true, filter: true, editable: true },
+      {
+        field: "modelFalsePositives",
+        sortable: true,
+        filter: true,
+        editable: true,
+      },
+      {
+        field: "modelTruePositives",
+        sortable: true,
+        filter: true,
+        editable: true,
+      },
+      { field: "dateOfCreation", sortable: true, filter: true, editable: true },
     ],
   };
   render() {
