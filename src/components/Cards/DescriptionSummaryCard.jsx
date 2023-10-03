@@ -18,7 +18,7 @@ class DescriptionSummaryCard extends Component {
               View all
             </span>
           </div>
-          <div class="flow-root">
+          <div className="flow-root">
             <DescriptionSummaryTable />
           </div>
         </div>

@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faUser,
-  faUserGroup,
-  faMicrochip,
   faUpload,
   faLineChart,
   faDatabase,
@@ -99,6 +97,24 @@ class Sidebar extends Component {
             </li>
             <li>
               <Link
+                to="/admin/upload"
+                className={
+                  active === "upload"
+                    ? "flex group items-center p-2 text-base font-normal text-white rounded-lg bg-eggyellow hover:bg-eggyellow2"
+                    : "flex group items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-eggyellow"
+                }
+              >
+                <FontAwesomeIcon
+                  className="flex-shrink-0 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                  icon={faUpload}
+                />
+                <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
+                  Upload
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/admin/users"
                 className={
                   active === "users"
@@ -111,11 +127,11 @@ class Sidebar extends Component {
                   icon={faUser}
                 />
                 <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
-                  Users
+                  User management
                 </span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/admin/organisations"
                 className={
@@ -132,8 +148,8 @@ class Sidebar extends Component {
                   Organisations
                 </span>
               </Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link
                 to="/admin/models"
                 className={
@@ -150,7 +166,7 @@ class Sidebar extends Component {
                   Model
                 </span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/admin/data-description"
@@ -187,24 +203,7 @@ class Sidebar extends Component {
                 </span>
               </Link>
             </li>
-            <li>
-              <Link
-                to="/admin/upload"
-                className={
-                  active === "upload"
-                    ? "flex group items-center p-2 text-base font-normal text-white rounded-lg bg-eggyellow hover:bg-eggyellow2"
-                    : "flex group items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-eggyellow"
-                }
-              >
-                <FontAwesomeIcon
-                  className="flex-shrink-0 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
-                  icon={faUpload}
-                />
-                <span className="ml-3 text-sm font-bold text-gray-500 group-hover:text-gray-700">
-                  Upload
-                </span>
-              </Link>
-            </li>
+
             {/* <li>
               <Link
                 to="/admin/models"

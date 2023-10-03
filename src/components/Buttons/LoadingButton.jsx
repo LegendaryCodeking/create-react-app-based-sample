@@ -20,6 +20,7 @@ class LoadingButton extends Component {
 
     this.props.onButtonClicked(e);
   };
+
   render() {
     const { loading, disabled, icon, text, float } = this.props;
     return (

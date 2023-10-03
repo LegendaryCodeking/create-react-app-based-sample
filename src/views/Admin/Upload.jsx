@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import StatsCards from "../../components/Admin/Stats/StatsCards";
+import DataDropzone from "../../components/Forms/FormComponents/Dropzone";
+import DivLoader from "../../components/Loaders/DivLoader";
+import * as XLSX from "xlsx";
 
 class Upload extends Component {
   state = {
     selectedUploadType: "api",
+    uploadingFile: false,
   };
 
   onChange = (e) => {
@@ -11,144 +15,91 @@ class Upload extends Component {
     console.log("value: ", value);
     this.setState({ selectedUploadType: value });
   };
+
+  submitFile = (file) => {
+    this.setState({ uploadingFile: true });
+    console.log("file uploading: ", file);
+
+    setTimeout(() => {
+      this.setState({ uploadingFile: false });
+    }, 4000);
+  };
+
+  onUploadDocument = async (file) => {
+    const reader = new FileReader();
+
+    reader.onabort = () => console.log("file reading was aborted");
+    reader.onerror = () => console.log("file reading has failed");
+    this.setState({ uploadingFile: true });
+    reader.onload = async () => {
+      // Do whatever you want with the file contents
+      const binaryStr = reader.result;
+      console.log("binaryStr: ", binaryStr);
+
+      const columns = await this.getColumnsFromExcelBinary(binaryStr);
+      this.setState({ uploadingFile: false });
+      console.log("columns: ", columns);
+    };
+    reader.onerror = (event) => {
+      this.setState({ uploadingFile: false });
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
+  getColumnsFromExcelBinary = async (binaryData) => {
+    return new Promise((resolve, reject) => {
+      try {
+        // Create a buffer from the binary data
+        const buffer = new Uint8Array(binaryData);
+        const data = new Blob([buffer]);
+        const reader = new FileReader();
+
+        reader.onload = async function (event) {
+          try {
+            // Parse the Excel file
+            const workbook = XLSX.read(event.target.result, { type: "array" });
+
+            // Assuming there is only one sheet in the Excel file
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+
+            // Extract column names from the first row of the sheet
+            const columnNames = [];
+            const range = XLSX.utils.decode_range(sheet["!ref"]);
+            for (let col = range.s.c; col <= range.e.c; col++) {
+              const cellAddress = { r: 0, c: col };
+              const cellRef = XLSX.utils.encode_cell(cellAddress);
+              columnNames.push(sheet[cellRef].v);
+            }
+
+            resolve(columnNames);
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+        reader.onerror = function (event) {
+          reject(event.target.error);
+        };
+
+        reader.readAsArrayBuffer(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
   render() {
-    const { selectedUploadType } = this.state;
+    const { uploadingFile } = this.state;
     return (
       <div className=" rounded-sm p-4 w-full" style={{ height: "90vh" }}>
         <StatsCards />
-        <div className="mt-4 flex space-x-4">
-          <div className="mb-4 flex flex-col w-2/3 border border-gray-500 rounded p-4">
+        <div className="mt-6 flex space-x-4">
+          <div className="mb-4 flex flex-col w-2/3 border border-gray-500 rounded p-4 relative">
+            <DivLoader show={uploadingFile} />
             <span className="px-4 font-bold text-white"> Upload </span>
             <div className="mt-4 px-4 mb-4">
-              <label
-                htmlFor="countries"
-                className="block mb-2 text-sm font-medium text-white"
-              >
-                Select an option
-              </label>
-              <select
-                id="countries"
-                onChange={this.onChange}
-                className="text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="api" defaultValue>
-                  API
-                </option>
-                <option value="file">Excel file</option>
-                <option value="database_file">Database file</option>
-              </select>
-            </div>
-            <div
-              id="api"
-              className={selectedUploadType === "api" ? "" : "hidden"}
-            >
-              <div className="flex">
-                <div className="mt-4 px-4 mb-6 w-2/3">
-                  <label
-                    htmlFor="countries"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
-                    Input API endpoint
-                  </label>
-                  <input
-                    type="text"
-                    id="countries"
-                    className="text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div className="mt-4 px-4 mb-6 w-1/3">
-                  <label
-                    htmlFor="countries"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
-                    Select API method
-                  </label>
-                  <select
-                    id="countries"
-                    className="text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="post" defaultValue>
-                      POST
-                    </option>
-                    <option value="get">GET</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div
-              id="database_file"
-              className={selectedUploadType === "database_file" ? "" : "hidden"}
-            >
-              <div className="flex">
-                <div className="mt-4 px-4 mb-6 w-2/3">
-                  <label
-                    className="block mb-2 text-sm font-medium text-white"
-                    htmlFor="file_input"
-                  >
-                    Upload database file
-                  </label>
-                  <input
-                    className="block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
-                    id="file_input"
-                    type="file"
-                  />
-                </div>
-                <div className="mt-4 px-4 mb-6 w-1/3">
-                  <label
-                    htmlFor="countries"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
-                    Select a database
-                  </label>
-                  <select
-                    id="countries"
-                    className="text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="post" defaultValue>
-                      SQL
-                    </option>
-                    <option value="get">MONGO</option>
-                    <option value="get">POSTGRES</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div
-              id="file"
-              className={selectedUploadType === "file" ? "" : "hidden"}
-            >
-              <div className="flex">
-                <div className="mt-4 px-4 mb-6 w-2/3">
-                  <label
-                    className="block mb-2 text-sm font-medium text-white"
-                    htmlFor="file_input"
-                  >
-                    Upload excel/csv
-                  </label>
-                  <input
-                    className="block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
-                    id="file_input"
-                    type="file"
-                  />
-                </div>
-                <div className="mt-4 px-4 mb-6 w-1/3">
-                  <label
-                    htmlFor="countries"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
-                    Select an option
-                  </label>
-                  <select
-                    id="countries"
-                    className="text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="excel" defaultValue>
-                      Excel
-                    </option>
-                    <option value="csv">Csv</option>
-                  </select>
-                </div>
-              </div>
+              <DataDropzone onUploadDocument={this.onUploadDocument} />
             </div>
           </div>
           <div className="mb-4 flex flex-col w-1/3 border border-gray-500 rounded">
