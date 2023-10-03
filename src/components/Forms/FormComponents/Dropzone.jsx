@@ -5,7 +5,6 @@ import CsvIcon from "../../../assets/images/csv-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import BasicAlert from "../../Alerts/BasicAlert";
-import LoadingButton from "../../Buttons/LoadingButton";
 
 const thumbsContainer = {
   display: "flex",
@@ -14,7 +13,7 @@ const thumbsContainer = {
   marginTop: 16,
 };
 
-const DataDropzone = ({ onUploadDocument }) => {
+const DataDropzone = ({ onUploadDocument, onClearColumns }) => {
   const [files, setFiles] = useState([]);
   const [alert, setAlert] = useState({
     show: false,
@@ -22,39 +21,41 @@ const DataDropzone = ({ onUploadDocument }) => {
     type: "",
   });
 
-  const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true);
-  const [uploadLoading, setUploadLoading] = useState(false);
+  /* const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true); */
+  //const [uploadLoading, setUploadLoading] = useState(false);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: file.type === "text/csv" ? CsvIcon : ExcelIcon,
-        })
-      )
-    );
-    checkUploadStatus(acceptedFiles);
-    onUploadDocument(acceptedFiles[0]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: file.type === "text/csv" ? CsvIcon : ExcelIcon,
+          })
+        )
+      );
+      checkUploadStatus(acceptedFiles);
+      onUploadDocument(acceptedFiles[0]);
+    },
+    [onUploadDocument]
+  );
 
-  const { getRootProps, fileRejections, acceptedFiles, getInputProps } =
-    useDropzone({
-      accept: {
-        "application/vnd.ms-excel": [],
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [],
-        "text/csv": [],
-      },
-      multiple: false,
-      onDrop: (acceptedFiles) => onDrop(acceptedFiles),
-      maxFiles: 1,
-    });
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.ms-excel": [],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [],
+      "text/csv": [],
+    },
+    multiple: false,
+    onDrop: (acceptedFiles) => onDrop(acceptedFiles),
+    maxFiles: 1,
+  });
 
   const checkUploadStatus = (acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       setAlert({ show: false, text: "", type: "" });
-      setUploadButtonDisabled(false);
+      //setUploadButtonDisabled(false);
     } else {
-      setUploadButtonDisabled(true);
+      //setUploadButtonDisabled(true);
       setAlert({
         show: true,
         text: "File was not accepted, check the type and upload again.",
@@ -62,13 +63,13 @@ const DataDropzone = ({ onUploadDocument }) => {
       });
     }
   };
-  const acceptedFileItems = acceptedFiles.map((file) => (
+  /* const acceptedFileItems = acceptedFiles.map((file) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
-  ));
+  )); */
 
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
+  /* const fileRejectionItems = fileRejections.map(({ file, errors }) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
       <ul>
@@ -77,7 +78,7 @@ const DataDropzone = ({ onUploadDocument }) => {
         ))}
       </ul>
     </li>
-  ));
+  )); */
 
   const thumbs = files.map((file) => (
     <div
@@ -99,17 +100,18 @@ const DataDropzone = ({ onUploadDocument }) => {
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
+  }, [files]);
 
   const clearFiles = () => {
     setFiles([]);
-    setUploadButtonDisabled(true);
+    onClearColumns();
+    //setUploadButtonDisabled(true);
   };
 
-  const submitFiles = () => {
+  /* const submitFiles = () => {
     //e.preventDefault();
     console.log("submitting files...", files[0]);
-  };
+  }; */
 
   return (
     <div className="">
@@ -139,7 +141,7 @@ const DataDropzone = ({ onUploadDocument }) => {
         )}
       </div>
 
-      <div className="flex justify-end mt-6">
+      {/* <div className="flex justify-end mt-6">
         <LoadingButton
           text="Next 1"
           onButtonClicked={submitFiles}
@@ -149,7 +151,7 @@ const DataDropzone = ({ onUploadDocument }) => {
           loading={uploadLoading}
           float="right"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

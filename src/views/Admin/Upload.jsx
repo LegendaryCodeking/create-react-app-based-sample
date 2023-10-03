@@ -3,11 +3,16 @@ import StatsCards from "../../components/Admin/Stats/StatsCards";
 import DataDropzone from "../../components/Forms/FormComponents/Dropzone";
 import DivLoader from "../../components/Loaders/DivLoader";
 import * as XLSX from "xlsx";
+import TargetSelectV2 from "../../components/Forms/FormComponents/TargetSelectV2";
 
 class Upload extends Component {
   state = {
     selectedUploadType: "api",
     uploadingFile: false,
+    fileColumns: [],
+    targetVariable: "",
+    fileData: [],
+    binaries: [],
   };
 
   onChange = (e) => {
@@ -35,12 +40,17 @@ class Upload extends Component {
       // Do whatever you want with the file contents
       const binaryStr = reader.result;
       console.log("binaryStr: ", binaryStr);
+      this.setState({ fileData: binaryStr });
 
       const columns = await this.getColumnsFromExcelBinary(binaryStr);
       this.setState({ uploadingFile: false });
       console.log("columns: ", columns);
+
+      this.setState({ fileColumns: columns });
     };
     reader.onerror = (event) => {
+      this.setState({ fileColumns: [] });
+      console.log("event: ", event);
       this.setState({ uploadingFile: false });
     };
     reader.readAsArrayBuffer(file);
@@ -89,8 +99,88 @@ class Upload extends Component {
     });
   };
 
+  getUniqueValuesInColumn = async (binaryData, columnName) => {
+    return new Promise((resolve, reject) => {
+      try {
+        // Create a buffer from the binary data
+        const buffer = new Uint8Array(binaryData);
+        const data = new Blob([buffer]);
+        const reader = new FileReader();
+
+        reader.onload = async function (event) {
+          try {
+            // Parse the Excel file
+            const workbook = XLSX.read(event.target.result, { type: "array" });
+
+            // Assuming there is only one sheet in the Excel file
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+
+            // Initialize an array to store unique values in the specified column
+            const uniqueValues = new Set();
+
+            // Extract values from the specified column
+            const range = XLSX.utils.decode_range(sheet["!ref"]);
+            for (let row = range.s.r + 1; row <= range.e.r; row++) {
+              const cellAddress = {
+                r: row,
+                c: XLSX.utils.decode_col(columnName),
+              };
+              const cellRef = XLSX.utils.encode_cell(cellAddress);
+              const cell = sheet[cellRef];
+
+              // Check if the cell is not empty or undefined before adding it to uniqueValues
+              if (cell && cell.v !== undefined && cell.v !== "") {
+                uniqueValues.add(cell.v);
+              }
+            }
+
+            resolve(Array.from(uniqueValues));
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+        reader.onerror = function (event) {
+          reject(event.target.error);
+        };
+
+        reader.readAsArrayBuffer(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  clearColumns = () => {
+    this.setState({ fileColumns: [], target: "" });
+  };
+
+  targetChanged = async (targetVariable) => {
+    console.log("target variable: ", targetVariable);
+    this.setState({ targetVariable });
+    this.setPossibleBinaries();
+  };
+
+  setPossibleBinaries = async () => {
+    const { fileData, targetVariable } = this.state;
+
+    if (fileData && targetVariable) {
+      const binaries = await this.getUniqueValuesInColumn(
+        fileData,
+        targetVariable
+      );
+
+      console.log("binaries: ", binaries);
+
+      this.setState({ binaries });
+    } else {
+      console.log("missing upload parameters");
+    }
+  };
+
   render() {
-    const { uploadingFile } = this.state;
+    const { uploadingFile, fileColumns } = this.state;
     return (
       <div className=" rounded-sm p-4 w-full" style={{ height: "90vh" }}>
         <StatsCards />
@@ -99,7 +189,18 @@ class Upload extends Component {
             <DivLoader show={uploadingFile} />
             <span className="px-4 font-bold text-white"> Upload </span>
             <div className="mt-4 px-4 mb-4">
-              <DataDropzone onUploadDocument={this.onUploadDocument} />
+              <DataDropzone
+                onUploadDocument={this.onUploadDocument}
+                onClearColumns={this.clearColumns}
+              />
+            </div>
+            <div
+              className={fileColumns.length > 0 ? "mt-4 px-4 mb-4" : "hidden"}
+            >
+              <TargetSelectV2
+                columns={fileColumns}
+                onTargetChanged={this.targetChanged}
+              />
             </div>
           </div>
           <div className="mb-4 flex flex-col w-1/3 border border-gray-500 rounded">
