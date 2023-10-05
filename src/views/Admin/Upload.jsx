@@ -4,6 +4,7 @@ import DataDropzone from "../../components/Forms/FormComponents/Dropzone";
 import DivLoader from "../../components/Loaders/DivLoader";
 import * as XLSX from "xlsx";
 import TargetSelectV2 from "../../components/Forms/FormComponents/TargetSelectV2";
+import BinaryValueSelect from "../../components/Forms/FormComponents/BinaryValueSelect";
 
 class Upload extends Component {
   state = {
@@ -13,6 +14,9 @@ class Upload extends Component {
     targetVariable: "",
     fileData: [],
     binaries: [],
+    approved: "",
+    rejected: "",
+    validity: false,
   };
 
   onChange = (e) => {
@@ -115,27 +119,22 @@ class Upload extends Component {
             // Assuming there is only one sheet in the Excel file
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
+            //console.log("sheet: ", sheet);
 
-            // Initialize an array to store unique values in the specified column
-            const uniqueValues = new Set();
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
+            console.log("json: ", jsonData);
 
-            // Extract values from the specified column
-            const range = XLSX.utils.decode_range(sheet["!ref"]);
-            for (let row = range.s.r + 1; row <= range.e.r; row++) {
-              const cellAddress = {
-                r: row,
-                c: XLSX.utils.decode_col(columnName),
-              };
-              const cellRef = XLSX.utils.encode_cell(cellAddress);
-              const cell = sheet[cellRef];
+            let fieldData = [];
 
-              // Check if the cell is not empty or undefined before adding it to uniqueValues
-              if (cell && cell.v !== undefined && cell.v !== "") {
-                uniqueValues.add(cell.v);
-              }
-            }
+            jsonData.forEach((column) => {
+              fieldData.push(column[columnName]);
+            });
 
-            resolve(Array.from(uniqueValues));
+            fieldData = [...new Set(fieldData)];
+            console.log("fieldData: ", fieldData);
+
+            //console.log("uniqueValues: ", uniqueValues);
+            resolve(fieldData);
           } catch (error) {
             reject(error);
           }
@@ -153,19 +152,33 @@ class Upload extends Component {
   };
 
   clearColumns = () => {
-    this.setState({ fileColumns: [], target: "" });
+    this.setState({
+      fileColumns: [],
+      target: "",
+      binaries: [],
+      targetVariable: "",
+      approved: "",
+      rejected: "",
+      validity: false,
+    });
   };
 
   targetChanged = async (targetVariable) => {
-    console.log("target variable: ", targetVariable);
-    this.setState({ targetVariable });
-    this.setPossibleBinaries();
+    const tVariable = await targetVariable;
+    //console.log("target variable: ", tVariable);
+    this.setState({ targetVariable: tVariable }, () => {
+      this.setPossibleBinaries();
+    });
   };
 
   setPossibleBinaries = async () => {
     const { fileData, targetVariable } = this.state;
 
-    if (fileData && targetVariable) {
+    console.log("target variable:", targetVariable);
+    setTimeout(() => {}, 2000);
+    console.log("fileData: ", fileData);
+
+    if (targetVariable) {
       const binaries = await this.getUniqueValuesInColumn(
         fileData,
         targetVariable
@@ -179,8 +192,53 @@ class Upload extends Component {
     }
   };
 
+  approveSelected = (value) => {
+    console.log("approved value: ", value);
+    this.setState({ approved: value }, () => {
+      this.checkValidity();
+    });
+  };
+
+  rejectSelected = (value) => {
+    console.log("rejected value: ", value);
+    this.setState({ rejected: value }, () => {
+      this.checkValidity();
+    });
+  };
+
+  componentDidMount() {
+    this.pageInitiate();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.pageInitiate();
+    }
+  }
+
+  pageInitiate = () => {
+    console.log("upload page init");
+  };
+
+  checkValidity = () => {
+    const { approved, rejected, fileData, targetVariable } = this.state;
+    console.log("approved: ", approved);
+    console.log("rejected: ", rejected);
+    console.log("fileData: ", fileData);
+    console.log("targetVariable: ", targetVariable);
+
+    if (approved && rejected && fileData && targetVariable) {
+      console.log("all values set");
+      this.setState({ validity: true });
+    } else {
+      console.log("some values are not set");
+      this.setState({ validity: false });
+    }
+  };
+
   render() {
-    const { uploadingFile, fileColumns } = this.state;
+    const { uploadingFile, fileColumns, binaries, targetVariable, validity } =
+      this.state;
     return (
       <div className=" rounded-sm p-4 w-full" style={{ height: "90vh" }}>
         <StatsCards />
@@ -201,6 +259,24 @@ class Upload extends Component {
                 columns={fileColumns}
                 onTargetChanged={this.targetChanged}
               />
+            </div>
+            <div className={targetVariable ? "mt-4 px-4 mb-4" : "hidden"}>
+              <BinaryValueSelect
+                options={binaries}
+                onApproveChanged={this.approveSelected}
+                onRejectedChanged={this.rejectSelected}
+              />
+            </div>
+            <div className={validity ? "mt-4 px-4 mb-4" : "hidden"}>
+              <button
+                className={
+                  validity
+                    ? "bg-eggyellow text-darkblue px-4 py-2 rounded hover:bg-eggyellow2"
+                    : "bg-gray-500 text-darkblue px-4 py-2 rounded hover:cursor-not-allowed"
+                }
+              >
+                Submit
+              </button>
             </div>
           </div>
           <div className="mb-4 flex flex-col w-1/3 border border-gray-500 rounded">

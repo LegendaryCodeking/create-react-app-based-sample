@@ -24,7 +24,7 @@ class TargetSelectV2 extends Component {
           onChange={this.changeTarget}
           class="border border-gray-300 bg-darkblue text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
-          <option selected>Choose a country</option>
+          <option selected>Choose a column</option>
           {columns &&
             columns.map((column) => <option value={column}>{column}</option>)}
         </select>

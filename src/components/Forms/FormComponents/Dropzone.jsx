@@ -129,9 +129,9 @@ const DataDropzone = ({ onUploadDocument, onClearColumns }) => {
       </div>
       <div
         {...getRootProps()}
-        className="px-4 py-12 border-2 border-dashed border-gray-300 rounded-lg mt-6"
+        className="px-4 py-8 border-2 border-dashed border-gray-500 rounded-lg mt-6 text-center flex justify-center"
       >
-        <input {...getInputProps()} />
+        <input className="" {...getInputProps()} />
         {files.length > 0 ? (
           <aside style={thumbsContainer}>{thumbs}</aside>
         ) : (
